@@ -1,12 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import OCLogo from "./OCLogo";
 import HeaderMenu from "./HeaderMenu";
+import Login from "../../Login/Login";
 export default function Header() {
     return (
         <header className=" bg-white border-b-2 border-gray-500 top-0 w-full h-16" >
             <div className="flex flex-row flex-nowrap pl-96">
                 <OCLogo />
                 <HeaderMenu />
+                <Login />
             </div>
         </header>
     )

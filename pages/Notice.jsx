@@ -1,9 +1,9 @@
 import React from "react";
-
+import NoticeContainer from "../components/Notice/NoticeContainer";
 const Notice = () => {
     return (
-        <div>
-            공지사항을 기록할 페이지입니다.
+        <div className="w-full h-full bg-gray-300">
+            <NoticeContainer />
         </div>
     )
 }

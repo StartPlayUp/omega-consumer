@@ -5,11 +5,11 @@ import MainGameReviewBaord from "./Boards/MainGameReviewBoard";
 const BoardContainer = () => {
     return (
         <div className="flex justify-center mt-8">
-            <div className="flex flex-row">
-                <MainNoticeBaord />
-                <BestBoard />
-            </div>
-            <div>
+            <div className="flex flex-col">
+                <div className="flex flex-row">
+                    <MainNoticeBaord className="border-black"/>
+                    <BestBoard />
+                </div>
                 <MainGameReviewBaord />
             </div>
 

@@ -1,11 +1,11 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from '../components/layout/layout'
-import Footer from '../components/footer/Footer'
+import Footer from '../components/layout/footer/Footer'
 function MyApp({ Component, pageProps }: AppProps) {
   return(
     <>
-      <Layout>
+      <Layout >
         <Component {...pageProps} />
       </Layout>
       
