@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
@@ -12,17 +13,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="w-full h-full">
-        <div className="absolute left-1/2 top-1/4 border-2">
+        <div className="relative w-1/2 h-1/3 left-1/4 top-1 border-2 shadow-2xl">
           안녕하세요
         </div>
-        <div className="absolute left-1/4 top-1/2">
-          <div>
+        <div className="mt-16 flex justify-center">
+          <div className="pr-16">
             테스트 문구입니다?
           </div>
-          <div className="absolute right-1/4">
+          <div className="pl-16">
             테스트 문구가 아닙니다?
           </div>
-          
+        </div>
+        <div className="flex justify-center">
+          <div>
+            테스트 문구다?
+          </div>
+          <div>
+            테스트 문구가 아니다?
+          </div>
         </div>
       </section>
       
