@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+<<<<<<< HEAD
 import React from "react";
 import Head from "next/head";
 import type { AppProps } from 'next/app';
@@ -39,6 +40,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Component {...pageProps} />
     </React.Fragment>
   );
+=======
+import type { AppProps } from 'next/app'
+import Layout from '../components/layout'
+function MyApp({ Component, pageProps }: AppProps) {
+  return(
+    <>
+      <Layout >
+        <Component {...pageProps} />
+      </Layout>
+      
+    </>
+  )
+>>>>>>> e4e27a756ca799dadcb404dc911f7fbc6ebbdfd2
 }
 export default MyApp
 
