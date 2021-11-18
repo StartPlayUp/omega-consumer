@@ -24,8 +24,8 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "/*.ts",
+    "/*.tsx",
     "components/layout/header/Header.jsx",
     "components/layout/layout.jsx"
 , "components/Login/Login.jsx"  ],

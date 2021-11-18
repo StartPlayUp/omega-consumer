@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from './../styles/Home.module.css';
-import Header from '../components/Header';
-import MainDoor from '../components/MainDoor';
-=======
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
->>>>>>> e4e27a756ca799dadcb404dc911f7fbc6ebbdfd2
 
 const Home: NextPage = () => {
   return (
