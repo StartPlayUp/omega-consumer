@@ -17,11 +17,12 @@ const SignUp = () => {
   };
   return (
     <div>
-      <form>
+      <form action="/api/user/register" method="post">
         <div>아디</div>
         <input
           type="text"
           onChange={onChange}
+          id="id"
           name="id"
           value={id}
           className="border-2"
@@ -32,6 +33,7 @@ const SignUp = () => {
           type="text"
           className="border-2"
           onChange={onChange}
+          id="nickname"
           name="nickname"
           value={nickname}
         ></input>
@@ -47,13 +49,14 @@ const SignUp = () => {
         ></input>
         <div> 비밀번호 확인용 {inputs.password}</div>
         <div>비번확인</div>
-        <input type="password" className="border-2"></input>
+        <input type="password" id="password" className="border-2"></input>
         <div>email</div>
         <input
           type="email"
           onChange={onChange}
           name="email"
           value={email}
+          id="email"
           className="border-2"
         ></input>
         <div> 이메일 확인용 {inputs.email}</div>

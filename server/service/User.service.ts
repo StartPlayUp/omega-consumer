@@ -23,6 +23,7 @@ const createUser = async (userData: ICreateUser): Promise<returnUser> => {
         });
 
         const errors = await validate(user)
+        console.log("asdfasdffadsafds2")
         if (errors.length > 0) throw errors
 
         await user.save()
@@ -122,8 +123,8 @@ const verifyEmailUser = async ({ emailToken }: { emailToken: string }): Promise<
     try {
         const user = await User.findOneOrFail({ emailToken });
         console.log(user)
-        user.emailToken = null || user.emailToken;
-        user.isVerified = true || user.isVerified;
+        user.emailToken = null;
+        user.isVerified = true;
         await user.save();
         return {
             success: true

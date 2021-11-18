@@ -6,7 +6,7 @@ const router = Router()
 router.post('/register', register);
 router.get('/getUser', getUser)
 router.post('/login', emailVerified, login)
-router.get('/logout', loginRequired, loginRequired, logout)
+router.get('/logout', loginRequired, logout)
 router.get('/verify-email', verifyEmail)
 
 export default router

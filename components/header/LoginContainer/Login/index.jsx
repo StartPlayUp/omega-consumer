@@ -16,7 +16,7 @@ const Login = () => {
   return (
     <>
       <div>로그인 입니다</div>
-      <form>
+      <form action="/api/user/login" method="post">
         <div>아디</div>
         <input
           type="id"
