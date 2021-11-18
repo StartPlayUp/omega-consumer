@@ -1,4 +1,7 @@
+import LoginModal from './LoginContainer/index'
+import React,{useState} from 'react';
 const Header = () => {
+
   return (
     <header>
       <nav className="w-full h-16 border-b-2">
@@ -9,7 +12,9 @@ const Header = () => {
             <li className="text-2xl m-3">게시판</li>
           </ul>
           <ul>
-            <li className="right-0">로그인</li>
+            <li className="right-0">
+              <LoginModal />
+            </li>
           </ul>
         </div>
       </nav>
