@@ -5,20 +5,20 @@
    "username": "root",
    "password": "mysql@rhdqn12",
    "database": "typeorm_tutorial",
-   "synchronize": false,
-   "logging": false,
+   "synchronize": true,
+   "logging": true,
    "entities": [
-      "server/entity/**/*.ts","./entity/**/*.js"
+      "server/typeorm/entity/*{.ts,.js}"
    ],
    "migrations": [
-      "server/migration/**/*.ts","./migration/**/*.js"
+      "server/typeorm/migration/**/*{.ts,.js}"
    ],
    "subscribers": [
-      "server/subscriber/**/*.ts","./subscriber/**/*.js"
+      "server/typeorm/subscriber/**/*{.ts,.js}"
    ],
    "cli": {
-      "entitiesDir": "server/entity",
-      "migrationsDir": "server/migration",
-      "subscribersDir": "server/subscriber"
+      "entitiesDir": "typeorm/entity",
+      "migrationsDir": "typeorm/migration",
+      "subscribersDir": "typeorm/subscriber"
    }
 }

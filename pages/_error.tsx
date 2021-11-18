@@ -7,7 +7,7 @@ import React, { Component, useEffect } from "react";
 const Error = ({ statusCode }: any) => {
 
     useEffect(() => {
-        Router.push("/test");
+        Router.push("/");
     }, [])
 
     return (

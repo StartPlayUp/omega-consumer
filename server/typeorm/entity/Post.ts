@@ -1,6 +1,6 @@
 import { Thumb } from './Thumb';
-import { IsEnum, IsIP, IsBoolean, MinLength, Length } from "class-validator";
-import { Entity, Column, ManyToMany, ManyToOne, OneToMany, AfterInsert } from "typeorm";
+import { IsIP, Length } from "class-validator";
+import { Entity, Column, ManyToOne, OneToMany, AfterInsert } from "typeorm";
 import { Comment } from "./Comment";
 
 import { Model } from './Models/Model'

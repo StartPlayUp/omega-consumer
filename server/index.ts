@@ -6,17 +6,19 @@ import server from './config/express';
 import next from "next";
 
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
+const app = next({ dev: true });
 const handle = app.getRequestHandler();
+
 const port = process.env.PORT || 3000;
+
 
 
 (async () => {
     try {
         await app.prepare();
-        //
-        // server.use()
+
         // 프론트 서버 가동
+        await createConnection()
         server.listen(port, (err?: any) => {
             if (err) throw err;
             console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);

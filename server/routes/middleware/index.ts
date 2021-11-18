@@ -16,7 +16,7 @@ const loginRequired = async (req: Request, res: any, next: NextFunction) => {
     if (token) {
         const validateToken: any = jwt.verify(token, secret);
         if (validateToken) {
-            res.user = validateToken.id
+            res.id = validateToken.id
             next()
         }
         else {

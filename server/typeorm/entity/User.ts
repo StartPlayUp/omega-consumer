@@ -32,8 +32,11 @@ export class User extends Model {
     @IsEnum(['user', 'admin', 'superadmin'])
     role!: string;
 
-    @Column({ nullable: true })
-    emailToken!: string
+    @Column({
+        type: 'text',
+        nullable: true
+    })
+    emailToken!: string | null
 
     @Column()
     isVerified!: boolean
