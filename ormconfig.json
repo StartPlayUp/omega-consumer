@@ -1,0 +1,24 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "root",
+   "password": "mysql@rhdqn12",
+   "database": "typeorm_tutorial",
+   "synchronize": false,
+   "logging": false,
+   "entities": [
+      "server/entity/**/*.ts","./entity/**/*.js"
+   ],
+   "migrations": [
+      "server/migration/**/*.ts","./migration/**/*.js"
+   ],
+   "subscribers": [
+      "server/subscriber/**/*.ts","./subscriber/**/*.js"
+   ],
+   "cli": {
+      "entitiesDir": "server/entity",
+      "migrationsDir": "server/migration",
+      "subscribersDir": "server/subscriber"
+   }
+}
