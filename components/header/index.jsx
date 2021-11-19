@@ -1,5 +1,5 @@
 import LoginModal from './LoginContainer/index'
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 const Header = () => {
 
   return (
