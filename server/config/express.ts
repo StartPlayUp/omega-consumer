@@ -5,8 +5,16 @@ import routes from "../routes";
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-require('dotenv').config();
+import cors from 'cors';
 const server = express()
+
+if (process.env.NODE_ENV !== 'production') {
+    server.use(cors({
+        origin: '*'
+    }));
+}
+
+require('dotenv').config();
 server.use(cookieParser())
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }));
