@@ -5,7 +5,7 @@ module.exports = {
    port: 3306,
    username: "root",
    password: "mysql@rhdqn12",
-   database: "omega_consumer",
+   database: "typeorm_tutorial",
    synchronize: true,
    logging: true,
    entities:

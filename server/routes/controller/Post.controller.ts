@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
-import { createPost, getLikeItPost, likeItPost } from '../../service/post.service';
+import {
+    createPost,
+    getPostFromUuid,
+    getPostsWithoutData,
+    getLikeItPost,
+    likeItPost
+} from '../../service/post.service';
 
 const sendPost = async (req: Request, res: Response) => {
     const { title, content, ipAddress, userUuid } = req.body;
@@ -7,6 +13,29 @@ const sendPost = async (req: Request, res: Response) => {
     const result = await createPost({
         title, content, ipAddress, userUuid,
     });
+    if (result.success) {
+        return res.status(201).json(result);
+    }
+    else {
+        return res.status(500).json(result)
+    }
+}
+
+const getPost = async (req: Request, res: Response) => {
+    const postUuid = req.query.postUuid as string;
+    const result = await getPostFromUuid({
+        postUuid
+    });
+    if (result.success) {
+        return res.status(201).json(result);
+    }
+    else {
+        return res.status(500).json(result)
+    }
+}
+
+const getPosts = async (req: Request, res: Response) => {
+    const result = await getPostsWithoutData();
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -31,7 +60,7 @@ const likeIt = async (req: Request, res: Response) => {
 }
 
 const getLikeIt = async (req: Request, res: Response) => {
-    const  postUuid  = req.query.postUuid as string;
+    const postUuid = req.query.postUuid as string;
     const result = await getLikeItPost({
         postUuid
     });
@@ -44,4 +73,4 @@ const getLikeIt = async (req: Request, res: Response) => {
 }
 
 
-export { sendPost, likeIt, getLikeIt }
+export { sendPost, getPost, getPosts, likeIt, getLikeIt }
