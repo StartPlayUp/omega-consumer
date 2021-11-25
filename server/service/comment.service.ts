@@ -125,10 +125,22 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
 
         const temp: any = {}
         comment.map((o) => {
+            // deleted가 1이라면 content 삭제
             if (o.comment_deleted) {
                 o.comment_content = "삭제된 글 입니다."
             }
 
+            if (o.parentComment_deleted) {
+                o.parentComment_content = "삭제된 글 입니다."
+            }
+
+            o.parentComment_ipAddress = o.parentComment_ipAddress &&
+                "X.X." + o.parentComment_ipAddress.split('.').slice(2, 4).join('.')
+
+            o.comment_ipAddress = o.comment_ipAddress &&
+                "X.X." + o.comment_ipAddress.split('.').slice(2, 4).join('.')
+
+            // temp에 index가 있다면
             if (temp.hasOwnProperty(o.comment_index)) {
                 if (o.parentComment_index) {
                     temp[o.comment_index]["childComments"].push({
@@ -144,6 +156,7 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
                     })
                 }
             }
+            // temp에 index가 없다면
             else {
                 const childComments = []
                 if (o.parentComment_index) {

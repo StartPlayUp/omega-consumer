@@ -8,7 +8,9 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dockerBuild":"docker build . -t omega",
+    "dockerRun":"docker run -p 8080:3000 -t omega"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^31.0.0",

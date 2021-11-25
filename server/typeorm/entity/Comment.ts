@@ -69,20 +69,10 @@ export class Comment extends Model {
 
 
     toJSON() {
-        if (this.deleted) {
-            return {
-                ...this,
-                content: "삭제된 글 입니다",
-                password: undefined,
-                test: this.user_nickname
-            }
-        }
-        else {
-            return {
-                ...this,
-                test: this.user_nickname,
-                password: undefined
-            }
+        return {
+            ...this,
+            test: this.user_nickname,
+            password: undefined
         }
     }
 }

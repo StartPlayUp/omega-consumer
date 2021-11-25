@@ -10,6 +10,7 @@ interface returnUser extends returnApi {
 }
 
 interface returnPost extends returnApi {
+    post?: any
 }
 interface returnPostLikeIt extends returnPost {
     message?: string

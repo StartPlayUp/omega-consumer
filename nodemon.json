@@ -1,6 +1,6 @@
 { 
     "verbose": true,
-    "watch": ["server/**/*.ts"],
+    "watch": ["server/**/*.ts"], 
     "ext": "ts js json",
     "ignore": ["server/**/*.spec.ts"],
     "exec": "ts-node --project tsconfig.server.json server/index.ts"

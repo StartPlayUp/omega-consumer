@@ -60,4 +60,14 @@ export class Post extends Model {
 
     @OneToMany(() => Thumb, thumb => thumb.post)
     thumbs!: Thumb[]
+
+    toJSON() {
+        const ipAddress = "X.X." + this.ipAddress.split('.').slice(2, 4).join('.')
+        return {
+            ...this,
+            ipAddress
+        }
+
+
+    }
 }

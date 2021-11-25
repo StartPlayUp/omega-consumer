@@ -37,3 +37,5 @@ config.ts
 
 # vercel
 .vercel
+
+docker-compose.yml

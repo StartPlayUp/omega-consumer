@@ -40,7 +40,7 @@ const likeItPost = async (likeItData: ILikeIt): Promise<returnPostLikeIt> => {
     }
 }
 
-const getLikeItPost = async (likeItData: any): Promise<returnGetPostLikeIt> => {
+const getLikeItPost = async (likeItData: { postUuid: string }): Promise<returnGetPostLikeIt> => {
     try {
         const { postUuid } = likeItData
         const post = await Post.findOneOrFail({ uuid: postUuid })
@@ -107,18 +107,44 @@ const updatePost = async () => {
 
 }
 
-const getPost = async () => {
-
-}
-
-
-const getPosts = async (): Promise<returnPost> => {
+const getPostsWithoutData = async (): Promise<returnPost> => {
     try {
-
+        const post = await getRepository(Post)
+            .createQueryBuilder("post")
+            .leftJoin('post.user', 'user')
+            .addSelect(['user.nickname'])
+            .getMany();
+        console.log(post)
         return {
             success: true,
+            post
         }
     } catch (err) {
+        console.error(err)
+        return {
+            success: false,
+            error: "Something went wrong"
+        }
+    }
+}
+
+const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<returnPost> => {
+    try {
+        console.log(postUuid)
+        // const post = await Post.findOneOrFail({ uuid: postUuid })
+        const post = await getRepository(Post)
+            .createQueryBuilder("post")
+            .leftJoin('post.user', 'user')
+            .addSelect(['user.nickname'])
+            .where("post.uuid = :uuid", { uuid: postUuid })
+            .getOne();
+        console.log(post)
+        return {
+            success: true,
+            post
+        }
+    } catch (err) {
+        console.error(err)
         return {
             success: false,
             error: "Something went wrong"
@@ -131,8 +157,8 @@ export {
     createPost,
     updatePost,
     deletePost,
-    getPost,
-    getPosts,
+    getPostFromUuid,
+    getPostsWithoutData,
     likeItPost,
     getLikeItPost,
 }
