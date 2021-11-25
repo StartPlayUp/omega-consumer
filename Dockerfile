@@ -44,4 +44,4 @@ ENV PORT 3000
 # Uncomment the following line in case you want to disable telemetry.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-# CMD ["node_modules/.bin/next", "start"]
+CMD ["node_modules/.bin/next", "start"]
