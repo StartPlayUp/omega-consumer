@@ -4,7 +4,7 @@ import { loginRequired, emailVerified } from '../../middleware'
 const router = Router()
 
 router.post('/register', register);
-router.get('/getUser', getUser)
+router.get('/getUser', loginRequired, getUser)
 router.post('/login', emailVerified, login)
 router.get('/logout', loginRequired, logout)
 router.get('/verify-email', verifyEmail)

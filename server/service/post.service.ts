@@ -107,27 +107,6 @@ const updatePost = async () => {
 
 }
 
-const getPostsWithoutData = async (): Promise<returnPost> => {
-    try {
-        const post = await getRepository(Post)
-            .createQueryBuilder("post")
-            .leftJoin('post.user', 'user')
-            .addSelect(['user.nickname'])
-            .getMany();
-        console.log(post)
-        return {
-            success: true,
-            post
-        }
-    } catch (err) {
-        console.error(err)
-        return {
-            success: false,
-            error: "Something went wrong"
-        }
-    }
-}
-
 const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<returnPost> => {
     try {
         console.log(postUuid)
@@ -153,12 +132,57 @@ const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<retu
 }
 
 
+const getPostsSortByTime = async (): Promise<returnPost> => {
+    try {
+        const post = await getRepository(Post)
+            .createQueryBuilder("post")
+            .leftJoin('post.user', 'user')
+            .addSelect(['user.nickname'])
+            .getMany();
+        console.log(post)
+        return {
+            success: true,
+            post
+        }
+    } catch (err) {
+        console.error(err)
+        return {
+            success: false,
+            error: "Something went wrong"
+        }
+    }
+}
+
+const getCategoryPostsSortByTime = async ({ category }: { category: string }): Promise<returnPost> => {
+    try {
+        const post = await getRepository(Post)
+            .createQueryBuilder("post")
+            .where("post.category = :category", { category })
+            .leftJoin('post.user', 'user')
+            .addSelect(['user.nickname'])
+            .getMany();
+        console.log(post)
+        return {
+            success: true,
+            post
+        }
+    } catch (err) {
+        console.error(err)
+        return {
+            success: false,
+            error: "Something went wrong"
+        }
+    }
+}
+
+
 export {
     createPost,
     updatePost,
     deletePost,
     getPostFromUuid,
-    getPostsWithoutData,
+    getPostsSortByTime,
+    getCategoryPostsSortByTime,
     likeItPost,
     getLikeItPost,
 }

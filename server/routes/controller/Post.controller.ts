@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import {
     createPost,
     getPostFromUuid,
-    getPostsWithoutData,
+    getPostsSortByTime,
     getLikeItPost,
+    getCategoryPostsSortByTime,
     likeItPost
 } from '../../service/post.service';
 
@@ -35,7 +36,18 @@ const getPost = async (req: Request, res: Response) => {
 }
 
 const getPosts = async (req: Request, res: Response) => {
-    const result = await getPostsWithoutData();
+    const result = await getPostsSortByTime();
+    if (result.success) {
+        return res.status(201).json(result);
+    }
+    else {
+        return res.status(500).json(result)
+    }
+}
+
+const getCategoryPosts = async (req: Request, res: Response) => {
+    const category = req.query.category as string;
+    const result = await getCategoryPostsSortByTime({ category });
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -73,4 +85,4 @@ const getLikeIt = async (req: Request, res: Response) => {
 }
 
 
-export { sendPost, getPost, getPosts, likeIt, getLikeIt }
+export { sendPost, getPost, getPosts, likeIt, getLikeIt, getCategoryPosts }
