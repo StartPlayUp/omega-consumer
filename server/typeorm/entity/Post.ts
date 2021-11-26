@@ -23,6 +23,9 @@ export class Post extends Model {
     })
     permision!: string;
 
+    @Column()
+    category!: string;
+
     @Column({
         nullable: false,
         default: false

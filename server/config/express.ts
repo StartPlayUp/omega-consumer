@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
 const server = express()
 
 if (process.env.NODE_ENV !== 'production') {
@@ -20,6 +21,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.json())
 server.use(morgan('combined'));
+// server.use(express.static(path.join(__dirname, '../public')))
 server.use('/api', routes)
 
 export default server;
