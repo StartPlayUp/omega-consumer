@@ -1,11 +1,12 @@
 import express, { Router } from 'express';
 import { sendPost, getCategoryPosts, getPost, getPosts, likeIt, getLikeIt } from '../../controller/Post.controller';
+import { loginRequired, ipMiddleware } from '../../middleware';
 const router = Router()
 
 
 // 카테고리 추가해야함
 
-router.post('/sendPost', sendPost);
+router.post('/sendPost', loginRequired, ipMiddleware, sendPost);
 router.get('/getPost', getPost);
 router.get('/getCategoryPosts', getCategoryPosts);
 router.get('/getPosts', getPosts);

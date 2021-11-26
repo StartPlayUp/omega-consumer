@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { checkEmailVerifyFromId } from '../../service/User.service';
+import requestIp from 'request-ip';
 // import cookie from 'cookie-parser'
 
 declare namespace Express {
@@ -10,13 +11,15 @@ declare namespace Express {
 }
 
 
-const loginRequired = async (req: Request, res: any, next: NextFunction) => {
+const loginRequired = async (req: any, res: any, next: NextFunction) => {
     const token = req.cookies['access-token']
     const secret: any = process.env.JWT_SECRET
     if (token) {
         const validateToken: any = jwt.verify(token, secret);
         if (validateToken) {
-            res.id = validateToken.id
+            req.user = {
+                id: validateToken.id
+            }
             next()
         }
         else {
@@ -43,4 +46,10 @@ const emailVerified = async (req: Request, res: any, next: NextFunction) => {
     }
 }
 
-export { loginRequired, emailVerified }
+const ipMiddleware = (req: any, res: any, next: NextFunction) => {
+    const clientIp = requestIp.getClientIp(req);
+    req.user.ipAddress = clientIp
+    next();
+};
+
+export { loginRequired, emailVerified, ipMiddleware }

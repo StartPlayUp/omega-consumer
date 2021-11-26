@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../../../../reducer/user";
 const Login = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     id: "",
     password: "",
@@ -12,6 +14,10 @@ const Login = () => {
       ...inputs,
       [name]: value,
     });
+  };
+  const onSubmit = () => {
+    console.log(inputs);
+    dispatch(loginAction(id, password));
   };
   return (
     <>
@@ -35,7 +41,9 @@ const Login = () => {
           className="border-2"
         ></input>
         <div>비밀번호 확인용 {inputs.password}</div>
-        <button className="border-2">로그인</button>
+        <button onClick={onSubmit} className="border-2">
+          로그인
+        </button>
       </form>
     </>
   );

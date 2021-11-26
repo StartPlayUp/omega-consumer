@@ -3,7 +3,8 @@ interface IPost {
     title: string,
     content: string,
     ipAddress: string
-    userUuid: string,
+    id: string,
+    category: string,
     permision?: role,
     useComment?: boolean,
     delete?: boolean,

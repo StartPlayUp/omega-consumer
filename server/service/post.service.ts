@@ -78,13 +78,13 @@ const createPost = async (postData: IPost): Promise<returnPost> => {
         title,
         content,
         ipAddress,
-        userUuid,
+        id,
+        category,
     } = postData;
     console.log(postData)
     try {
-        const user = await User.findOneOrFail({ uuid: userUuid })
-        console.log(user)
-        const post = Post.create({ title, content, ipAddress, user });
+        const user = await User.findOneOrFail({ id })
+        const post = Post.create({ title, content, ipAddress, user, category });
         const errors = await validate(post)
         if (errors.length > 0) throw errors
         await post.save()

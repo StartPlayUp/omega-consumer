@@ -1,7 +1,9 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import React, { FC } from 'react';
 import Layout from '../components/layout'
-function MyApp({ Component, pageProps }: AppProps) {
+import wrapper from "../store/configureStore"
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Layout >
@@ -11,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   )
 }
-export default MyApp
+export default wrapper.withRedux(MyApp);
 
 
 // Router.events.on("routeChangeStart", (url) => {

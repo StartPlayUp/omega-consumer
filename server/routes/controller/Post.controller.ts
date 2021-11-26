@@ -8,11 +8,12 @@ import {
     likeItPost
 } from '../../service/post.service';
 
-const sendPost = async (req: Request, res: Response) => {
-    const { title, content, ipAddress, userUuid } = req.body;
-    console.log(title)
+const sendPost = async (req: any, res: Response) => {
+    const { id, ipAddress } = req.user;
+    console.log("ipAddress : ", id, ipAddress);
+    const { title, content, category } = req.body;
     const result = await createPost({
-        title, content, ipAddress, userUuid,
+        title, content, ipAddress, id, category
     });
     if (result.success) {
         return res.status(201).json(result);
