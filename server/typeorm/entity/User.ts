@@ -8,6 +8,7 @@ import { Post } from './Post'
 
 @Entity()
 export class User extends Model {
+
     @Column({ unique: true })
     @Length(5, 30)
     id!: string;
