@@ -23,7 +23,7 @@ const createUser = async (userData: ICreateUser): Promise<returnUser> => {
         });
 
         const errors = await validate(user)
-        console.log("asdfasdffadsafds2")
+        console.log("createUser error check : ",errors)
         if (errors.length > 0) throw errors
 
         await user.save()
@@ -109,7 +109,7 @@ const loginCheckUser = async (userData: ILoginUser): Promise<returnUser> => {
         if (!match) throw "비밀번호가 일치하지 않습니다."
         return {
             success: true,
-            user
+            nickname:user.nickname
         }
     } catch (error: any) {
         return {
@@ -146,12 +146,14 @@ const checkEmailVerifyFromId = async ({ id }: { id: string }): Promise<returnUse
         }
         else {
             return {
-                success: false
+                success: false,
+                error:"이메일 인증을 받아야 합니다."
             }
         }
     } catch (error) {
         return {
-            success: false
+            success: false,
+            error:"아이디가 없습니다."
         }
     }
 }

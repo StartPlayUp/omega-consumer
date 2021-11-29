@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport(config.mailConfig);
 
 const register = async (req: Request, res: Response) => {
     const { id, nickname, email, password } = req.body;
-    console.log(id, nickname, email, password)
+    console.log("register : ",id, nickname, email, password)
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
     const emailToken = crypto.randomBytes(64).toString('hex');
@@ -43,8 +43,7 @@ const register = async (req: Request, res: Response) => {
             }
         })
 
-        res.redirect('/login')
-        // return res.status(201).json(result);
+        return res.status(201).json(result);
     }
     else {
         return res.status(500).json(result)
@@ -64,8 +63,8 @@ const login = async (req: Request, res: Response) => {
     if (result.success) {
         const token = createToken(id)
         res.cookie('access-token', token)
-        res.redirect('/dashboard')
-        // return res.status(201).json(result);
+        // res.redirect('/dashboard')
+        return res.status(201).json(result);
     }
     else {
         return res.status(500).json(result)

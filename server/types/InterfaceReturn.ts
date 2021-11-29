@@ -7,6 +7,7 @@ interface returnApi {
 
 interface returnUser extends returnApi {
     user?: any
+    nickname?:string
 }
 
 interface returnPost extends returnApi {

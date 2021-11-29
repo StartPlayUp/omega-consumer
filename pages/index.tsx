@@ -6,7 +6,7 @@ import HomePageContent from "../components/homePageContainer/contents/homePageCo
 // import styles from '../styles/Home.module.css';
 import Link from 'next/link'
 
-const Home: NextPage = (): JSX.Element => {
+const Home: NextPage = (): any => {
   return (
     <div className="min-h-screen p-0 flex flex-col justify-center h-screen items-center">
       <Head>
@@ -16,7 +16,7 @@ const Home: NextPage = (): JSX.Element => {
       </Head>
       <section className="w-full h-full">
         <HomePageMainDoorContainer />
-        <HomePageContent />
+        <HomePageContent/>
       </section>
     </div>
   )

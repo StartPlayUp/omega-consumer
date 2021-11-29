@@ -23,14 +23,14 @@ const loginRequired = async (req: any, res: any, next: NextFunction) => {
             next()
         }
         else {
-            console.log("toekn expires");
-            res.redirect('/user/login')
+            console.log("token expires");
+            // res.redirect('/user/login')
         }
 
     }
     else {
         console.log('token not found')
-        res.redirect('/user/login')
+        // res.redirect('/user/login')
     }
 }
 
@@ -42,12 +42,14 @@ const emailVerified = async (req: Request, res: any, next: NextFunction) => {
         next()
     }
     else {
-        console.log("이메일 인증 받아야해요..")
+        console.log(result.error)
+        return res.status(500).json(result)
     }
 }
 
 const ipMiddleware = (req: any, res: any, next: NextFunction) => {
     const clientIp = requestIp.getClientIp(req);
+    console.log("test ip : ",clientIp);
     req.user.ipAddress = clientIp
     next();
 };
