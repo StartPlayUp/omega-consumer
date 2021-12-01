@@ -1,6 +1,26 @@
-import React, { useState } from "react";
-
+import React, { useState,useEffect } from "react";
+import axios from "axios";
+import NoticePosts from "./NoticePosts";
 export default function NoticeContainer() {
+  const [noticeBoard, setNoticeBoard] = useState([]);
+  const dataBaseAsync = async()=> {
+    try {
+      const res = await axios.get("/api/post/getPosts")
+      if (res.data.success) {
+        const posts = res.data.post;
+        setNoticeBoard(posts)
+      }
+      else {
+        alert("서버에 이상이 생겨서 게시글을 가져오지 못했습니다.")
+      }
+    } catch {
+      alert("서버에 이상이 생겨서 게시글을 가져오지 못했습니다.")
+    }
+  }
+  useEffect(() => {
+    dataBaseAsync()
+  }, [])
+
   return (
     <div className="md:w-3/4 h-screen w-full border-b-4">
       <div className="w-full h-6 bg-gray-200">
@@ -13,7 +33,7 @@ export default function NoticeContainer() {
           <li className="text-center w-24">조회수</li>
         </ul>
       </div>
-      <div className="bg-gray-100 w-full h-full">아무말이나 하기</div>
+      <NoticePosts posts={ noticeBoard}>아무말이나 하기</NoticePosts>
     </div>
   );
 }
