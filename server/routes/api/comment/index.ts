@@ -10,5 +10,4 @@ router.post('/sendMemberComment', sendMemberComment);
 router.post('/sendNonMemberComment', sendNonMemberComment);
 router.get('/getComments', getComments);
 
-
 export default router
