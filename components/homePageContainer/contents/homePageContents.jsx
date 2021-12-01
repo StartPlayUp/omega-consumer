@@ -3,7 +3,6 @@ import HomepagePost from "./homepagePost";
 import axios from "axios";
 const HomePageContent = () => {
   useEffect(() => {
-    console.log("asdf");
     (async () => {
       try {
         console.log("asdf2");
