@@ -5,8 +5,8 @@ module.exports = {
   port: 3306,
   username: process.env.DATABASE_ID,
   password: process.env.DATABASE_PASSWORD,
-  database: "omega_consumer",
-  synchronize: true,
+  database: "typeorm_tutorial",
+  synchronize: false,
   logging: true,
   entities: [
     process.env.NODE_ENV === "production"

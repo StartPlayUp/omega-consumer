@@ -28,7 +28,7 @@
     "**/*.tsx",
     "components/layout/header/Header.jsx",
     "components/layout/layout.jsx"
-, "components/Login/Login.jsx"  ],
+, "components/Login/Login.jsx", "pages/index.jsx"  ],
   "exclude": [
     "node_modules"
   ]
