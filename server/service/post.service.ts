@@ -132,13 +132,14 @@ const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<retu
 }
 
 
-const getPostsSortByTime = async (): Promise<returnPost> => {
+const getPostsSortByTime = async (): Promise<any> => {
     try {
         const post = await getRepository(Post)
             .createQueryBuilder("post")
+            .select(["post.uuid", "post.title", "post.updatedAt"])
             .leftJoin('post.user', 'user')
-            .addSelect(['user.nickname'])
-            .getMany();
+            .addSelect('user.nickname' as "nickname")
+            .getRawMany();
         console.log(post)
         return {
             success: true,

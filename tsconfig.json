@@ -25,10 +25,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "components/layout/header/Header.jsx",
-    "components/layout/layout.jsx"
-, "components/Login/Login.jsx", "pages/index.jsx"  ],
+    "**/*.tsx"  ],
   "exclude": [
     "node_modules"
   ]
