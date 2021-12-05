@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import { Thumb } from '../typeorm/entity/Thumb';
 import { User } from '../typeorm/entity/User';
 import { validate } from 'class-validator';
-import { returnGetPostLikeIt, returnPost, returnPostLikeIt } from '../types/InterfaceReturn';
+import { returnGetPostLikeIt, returnPost, returnPostLikeIt, returnPosts } from '../types/InterfaceReturn';
 import { IPost, ILikeIt } from '../types/service/InterfacePost';
 import { Post } from '../typeorm/entity/Post';
 
@@ -132,18 +132,18 @@ const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<retu
 }
 
 
-const getPostsSortByTime = async (): Promise<any> => {
+const getPostsSortByTime = async (): Promise<returnPosts> => {
     try {
-        const post = await getRepository(Post)
+        const posts = await getRepository(Post)
             .createQueryBuilder("post")
             .select(["post.uuid", "post.title", "post.updatedAt"])
             .leftJoin('post.user', 'user')
             .addSelect('user.nickname' as "nickname")
             .getRawMany();
-        console.log(post)
+        console.log(posts)
         return {
             success: true,
-            post
+            posts
         }
     } catch (err) {
         console.error(err)
