@@ -8,7 +8,7 @@ module.exports = {
   username: process.env.DATABASE_ID,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  synchronize: false,
+  synchronize: true,
   logging: true,
   entities: [
     process.env.NODE_ENV === "production"

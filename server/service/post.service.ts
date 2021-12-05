@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import { Thumb } from '../typeorm/entity/Thumb';
 import { User } from '../typeorm/entity/User';
 import { validate } from 'class-validator';
@@ -118,6 +118,14 @@ const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<retu
             .where("post.uuid = :uuid", { uuid: postUuid })
             .getOne();
         console.log(post)
+
+        const postUpdate = await getConnection()
+            .createQueryBuilder()
+            .update(Post)
+            .set({ views: () => "views + 1" })
+            .where("uuid = :uuid", { uuid: postUuid })
+            .execute();
+
         return {
             success: true,
             post
@@ -136,7 +144,7 @@ const getPostsSortByTime = async (): Promise<returnPosts> => {
     try {
         const posts = await getRepository(Post)
             .createQueryBuilder("post")
-            .select(["post.uuid", "post.title", "post.updatedAt"])
+            .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
             .leftJoin('post.user', 'user')
             .addSelect('user.nickname' as "nickname")
             .getRawMany();

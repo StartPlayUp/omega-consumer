@@ -9,19 +9,20 @@ const HomePageContent = () => {
       try {
         const res = await axios.get("/api/post/getPosts");
         if (res.data.success) {
-          const posts = res.data.post;
+          const posts = res.data.posts;
           const serverToClientNoticeBoard = [];
           const serverToClientEtcBoard = [];
+          console.log(posts)
           posts.forEach((element) => {
             if (element.category === "noticeBoard") {
               serverToClientNoticeBoard.push({
-                title: element.title,
-                uuid: element.uuid,
+                title: element.post_title,
+                uuid: element.post_uuid,
               });
             } else {
               serverToClientEtcBoard.push({
-                title: element.title,
-                uuid: element.uuid,
+                title: element.post_title,
+                uuid: element.post_uuid,
               });
             }
           });

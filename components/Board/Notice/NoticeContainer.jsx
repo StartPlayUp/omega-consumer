@@ -1,13 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NoticePosts from "./NoticePosts";
 export default function NoticeContainer() {
   const [noticeBoard, setNoticeBoard] = useState([]);
-  const dataBaseAsync = async()=> {
+  const dataBaseAsync = async () => {
     try {
       const res = await axios.get("/api/post/getPosts")
       if (res.data.success) {
-        const posts = res.data.post;
+        const posts = res.data.posts;
         setNoticeBoard(posts)
       }
       else {
@@ -33,7 +33,7 @@ export default function NoticeContainer() {
           <li className="text-center w-24">조회수</li>
         </ul>
       </div>
-      <NoticePosts posts={ noticeBoard}>아무말이나 하기</NoticePosts>
+      <NoticePosts posts={noticeBoard}>아무말이나 하기</NoticePosts>
     </div>
   );
 }

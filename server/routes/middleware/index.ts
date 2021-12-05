@@ -49,7 +49,7 @@ const emailVerified = async (req: Request, res: any, next: NextFunction) => {
 
 const ipMiddleware = (req: any, res: any, next: NextFunction) => {
     const clientIp = requestIp.getClientIp(req);
-    console.log("test ip : ",clientIp);
+    console.log("test ip : ", clientIp);
     req.user.ipAddress = clientIp
     next();
 };

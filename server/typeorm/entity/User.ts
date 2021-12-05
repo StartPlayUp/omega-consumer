@@ -39,6 +39,7 @@ export class User extends Model {
     })
     emailToken!: string | null
 
+
     @Column()
     isVerified!: boolean
 
