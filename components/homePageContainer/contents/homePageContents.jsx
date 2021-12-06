@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GetStaticProps } from "next";
 import HomepagePost from "./homepagePost";
 import axios from "axios";
 const HomePageContent = () => {
@@ -9,27 +10,18 @@ const HomePageContent = () => {
       try {
         const res = await axios.get("/api/post/getPosts");
         if (res.data.success) {
-          const posts = res.data.post;
+          const posts = res.data.posts;
           const serverToClientNoticeBoard = [];
           const serverToClientEtcBoard = [];
+          console.log("aaasdasddd", posts);
           posts.forEach((element) => {
-            if (element.category === "noticeBoard") {
-              serverToClientNoticeBoard.push({
-                title: element.title,
-                uuid: element.uuid,
-              });
-            } else {
-              serverToClientEtcBoard.push({
-                title: element.title,
-                uuid: element.uuid,
-              });
-            }
+            serverToClientNoticeBoard.push({
+              title: element.post_title,
+              uuid: element.post_uuid,
+            });
           });
           if (serverToClientNoticeBoard.length !== 0) {
             setNoticeBoard(serverToClientNoticeBoard);
-          }
-          if (serverToClientEtcBoard.length !== 0) {
-            setEtcBoard(serverToClientEtcBoard);
           }
         } else {
           console.log("서버가 이상이 생겨 포스트를 못가져옴");
@@ -40,6 +32,7 @@ const HomePageContent = () => {
       }
     })();
   }, []);
+  console.log("noticeBoard",noticeBoard)
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col lg:flex-row justify-center ">
@@ -50,5 +43,19 @@ const HomePageContent = () => {
     </div>
   );
 };
-
+// export const getServerSideProps = async () => {
+//   try {
+//     const res = await fetch("http://localhost:5000/api/post/getPosts");
+//     const data = await res.json();
+//     console.log("test");
+//       return { props: { data } };
+//   } catch {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+// };
 export default HomePageContent;
