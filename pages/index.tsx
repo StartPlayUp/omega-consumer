@@ -3,8 +3,8 @@ import Head from 'next/head'
 import HomePageMainDoorContainer from "../components/homePageContainer/mainDoor"
 import Image from 'next/image'
 import HomePageContent from "../components/homePageContainer/contents/homePageContents";
+
 // import styles from '../styles/Home.module.css';
-import Link from 'next/link'
 
 const Home: NextPage = (): any => {
   return (
@@ -16,7 +16,7 @@ const Home: NextPage = (): any => {
       </Head>
       <section className="w-full h-full">
         <HomePageMainDoorContainer />
-        <HomePageContent/>
+        <HomePageContent />
       </section>
     </div>
   )

@@ -12,9 +12,8 @@ module.exports = {
   logging: true,
   entities: [
     process.env.NODE_ENV === "production"
-      ? "dist/typeorm/entity/*{.ts,.js}" :
-      (process.env.NODE_ENV === 'test' ? "**/entity/*{.ts,.js}"
-        : "server/typeorm/entity/*{.ts,.js}"),
+      ? "dist/typeorm/entity/*{.ts,.js}"
+      : "server/typeorm/entity/*{.ts,.js}",
   ],
   migrations: ["server/typeorm/migration/**/*{.ts,.js}"],
   subscribers: ["server/typeorm/subscriber/**/*{.ts,.js}"],

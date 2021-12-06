@@ -11,7 +11,7 @@ const UserLink = ({ id }) => (
 );
 const noticeBoard = () => {
   return (
-    <div className="flex h-screen place-items-center flex-col">
+    <div className="flex place-items-center flex-col">
       <div className="w-3/4 h-9 flex m-5">
         <div className="flex-none ml-16 text-4xl">공지사항</div>
         <UserLink id="noticeBoard" comment="글쓰기"></UserLink>
