@@ -7,11 +7,14 @@ interface returnApi {
 
 interface returnUser extends returnApi {
     user?: any
-    nickname?:string
+    nickname?: string
 }
 
 interface returnPost extends returnApi {
     post?: any
+}
+interface returnPosts extends returnApi {
+    posts?: Array<Object>
 }
 interface returnPostLikeIt extends returnPost {
     message?: string
@@ -26,4 +29,4 @@ interface returnComment extends returnApi {
     comment?: any,
 }
 
-export type { returnApi, returnUser, returnPost, returnComment, returnPostLikeIt, returnGetPostLikeIt }
+export type { returnApi, returnUser, returnPost, returnComment, returnPostLikeIt, returnGetPostLikeIt, returnPosts, }
