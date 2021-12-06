@@ -16,7 +16,7 @@ const ContentTestPage = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="flex place-items-center flex-col gap-yg-10 ">
+    <div className="flex place-items-center flex-col gap-y-10 ">
       <div className="w-3/4 h-9 flex m-5">
         <div className="flex-none ml-16 text-4xl">공지사항</div>
         <UserLink id="noticeBoard" comment="글쓰기"></UserLink>
