@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { logoutAction } from "../../reducer/user";
 import { useDispatch } from "react-redux";
+import { Button } from "antd";
 import Link from "next/link";
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,9 @@ const Header = () => {
         <div className="flex mt-3 w-full">
           <ul className="flex ml-16 ">
             <li className="lg:text-5xl">
-              <Link href="/">OmegaComsumer</Link>
+              <Link href="/" className="text-black">
+                OmegaComsumer
+              </Link>
             </li>
             <li className="text-2xl m-3 px-16">
               <Link href="/noticeBoard">공지사항</Link>
@@ -24,14 +27,22 @@ const Header = () => {
             <li className="text-2xl m-3">게시판</li>
           </ul>
           <ul>
-            <li className="absolute lg:right-5 m-3">
+            <li className="absolute lg:right-5">
               {isLoggedIn ? (
                 <div className="">
                   <div>{me}님</div>
-                  <button onClick={logoutFunction}>로그아웃</button>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    onClick={logoutFunction}
+                  >
+                    로그아웃
+                  </Button>
                 </div>
               ) : (
-                <LoginModal />
+                <div className=" m-3">
+                  <LoginModal />
+                </div>
               )}
             </li>
           </ul>
