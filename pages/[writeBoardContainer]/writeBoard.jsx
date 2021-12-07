@@ -15,7 +15,7 @@ const WriteBoard = () => {
     if (writeBoardContainer === "noticeBoard") {
       setBoardName("공지사항");
     }
-  }, []);
+  }, [writeBoardContainer]);
   return (
     <form action="/api/post/sendPost" method="post">
       <div className="flex flex-col items-center">

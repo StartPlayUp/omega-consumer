@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import NoticeContainer from "../components/Board/Notice/NoticeContainer";
+import NoticeContainer from "../../../components/Board/Notice/NoticeContainer";
 import Link from "next/link";
 
 const Test = ({ post }) => {
@@ -26,22 +26,22 @@ const Test = ({ post }) => {
     </div>
   );
 };
-export async function getStaticPaths() {
-  const res = await fetch("http://localhost:5000/api/post/getPosts");
-  const posts = await res.json();
-  const paths = posts.map((post) => ({
-    params: { id: post.index },
-  }));
-  return { paths, fallback: true };
-}
-export async function getStaticProps({ params }) {
-  const res = await fetch("http://localhost:5000/api/post/getPosts");
-  const post = await res.json();
-  return {
-    props: {
-      post,
-    },
-  };
-}
+// export async function getStaticPaths() {
+//   const res = await fetch("http://localhost:5000/api/post/getPosts");
+//   const posts = await res.json();
+//   const paths = posts.map((post) => ({
+//     params: { id: post.index },
+//   }));
+//   return { paths, fallback: true };
+// }
+// export async function getStaticProps({ params }) {
+//   const res = await fetch("http://localhost:5000/api/post/getPosts");
+//   const post = await res.json();
+//   return {
+//     props: {
+//       post,
+//     },
+//   };
+// }
 
 export default Test;

@@ -16,7 +16,7 @@ const Home: NextPage = (): any => {
       </Head>
       <section className="w-full h-full">
         <HomePageMainDoorContainer />
-        <HomePageContent/>
+        <HomePageContent />
       </section>
     </div>
   )

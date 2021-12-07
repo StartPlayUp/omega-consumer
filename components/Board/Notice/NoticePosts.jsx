@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const NoticePosts = ({ posts }) => {
   return (
-    <div className="bg-gray-100 w-full h-full">
+    <div className="bg-gray-100 w-full">
       {Object.keys(posts).map((i) => (
         <div key={posts.uuid}>
           <div>

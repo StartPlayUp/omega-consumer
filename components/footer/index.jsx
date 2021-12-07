@@ -1,5 +1,7 @@
 import Link from "next/link";
+import Image from 'next/image'
 import { useState } from "react";
+import favicon from '../../public/img/favicon_image.png'
 const Footer = () => {
     const [mode, setMode] = useState("auto");
     return (
@@ -136,10 +138,10 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="py-16 flex flex-col justify-center items-center">
-                    <Link href="javascript:void(0)">
-                        <img style={{ width: "150px", borderRadius: "30px" }} src="/img/favicon_image.png"></img>
+                    <Link href={{ pathname: "/" }} passHref>
+                        <Image s src={favicon} alt="image" width={50} height={50} />
                     </Link>
-                    <p className="mt-6 text-xs lg:text-sm leading-none text-gray-900 dark:text-gray-50">2021 Tailwind UI Kit. All Rights Reserved.</p>
+                    <p className="mt-6 text-xs lg:text-sm leading-none text-gray-900 dark:text-gray-50">2021 JSC & JJ. All Rights Reserved.</p>
                 </div>
             </footer >
         </div >

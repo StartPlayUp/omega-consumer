@@ -30,6 +30,12 @@ export class Post extends Model {
         nullable: false,
         default: false
     })
+    views!: number;
+
+    @Column({
+        nullable: false,
+        default: 0
+    })
     delete!: boolean;
 
     @Column({
