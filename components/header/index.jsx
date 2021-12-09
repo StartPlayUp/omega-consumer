@@ -17,12 +17,14 @@ const Header = () => {
         <div className="flex mt-3 w-full">
           <ul className="flex ml-16 ">
             <li className="lg:text-5xl">
-              <Link href="/" className="text-black">
-                OmegaComsumer
+              <Link href="/" className="text-black" passHref>
+                <a style={{ color: 'black' }}>OmegaComsumer</a>
               </Link>
             </li>
             <li className="text-2xl m-3 px-16">
-              <Link href="/noticeBoard">공지사항</Link>
+              <Link href="/noticeBoard" passHref>
+                <a style={{ color: 'black' }}>공지사항</a>
+              </Link>
             </li>
             <li className="text-2xl m-3">게시판</li>
           </ul>

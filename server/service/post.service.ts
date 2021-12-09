@@ -92,6 +92,7 @@ const createPost = async (postData: IPost): Promise<returnPost> => {
             success: true,
         }
     } catch (err) {
+        console.log(err)
         return {
             success: false,
             error: "Something went wrong"

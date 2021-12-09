@@ -21,7 +21,7 @@ export default function NoticeContainer() {
   }, []);
 
   return (
-    <div className="md:w-3/4 w-full border-b-4 ">
+    <div className="md:w-3/4 w-full border-b-4 h-full">
       <div className="w-full h-6 bg-gray-200">
         <ul className="flex w-full text-sm lg:text-base">
           <li className="w-10 text-center">No.</li>
