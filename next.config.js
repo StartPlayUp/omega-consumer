@@ -11,5 +11,8 @@ module.exports = {
   sassOptions: {
     includePaths: [path.join("./jss")],
   },
+  images: {
+    domains: ["cdn.discordapp.com"],
+  },
   reactStrictMode: true,
-}
+};
