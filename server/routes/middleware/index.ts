@@ -24,13 +24,13 @@ const loginRequired = async (req: any, res: any, next: NextFunction) => {
         }
         else {
             console.log("token expires");
-            // res.redirect('/user/login')
+            res.redirect('/')
         }
 
     }
     else {
         console.log('token not found')
-        // res.redirect('/user/login')
+        res.redirect('/')
     }
 }
 

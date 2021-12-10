@@ -1,6 +1,8 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import React, { FC } from 'react';
+// import 'antd/dist/antd.css';
+import 'antd/dist/antd.variable.min.css';
 import Layout from '../components/layout'
 import wrapper from "../store/configureStore"
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {

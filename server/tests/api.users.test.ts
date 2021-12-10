@@ -1,5 +1,3 @@
-import request from "supertest";
-import server from "../config/express"
 import connection from '../typeorm/connection';
 import http from './supertest'
 import login from './modules/login';

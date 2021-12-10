@@ -44,6 +44,12 @@ export class Post extends Model {
     })
     useComment!: boolean;
 
+    @Column({
+        nullable: false,
+        default: 0
+    })
+    commentCount!: number;
+
     @Column()
     @IsIP()
     ipAddress!: string;

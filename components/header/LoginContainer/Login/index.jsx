@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../../../reducer/user";
 import axios from "axios";
-import "antd/dist/antd.css";
 import { Form, Input, Button, Checkbox } from "antd";
 const Login = () => {
   const dispatch = useDispatch();
