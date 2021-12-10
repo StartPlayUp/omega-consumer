@@ -5,26 +5,11 @@ import axios from "axios";
 import { Form, Input, Button, Checkbox } from "antd";
 const Login = () => {
   const dispatch = useDispatch();
-  const [inputs, setInputs] = useState({
-    id: "",
-    password: "",
-  });
-  const { id, password } = inputs;
-  // const onChange = (e) => {
-  //   const { value, name } = e.target;
-  //   setInputs({
-  //     ...inputs,
-  //     [name]: value,
-  //   });
-  // };
-  const onFinish = (values) => {
-    setInputs(values);
-  };
-  const onSubmit = async () => {
+  const onFinish = async (values) => {
     try {
       const loginResult = await axios.post("/api/user/login", {
-        id: inputs.id,
-        password: inputs.password,
+        id: values.id,
+        password: values.password,
       });
       console.log(loginResult);
       if (loginResult.data.success) {
@@ -81,7 +66,8 @@ const Login = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submt" onClick={onSubmit}>
+          <Button type="primary" htmlType="submit">
+            {/* <Button type="primary" htmlType="submit" onClick={onSubmit}> */}
             로그인
           </Button>
         </Form.Item>
