@@ -163,6 +163,45 @@ const getPostsSortByTime = async (): Promise<returnPosts> => {
     }
 }
 
+const getPostsPagenationSortByTime = async ({ category, page = 0, pageSize = 15 }: { category: string, page?: number, pageSize?: number }): Promise<returnPosts> => {
+    try {
+        let posts: Array<object> = []
+        if (category) {
+            await getRepository(Post)
+                .createQueryBuilder("post")
+                .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
+                .where("post.category = :category", { category })
+                .leftJoin('post.user', 'user')
+                .addSelect('user.nickname' as "nickname")
+                .skip((page - 1) * pageSize)
+                .take(pageSize)
+                .getRawMany();
+            console.log(posts)
+        }
+        else {
+            await getRepository(Post)
+                .createQueryBuilder("post")
+                .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
+                .leftJoin('post.user', 'user')
+                .addSelect('user.nickname' as "nickname")
+                .skip((page - 1) * pageSize)
+                .take(pageSize)
+                .getRawMany();
+            console.log(posts)
+        }
+        return {
+            success: true,
+            posts
+        }
+    } catch (err) {
+        console.error(err)
+        return {
+            success: false,
+            error: "Something went wrong"
+        }
+    }
+}
+
 const getCategoryPostsSortByTime = async ({ category }: { category: string }): Promise<returnPost> => {
     try {
         const post = await getRepository(Post)
@@ -193,6 +232,7 @@ export {
     getPostFromUuid,
     getPostsSortByTime,
     getCategoryPostsSortByTime,
+    getPostsPagenationSortByTime,
     likeItPost,
     getLikeItPost,
 }

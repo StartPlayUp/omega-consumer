@@ -33,6 +33,7 @@ export default function NoticeContainer() {
         </ul>
       </div>
       <NoticePosts posts={noticeBoard}></NoticePosts>
+
     </div>
   );
 }

@@ -8,8 +8,8 @@ const router = Router()
 
 router.post('/sendPost', loginRequired, ipMiddleware, sendPost);
 router.get('/getPost', getPost);
-router.get('/getCategoryPosts', getCategoryPosts);
 router.get('/getPosts', getPosts);
+router.get('/getCategoryPosts', getCategoryPosts);
 router.put('/likeIt', likeIt);
 router.get('/getLikeIt', getLikeIt);
 

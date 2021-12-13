@@ -5,6 +5,7 @@ import {
     getPostsSortByTime,
     getLikeItPost,
     getCategoryPostsSortByTime,
+    getPostsPagenationSortByTime,
     likeItPost
 } from '../../service/post.service';
 
@@ -49,6 +50,17 @@ const getPosts = async (req: Request, res: Response) => {
 const getCategoryPosts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
     const result = await getCategoryPostsSortByTime({ category });
+    if (result.success) {
+        return res.status(201).json(result);
+    }
+    else {
+        return res.status(500).json(result)
+    }
+}
+
+const getCategoryPostsPagenation = async (req: Request, res: Response) => {
+    const category = req.query.category as string;
+    const result = await getPostsPagenationSortByTime({ category });
     if (result.success) {
         return res.status(201).json(result);
     }
