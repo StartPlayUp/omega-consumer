@@ -47,7 +47,7 @@ export const getServerSideProps = async (context) => {
         }
       }
     } else {
-      console.log("서버가 이상이 생겨 포스트를 못가져옴");
+      console.log("res.data.success False");
       return {
         redirect: {
           permanent: false,

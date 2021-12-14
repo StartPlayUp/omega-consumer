@@ -49,7 +49,9 @@ const getPosts = async (req: Request, res: Response) => {
 
 const getCategoryPosts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
-    const result = await getCategoryPostsSortByTime({ category });
+    const limit = req.query.limit as string;
+    console.log(category, limit)
+    const result = await getCategoryPostsSortByTime({ category, limit });
     if (result.success) {
         return res.status(201).json(result);
     }

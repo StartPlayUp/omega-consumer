@@ -9,7 +9,7 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "nextBuild": "cross-env NODE_ENV=production next build",
     "expressBuild": " cross-env NODE_ENV=production tsc --project tsconfig.server.json",
-    "expressStart": "cross-env NODE_ENV=production PORT=3333 node ./dist/index.js",
+    "expressStart": "cross-env NODE_ENV=production PORT=5000 node ./dist/index.js",
     "start": "next start",
     "lint": "next lint",
     "dockerBuild": "docker build . -t omega",

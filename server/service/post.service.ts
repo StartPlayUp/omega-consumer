@@ -202,15 +202,18 @@ const getPostsPagenationSortByTime = async ({ category, page = 0, pageSize = 15 
     }
 }
 
-const getCategoryPostsSortByTime = async ({ category }: { category: string }): Promise<returnPosts> => {
+const getCategoryPostsSortByTime = async ({ category, limit }: { category: string, limit: string }): Promise<returnPosts> => {
     try {
+        limit = limit || "1500"
+        const intLimit = parseInt(limit);
         const posts = await getRepository(Post)
             .createQueryBuilder("post")
             .where("post.category = :category", { category })
             .leftJoin('post.user', 'user')
             .addSelect(['user.nickname'])
+            .orderBy("post.createdAt", "DESC")
+            .limit(intLimit)
             .getRawMany();
-        // console.log(posts)
         return {
             success: true,
             posts
