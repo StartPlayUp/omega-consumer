@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-// import NoticeContainer from "../../../components/Board/Notice/NoticeContainer";
 import Pagination from '../../../components/Board/Pagenation'
 import NoticeContainer from '../../../components/Board/PageContainer'
 import Link from "next/link";
 import useInput from '../../../components/hooks/useInput'
 import axios from 'axios';
+import categoryList from '../../../constants/constant/category'
+import Router from "next/router";
 
 const Test = ({ posts }) => {
   // const [page, setPage] = useInput(1);
@@ -34,11 +35,11 @@ const Test = ({ posts }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   try {
-    const res = await axios.get("http://localhost:5000/api/post/getPosts");
-    console.log(res)
-    if (res.data.success) {
+    const { category } = context.query;
+    const res = await axios.get(`http://localhost:5000/api/post/getCategoryPosts?category=${category}`);
+    if (res.data.success && res.data.posts.length) {
       const posts = res.data.posts;
       return {
         props: {
@@ -48,6 +49,10 @@ export const getServerSideProps = async () => {
     } else {
       console.log("서버가 이상이 생겨 포스트를 못가져옴");
       return {
+        redirect: {
+          permanent: false,
+          destination: '/'
+        },
         props: {
           posts: []
         }
@@ -57,6 +62,10 @@ export const getServerSideProps = async () => {
     console.log("post get error : ", err);
     console.log("서버가 이상이 생겨 포스트를 못가져옴");
     return {
+      redirect: {
+        permanent: false,
+        destination: '/'
+      },
       props: {
         posts: []
       }

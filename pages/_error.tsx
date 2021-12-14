@@ -1,4 +1,4 @@
-import { NextPageContext } from "next";
+import { GetStaticPaths, NextPageContext } from "next";
 import Router from "next/router";
 import React, { Component, useEffect } from "react";
 
@@ -19,9 +19,10 @@ const Error = ({ statusCode }: any) => {
     );
 };
 
-Error.getInitialProps = ({ res, err }: NextPageContext) => {
+export const getStaticProps = ({ res, err }: NextPageContext) => {
     const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-    return { statusCode };
+    return {
+        props: { statusCode }
+    };
 };
-
 export default Error

@@ -202,18 +202,18 @@ const getPostsPagenationSortByTime = async ({ category, page = 0, pageSize = 15 
     }
 }
 
-const getCategoryPostsSortByTime = async ({ category }: { category: string }): Promise<returnPost> => {
+const getCategoryPostsSortByTime = async ({ category }: { category: string }): Promise<returnPosts> => {
     try {
-        const post = await getRepository(Post)
+        const posts = await getRepository(Post)
             .createQueryBuilder("post")
             .where("post.category = :category", { category })
             .leftJoin('post.user', 'user')
             .addSelect(['user.nickname'])
-            .getMany();
-        console.log(post)
+            .getRawMany();
+        // console.log(posts)
         return {
             success: true,
-            post
+            posts
         }
     } catch (err) {
         console.error(err)
