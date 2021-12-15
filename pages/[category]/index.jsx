@@ -6,9 +6,10 @@ import axios from "axios";
 import { Pagination } from "antd";
 import { useEffect } from "react";
 import { post } from "superagent";
+import { NOTICE_BOARD } from '../../constants/constant/category';
 
 const UserLink = ({ id }) => (
-  <Link href="/[writeBoardContainer]/writeBoard" as={`${id}/writeBoard`}>
+  <Link href="/[category]/writeBoard" as={`${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
       <div className="font-extrabold text-white">글쓰기</div>
     </a>
@@ -16,13 +17,15 @@ const UserLink = ({ id }) => (
 );
 const BoardWrapper = ({ posts }) => {
   const router = useRouter();
+
   const { category } = router.query;
   console.log(category);
   const [boardName, setBoardName] = useState("");
 
   const [page, setPage] = useState(1);
   useEffect(() => {
-    if (category === "noticeBoard") {
+    console.log("NOTICE_BOARD : ", NOTICE_BOARD)
+    if (category === NOTICE_BOARD) {
       setBoardName("공지사항");
     } else {
       setBoardName(category);
