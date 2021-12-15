@@ -8,6 +8,7 @@ import axios from 'axios';
 import categoryList from '../../../constants/constant/category'
 import Router from "next/router";
 
+
 const Test = ({ posts }) => {
   const [page, setPage] = useState(1);
   const router = useRouter().query;
