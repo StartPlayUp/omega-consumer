@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { post } from "superagent";
 
 const UserLink = ({ id }) => (
-  <Link href="/[writeBoardContainer]/writeBoard" as={`${id}/writeBoard`}>
+  <Link href="/[category]/writeBoard" as={`${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
       <div className="font-extrabold text-white">글쓰기</div>
     </a>
