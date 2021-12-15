@@ -9,7 +9,6 @@ import categoryList from '../../../constants/constant/category'
 import Router from "next/router";
 
 const Test = ({ posts }) => {
-  // const [page, setPage] = useInput(1);
   const [page, setPage] = useState(1);
   const router = useRouter().query;
   const UserLink = ({ id }) => (
