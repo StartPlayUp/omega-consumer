@@ -7,15 +7,15 @@ const WriteBoard = () => {
   const [boardName, setBoardName] = useState("");
 
   const router = useRouter();
-  const { writeBoardContainer } = router.query;
+  const { category } = router.query;
 
   console.log(router.query);
   useEffect(() => {
     setEditorLoaded(true);
-    if (writeBoardContainer === "noticeBoard") {
+    if (category === "noticeBoard") {
       setBoardName("공지사항");
     }
-  }, [writeBoardContainer]);
+  }, [category]);
   return (
     <form action="/api/post/sendPost" method="post">
       <div className="flex flex-col items-center">

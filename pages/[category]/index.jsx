@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import PostList from "../../components/Board/PageContainer/index";
 import Link from "next/link";
 import axios from "axios";
-import Pagenation from "../../components/Board/Pagenation";
+import { Pagination } from "antd";
 import { useEffect } from "react";
+import { post } from "superagent";
 
 const UserLink = ({ id }) => (
   <Link href="/[writeBoardContainer]/writeBoard" as={`${id}/writeBoard`}>
@@ -31,10 +32,16 @@ const BoardWrapper = ({ posts }) => {
     <div className="flex place-items-center flex-col">
       <div className="w-3/4 h-9 flex m-5">
         <div className="flex-none ml-16 text-4xl">{boardName}</div>
-        <UserLink id="noticeBoard" comment="글쓰기"></UserLink>
+        <UserLink id={category} comment="글쓰기"></UserLink>
       </div>
       <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
-      <Pagenation page={page} count={posts.length} setPage={setPage} />
+      <Pagination
+        current={page}
+        onChange={setPage}
+        defaultPageSize={15}
+        total={posts.length}
+        showSizeChanger={false}
+      />
     </div>
   );
 };
