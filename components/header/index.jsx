@@ -5,12 +5,18 @@ import { logoutAction } from "../../reducer/user";
 import { useDispatch } from "react-redux";
 import { Button } from "antd";
 import Link from "next/link";
+import NOTICE_BOARD from "../../constants/constant/category";
 const Header = () => {
   const dispatch = useDispatch();
   const { me, isLoggedIn } = useSelector((state) => state.user);
   const logoutFunction = () => {
     dispatch(logoutAction());
   };
+  const UserLink = ({ id }) => (
+    <Link href="[category]" as={`${id}`}>
+      <a style={{ color: "black" }}>공지사항</a>
+    </Link>
+  );
   return (
     <header>
       <nav className="w-full h-16 border-b-2">
@@ -18,13 +24,11 @@ const Header = () => {
           <ul className="flex ml-16 ">
             <li className="lg:text-5xl">
               <Link href="/" className="text-black" passHref>
-                <a style={{ color: 'black' }}>OmegaComsumer</a>
+                <a style={{ color: "black" }}>OmegaComsumer</a>
               </Link>
             </li>
             <li className="text-2xl m-3 px-16">
-              <Link href="/noticeBoard" passHref>
-                <a style={{ color: 'black' }}>공지사항</a>
-              </Link>
+              <UserLink id="noticeBoard" passHref></UserLink>
             </li>
             <li className="text-2xl m-3">게시판</li>
           </ul>
