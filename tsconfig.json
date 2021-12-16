@@ -26,7 +26,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx","./constants/constant/category.tsx" ],
+    "**/*.tsx",
+    "./constants/constant/category.ts",
+    "./components/hooks/*.ts"
+   ],
   "exclude": [
     "node_modules"
   ]

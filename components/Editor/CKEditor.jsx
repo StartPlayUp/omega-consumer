@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function Editor({ onChange, editorLoaded, name, value }) {
+function Editor({ onChange, editorLoaded }) {
   const editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
 
@@ -15,13 +15,10 @@ function Editor({ onChange, editorLoaded, name, value }) {
     <div>
       {editorLoaded ? (
         <CKEditor
-          type=""
-          name={name}
           editor={ClassicEditor}
-          data={value}
+          data="<div>글을 적어주세요…..</div>"
           onChange={(event, editor) => {
             const data = editor.getData();
-            // console.log({ event, editor, data })
             onChange(data);
           }}
         />
