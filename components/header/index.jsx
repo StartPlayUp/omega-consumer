@@ -12,11 +12,6 @@ const Header = () => {
   const logoutFunction = () => {
     dispatch(logoutAction());
   };
-  const UserLink = ({ id }) => (
-    <Link href="[category]" as={`${id}`}>
-      <a style={{ color: "black" }}>공지사항</a>
-    </Link>
-  );
   return (
     <header>
       <nav className="w-full h-16 border-b-2">
@@ -28,7 +23,9 @@ const Header = () => {
               </Link>
             </li>
             <li className="text-2xl m-3 px-16">
-              <UserLink id="noticeBoard" passHref></UserLink>
+              <Link href="/noticeBoard" className="text-black" passHref>
+                <a style={{ color: "black" }}>공지사항</a>
+              </Link>
             </li>
             <li className="text-2xl m-3">게시판</li>
           </ul>

@@ -15,11 +15,9 @@ const UserLink = ({ id }) => (
     </a>
   </Link>
 );
-const BoardWrapper = ({ posts }) => {
+const BoardWrapper = ({ posts,post }) => {
   const router = useRouter();
-
   const { category } = router.query;
-  console.log(category);
   const [boardName, setBoardName] = useState("");
 
   const [page, setPage] = useState(1);
@@ -31,24 +29,24 @@ const BoardWrapper = ({ posts }) => {
       setBoardName(category);
     }
   }, [category]);
-  return (
-    <div className="w-full h-full bg-slate-200">
-      <div className="flex place-items-center flex-col">
-        <div className="w-3/4 h-9 flex m-5">
-          <div className="flex-none ml-16 text-4xl">{boardName}</div>
-          <UserLink id={category} comment="글쓰기"></UserLink>
+    return (
+      <div className="w-full h-full bg-slate-500">
+        <div className="flex place-items-center flex-col">
+          <div className="w-3/4 h-9 flex m-5">
+            <div className="flex-none ml-16 text-4xl">{boardName}</div>
+            <UserLink id={category} comment="글쓰기"></UserLink>
+          </div>
+          <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
+          <Pagination
+            current={page}
+            onChange={setPage}
+            defaultPageSize={15}
+            total={posts.length}
+            showSizeChanger={false}
+          />
         </div>
-        <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
-        <Pagination
-          current={page}
-          onChange={setPage}
-          defaultPageSize={15}
-          total={posts.length}
-          showSizeChanger={false}
-        />
-      </div>{" "}
-    </div>
-  );
+      </div>
+    );
 };
 export const getServerSideProps = async (context) => {
   try {
