@@ -1,3 +1,5 @@
+import cookieParser from "cookie-parser";
+
 export const initialState = {
   isLoggedIn: false,
   me: null,

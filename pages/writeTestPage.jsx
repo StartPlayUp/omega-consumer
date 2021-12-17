@@ -20,6 +20,7 @@ const Write = () => {
           editorLoaded={editorLoaded}
         />
       </div>
+
       {JSON.stringify(data)}
     </div>
   );

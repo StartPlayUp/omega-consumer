@@ -6,11 +6,23 @@ import { useDispatch } from "react-redux";
 import { Button } from "antd";
 import Link from "next/link";
 import NOTICE_BOARD from "../../constants/constant/category";
+import axios from 'axios';
 const Header = () => {
   const dispatch = useDispatch();
   const { me, isLoggedIn } = useSelector((state) => state.user);
-  const logoutFunction = () => {
-    dispatch(logoutAction());
+  const logoutFunction = async () => {
+    try {
+      const logoutResult = await axios.post("/api/user/logout");
+      if (logoutResult.data.success) {
+        dispatch(dispatch(logoutAction()));
+      } else {
+        alert(logoutResult.data.success);
+        alert("로그아웃 실패 로그인 한지 확인하시오");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("로그아웃 전송 실패");
+    }
   };
   return (
     <header>
@@ -23,7 +35,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="text-2xl m-3 px-16">
-              <Link href="/noticeBoard" className="text-black" passHref>
+              <Link href="/noticeBoard">
                 <a style={{ color: "black" }}>공지사항</a>
               </Link>
             </li>
