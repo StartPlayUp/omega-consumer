@@ -1,5 +1,6 @@
+import { User } from './../../typeorm/entity/User';
 import { Request, Response } from 'express';
-import { createUser, readUser, loginCheckUser, verifyEmailUser } from '../../service/User.service';
+import { createUser, getUserFromId, loginCheckUser, verifyEmailUser } from '../../service/User.service';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -52,7 +53,7 @@ const register = async (req: Request, res: Response) => {
 
 const createToken = (id: string) => {
     const secret: any = process.env.JWT_SECRET
-    return jwt.sign({ id }, secret);
+    return jwt.sign({ id }, secret, { expiresIn: '30s' });
 }
 
 
@@ -82,12 +83,43 @@ const verifyEmail = async (req: Request, res: Response) => {
     console.log(emailToken)
     const result = await verifyEmailUser({ emailToken })
     if (result.success) {
-        return res.status(201).json(result);
+        return res.status(201).json(result).redirect("/");
     }
     else {
-        return res.status(500).json(result)
+        return res.status(500).json(result).redirect("/");
     }
 }
+
+const sendVerifyEmail = async (req: Request, res: Response) => {
+    // console.log(req.user)
+    const salt = await bcrypt.genSalt(10);
+    const emailToken = crypto.randomBytes(64).toString('hex');
+    // const mailOptions = {
+    //     from: '"Verify your email <startPlayUp@gmail.com>',
+    //     to: email,
+    //     subject: 'codewithsid = - verfiy your email',
+    //     html: `
+    //         <h2> ${nickname} 회원님</h2>
+    //         <h4> 가입하시려면 이메일 인증이 필요합니다. 아래 인증하기 버튼을 눌러주세요</h4>
+    //         <a href="http://${req.headers.host}/api/user/verify-email?token=${emailToken}">인증하기</a>
+    //     `
+    // }
+    // if (result.success) {
+    //     transporter.sendMail(mailOptions, (error, info) => {
+    //         if (error) {
+    //             console.log(error)
+    //         }
+    //         else {
+    //             console.log("인증 메일을 보냈습니다.")
+    //         }
+    //     })
+    //     return res.status(201).json(result);
+    // }
+    // else {
+    //     return res.status(500).json(result)
+    // }
+}
+
 
 const logout = async (req: Request, res: Response) => {
     res.cookie('access-token', "", { maxAge: 1 })
@@ -96,8 +128,8 @@ const logout = async (req: Request, res: Response) => {
 
 
 const deleteUser = async (req: Request, res: Response) => {
-    const nickname = req.query.nickname as string;
-    const result = await readUser({ nickname });
+    const { id } = req.user as { id: string }
+    const result = await getUserFromId({ id });
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -108,8 +140,8 @@ const deleteUser = async (req: Request, res: Response) => {
 
 
 const getUser = async (req: Request, res: Response) => {
-    const nickname = req.query.nickname as string;
-    const result = await readUser({ nickname });
+    const { id } = req.user as { id: string }
+    const result = await getUserFromId({ id });
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -121,4 +153,4 @@ const getUser = async (req: Request, res: Response) => {
 
 
 
-export { register, getUser, deleteUser, login, logout, verifyEmail }
+export { register, getUser, deleteUser, login, logout, verifyEmail, sendVerifyEmail }

@@ -13,7 +13,7 @@ interface ICreateUser {
 
 
 interface IReadUser {
-    nickname: string
+    id: string
 }
 
 interface ILoginUser {

@@ -78,17 +78,16 @@ const updateUser = async (userData: ICreateUser): Promise<returnUser> => {
     }
 }
 
-const readUser = async (userData: IReadUser): Promise<returnUser> => {
-    const { nickname } = userData;
+const getUserFromId = async (userData: IReadUser): Promise<returnUser> => {
+    const { id } = userData;
     try {
-        const user = await User.findOneOrFail({ nickname });
+        const user = await User.findOneOrFail({ id });
         const userWithoutPassword = {
             ...user,
             password: undefined,
             emailToken: undefined,
             isVerified: undefined
         }
-
         return {
             success: true,
             user: userWithoutPassword
@@ -159,4 +158,4 @@ const checkEmailVerifyFromId = async ({ id }: { id: string }): Promise<returnUse
     }
 }
 
-export { createUser, readUser, loginCheckUser, verifyEmailUser, checkEmailVerifyFromId }
+export { createUser, getUserFromId, loginCheckUser, verifyEmailUser, checkEmailVerifyFromId }

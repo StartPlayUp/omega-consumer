@@ -11,20 +11,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const { me, isLoggedIn } = useSelector((state) => state.user);
   const logoutFunction = async () => {
-    try {
-      const logoutResult = await axios.post("/api/user/logout");
-      if (logoutResult.data.success) {
-        dispatch(dispatch(logoutAction()));
-      } else {
-        alert(logoutResult.data.success);
-        alert("로그아웃 실패 로그인 한지 확인하시오");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("로그아웃 전송 실패");
-    }
-  };
-
+    await axios.post("/api/user/logout");
+    dispatch(logoutAction());
+  }
   return (
     <header>
       <nav className="w-full h-16 border-b-2">

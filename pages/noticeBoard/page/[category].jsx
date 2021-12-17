@@ -1,12 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import Pagination from '../../../components/Board/Pagenation'
 import NoticeContainer from '../../../components/Board/PageContainer'
 import Link from "next/link";
-import useInput from '../../../components/hooks/useInput'
 import axios from 'axios';
-import categoryList from '../../../constants/constant/category'
-import Router from "next/router";
 
 
 const Test = ({ posts }) => {
@@ -30,7 +26,6 @@ const Test = ({ posts }) => {
         <UserLink id="noticeBoard" comment="글쓰기"></UserLink>
       </div>
       <NoticeContainer posts={posts.slice((15 * (page - 1)), (15 * page))} />
-      <Pagination page={page} count={posts.length} setPage={setPage} />
     </div>
   );
 };
