@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CATEGORY_LIST } from "../../../constants/constant/category";
 import Link from "next/link";
 const GetPostUuid = ({ category, uuid, posts, timeArray }) => (
-  <Link href={`${category}/post/${uuid}`}>
+  <Link href={`/${category}/post/${uuid}`}>
     <a className="text-black">
       <div className="w-full flex items-center">
         <div className="text-center w-32">

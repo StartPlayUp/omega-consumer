@@ -9,7 +9,7 @@ import { post } from "superagent";
 import { NOTICE_BOARD } from "../../constants/constant/category";
 
 const UserLink = ({ id }) => (
-  <Link href="/[category]/writeBoard" as={`${id}/writeBoard`}>
+  <Link href={`/${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
       <div className="font-extrabold text-white">글쓰기</div>
     </a>

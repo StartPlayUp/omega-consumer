@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon",
     "devCli": "next dev",
-    "pro": "cross-env NODE_ENV=production next build && cross-env NODE_ENV=production tsc --project tsconfig.server.json && cross-env NODE_ENV=production PORT=3333 node ./dist/index.js",
+    "pro": "cross-env NODE_ENV=production next build && cross-env NODE_ENV=production tsc --project tsconfig.server.json && cross-env NODE_ENV=production PORT=5000 node ./dist/index.js",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "nextBuild": "cross-env NODE_ENV=production next build",
     "expressBuild": " cross-env NODE_ENV=production tsc --project tsconfig.server.json",
