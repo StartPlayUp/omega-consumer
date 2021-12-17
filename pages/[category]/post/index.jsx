@@ -5,7 +5,6 @@ import Link from "next/link";
 import axios from "axios";
 import { Pagination } from "antd";
 import { useEffect } from "react";
-import { post } from "superagent";
 import { NOTICE_BOARD } from "../../constants/constant/category";
 
 const UserLink = ({ id }) => (
@@ -36,55 +35,20 @@ const BoardWrapper = ({ posts,post }) => {
             <div className="flex-none ml-16 text-4xl">{boardName}</div>
             <UserLink id={category} comment="글쓰기"></UserLink>
           </div>
-          <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
-          <Pagination
-            current={page}
-            onChange={setPage}
-            defaultPageSize={15}
-            total={posts.length}
-            showSizeChanger={false}
-          />
+          <PostList/>
+          {/* <PostList posts={posts.slice(15 * (page - 1), 15 * page)} /> */}
+          <div className="mb-3">
+            <Pagination
+              current={page}
+              onChange={setPage}
+              defaultPageSize={15}
+              total={posts.length}
+              showSizeChanger={false}
+            />
+          </div>
         </div>
       </div>
     );
 };
-export const getServerSideProps = async (context) => {
-  try {
-    const { category } = context.query;
-    const res = await axios.get(
-      `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
-    );
-    if (res.data.success && res.data.posts.length) {
-      const posts = res.data.posts;
-      return {
-        props: {
-          posts,
-        },
-      };
-    } else {
-      console.log("res.data.success False");
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/",
-        },
-        props: {
-          posts: [],
-        },
-      };
-    }
-  } catch (err) {
-    console.log("post get error : ", err);
-    console.log("서버가 이상이 생겨 포스트를 못가져옴");
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/",
-      },
-      props: {
-        posts: [],
-      },
-    };
-  }
-};
+
 export default BoardWrapper;

@@ -1,23 +1,31 @@
 import React from "react";
 import Content from "./Content";
-const ContentContainer = () => {
+const ContentContainer = ({ post }) => {
+  console.log(post);
+  const timeArray = post.createdAt
+    .slice(0, post.createdAt.length - 5)
+    .split("T");
+  console.log(timeArray);
   return (
     <div className="md:w-2/3 w-full bg-gray-200">
       <div className="ml-3 mr-3 ">
         <div className="mt-3 border-b-2 border-blue-400">
           <div className="w-full flex ">
-            <div className="text-2xl">아니 이게 게임인가</div>
-            <div className="ml-auto">2021-10-31</div>
+            <div className="text-2xl">{post.title}</div>
+            <div className="ml-auto items-center text-center">
+              <div>{timeArray[0]}</div>
+              <div>{timeArray[1]}</div>
+            </div>
           </div>
           <div className="w-full flex">
-            <div className="font-bold">안녕하세요님</div>
-            <div className="ml-auto"> 607회 조회</div>
-            <div className="ml-3">댓글 3개</div>
+            <div className="font-bold">{post.user.nickname}님</div>
+            <div className="ml-auto"> {post.views}회 조회</div>
+            <div className="ml-3">댓글 {post.commentCount}개</div>
           </div>
         </div>
         <div className="w-full flex flex-col h-full">
           <div className="mt-3 h-full">
-            <Content />
+            <Content content={ post.content}/>
           </div>
           <div className="w-full mt-72 flex justify-center">
             <div className="mr-3 w-28 h-28 border-2 flex justify-center bg-white shadow-2xl">

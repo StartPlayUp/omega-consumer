@@ -1,6 +1,29 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { CATEGORY_LIST } from "../../../constants/constant/category";
+import Link from "next/link";
+const GetPostUuid = ({ category, uuid, posts, timeArray }) => (
+  <Link href={`${category}/post/${uuid}`}>
+    <a className="text-black">
+      <div className="w-full flex items-center">
+        <div className="text-center w-32">
+          {CATEGORY_LIST[posts.post_category]}
+        </div>
+        <div className="w-1/2">{posts.post_title}</div>
+        <div className="w-56 text-center">{posts.user_nickname}</div>
+        <div className="w-56 text-center">
+          <div>{timeArray[0]}</div>
+          <div>{timeArray[1]}</div>
+        </div>
+        <div className="text-center w-24">{posts.post_views}</div>
+      </div>
+    </a>
+  </Link>
+);
 const Posts = ({ posts }) => {
+  const router = useRouter();
+  const { category } = router.query;
+  console.log(category);
   return (
     <div className="bg-gray-100 w-full h-full">
       {Object.keys(posts).map((i) => {
@@ -9,16 +32,12 @@ const Posts = ({ posts }) => {
           .split("T");
         return (
           <div key={posts.uuid}>
-            <div>
-              <button className="flex">
-                <div>{CATEGORY_LIST[posts[i].post_category]}</div>
-                <div>{posts[i].post_title}</div>
-                <div className="">
-                  <div>{timeArray[0]}</div>
-                  <div>{timeArray[1]}</div>
-                </div>
-              </button>
-            </div>
+            <GetPostUuid
+              category={category}
+              uuid={posts[i].post_uuid}
+              posts={posts[i]}
+              timeArray={timeArray}
+            />
           </div>
         );
       })}
