@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     "./constants/constant/category.ts",
-    "./components/hooks/*.ts"
+    "./components/hooks/*.ts",
    ],
   "exclude": [
     "node_modules"

@@ -37,6 +37,8 @@ export const getServerSideProps = async () => {
             };
         } else {
             console.log("로그인 하세요");
+            console.log(success)
+            console.log(user)
             return {
                 redirect: {
                     permanent: false,

@@ -3,12 +3,7 @@ import { ILoginUser, IReadUser, IUser, returnUser } from '../types/service/Inter
 import { User } from '../typeorm/entity/User';
 import bcrypt from 'bcrypt';
 import { getConnection } from "typeorm";
-
-
-
-
-
-
+import { sanitizeUser } from '../utilities/apiUtilities';
 
 const createUser = async (userData: IUser): Promise<returnUser> => {
     const { id, nickname, email, password, emailToken, isVerified } = userData;
@@ -87,15 +82,10 @@ const getUserFromId = async (userData: IReadUser): Promise<returnUser> => {
     const { id } = userData;
     try {
         const user = await User.findOneOrFail({ id });
-        const userWithoutPassword = {
-            ...user,
-            password: undefined,
-            emailToken: undefined,
-            isVerified: undefined
-        }
+        const sanitizeUserData = await sanitizeUser(user);
         return {
             success: true,
-            user: userWithoutPassword
+            user: sanitizeUserData
         }
     } catch (err) {
         return {

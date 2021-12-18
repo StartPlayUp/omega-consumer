@@ -3,8 +3,8 @@ import nodemailer from 'nodemailer';
 import config from '../config'
 import crypto from 'crypto';
 
-const sanitizeUser = (user: User) => {
-    const { password, ...userWithOutPassword } = user;
+const sanitizeUser = (user: User): any => {
+    const { password, emailToken, isVerified, ...userWithOutPassword } = user;
     return userWithOutPassword;
 };
 

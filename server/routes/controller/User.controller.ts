@@ -54,7 +54,7 @@ const register = async (req: Request, res: Response) => {
 
 const createToken = (id: string) => {
     const secret: any = process.env.JWT_SECRET
-    return jwt.sign({ id }, secret, { expiresIn: '30s' });
+    return jwt.sign({ id }, secret, { expiresIn: '1h' });
 }
 
 
@@ -67,7 +67,7 @@ const login = async (req: Request, res: Response) => {
         res.cookie('access-token', token, {
             secure: true,
             httpOnly: true,
-            maxAge: 900000
+            maxAge: 3600000
         })
         // res.redirect('/dashboard')
         return res.status(201).json(result);
