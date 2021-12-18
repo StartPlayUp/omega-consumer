@@ -2,8 +2,7 @@ import { User } from '../typeorm/entity/User';
 import { Comment } from '../typeorm/entity/Comment';
 import { Post } from '../typeorm/entity/Post';
 import { validate } from 'class-validator';
-import { returnComment } from '../types/InterfaceReturn';
-import { IMemberComment, INonMemberComment } from '../types/service/InterfaceComment';
+import { IMemberComment, INonMemberComment, returnComment } from '../types/service/InterfaceComment';
 import { getRepository } from 'typeorm';
 
 

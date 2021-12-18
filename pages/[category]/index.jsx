@@ -55,11 +55,11 @@ const BoardWrapper = ({ posts }) => {
 export const getServerSideProps = async (context) => {
   try {
     const { category } = context.query;
-    const res = await axios.get(
+    const { data: { success, posts } } = await axios.get(
       `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
     );
-    if (res.data.success && res.data.posts.length) {
-      const posts = res.data.posts;
+    console.log(success, posts)
+    if (success || posts.length == 0) {
       return {
         props: {
           posts,
@@ -72,9 +72,6 @@ export const getServerSideProps = async (context) => {
           permanent: false,
           destination: "/",
         },
-        props: {
-          posts: [],
-        },
       };
     }
   } catch (err) {
@@ -84,9 +81,6 @@ export const getServerSideProps = async (context) => {
       redirect: {
         permanent: false,
         destination: "/",
-      },
-      props: {
-        posts: [],
       },
     };
   }

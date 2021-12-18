@@ -1,11 +1,12 @@
 import { User } from './../../typeorm/entity/User';
 import { Request, Response } from 'express';
-import { createUser, getUserFromId, loginCheckUser, verifyEmailUser } from '../../service/User.service';
+import { createUser, getUserFromId, loginCheckUser, updateUser, verifyEmailUser } from '../../service/User.service';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import config from '../../config'
+import { sendMail } from '../../utilities/apiUtilities';
 
 
 const transporter = nodemailer.createTransport(config.mailConfig);
@@ -90,35 +91,52 @@ const verifyEmail = async (req: Request, res: Response) => {
     }
 }
 
+
+
 const sendVerifyEmail = async (req: Request, res: Response) => {
-    // console.log(req.user)
-    const salt = await bcrypt.genSalt(10);
-    const emailToken = crypto.randomBytes(64).toString('hex');
-    // const mailOptions = {
-    //     from: '"Verify your email <startPlayUp@gmail.com>',
-    //     to: email,
-    //     subject: 'codewithsid = - verfiy your email',
-    //     html: `
-    //         <h2> ${nickname} 회원님</h2>
-    //         <h4> 가입하시려면 이메일 인증이 필요합니다. 아래 인증하기 버튼을 눌러주세요</h4>
-    //         <a href="http://${req.headers.host}/api/user/verify-email?token=${emailToken}">인증하기</a>
-    //     `
-    // }
-    // if (result.success) {
-    //     transporter.sendMail(mailOptions, (error, info) => {
-    //         if (error) {
-    //             console.log(error)
-    //         }
-    //         else {
-    //             console.log("인증 메일을 보냈습니다.")
-    //         }
-    //     })
-    //     return res.status(201).json(result);
-    // }
-    // else {
-    //     return res.status(500).json(result)
-    // }
+    const id = req.user.id as string
+
+    const { success, user } = await getUserFromId({ id });
+    if (success) {
+        const host = req.headers.host;
+        const { email, nickname } = user;
+        const result = await updateUser({ user })
+        const { success: sendMailSuccess, message } = sendMail({ host, email, nickname });
+        return res.status(201).json({
+            success: true,
+            message: "인증메일을 보냈습니다."
+        })
+    }
+    else {
+        return res.status(500).json({
+            success: false,
+            message: "인증 메일 보내기에 실패하였습니다."
+        });
+    }
 }
+
+// const updateUser = async (req: Request, res: Response) => {
+//     // const id = req.user.id as string
+//     // const { email } = req.body;
+//     // const { success, user: { nickname, email } } = await getUserFromId({ id })
+//     // const res = await User.update({ id }, { email }).then(response => response.raw[0]);
+//     // return post; // returns post of type Post
+
+//     // if (success) {
+//     //     const { success: sendMailSuccess, message } = sendMail({ host: req.headers.host, email, nickname });
+//     //     return res.status(201).json({
+//     //         success: true,
+//     //         message: "인증메일을 보냈습니다."
+//     //     })
+//     // }
+//     // else {
+//     //     return res.status(500).json({
+//     //         success: false,
+//     //         message: "인증 메일 보내기에 실패하였습니다."
+//     //     });
+//     // }
+// }
+
 
 
 const logout = async (req: Request, res: Response) => {

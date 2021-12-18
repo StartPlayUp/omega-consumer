@@ -1,4 +1,5 @@
 import { interfaceCommentModel } from "./Model/interfaceCommentModel";
+import { returnApi } from "./Model/InterfaceReturnApiModel";
 
 interface IMemberComment extends interfaceCommentModel {
     userUuid: string
@@ -9,4 +10,9 @@ interface INonMemberComment extends interfaceCommentModel {
     password: string
 }
 
-export type { IMemberComment, INonMemberComment }
+
+interface returnComment extends returnApi {
+    comment?: any,
+}
+
+export type { IMemberComment, INonMemberComment, returnComment }

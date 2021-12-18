@@ -13,7 +13,7 @@ const Login = () => {
       });
       console.log(loginResult);
       if (loginResult.data.success) {
-        dispatch(loginAction(loginResult.data.nickname));
+        dispatch(loginAction(loginResult.data.user.nickname));
       } else {
         alert(loginResult.data.success);
         alert("아이디 혹은 비밀번호를 다시 확인해주세요.");

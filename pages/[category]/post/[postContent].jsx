@@ -54,43 +54,25 @@ export const getServerSideProps = async (context) => {
   try {
     const { category, postContent } = context.query;
     console.log(postContent);
-    let getPosts = false;
-    let getPost = false;
-    const res = await axios.get(
+    const { data: { success: getPostsSuccess, posts } } = await axios.get(
       `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
     );
-    const getPostRes = await axios.get(
+    const { data: { success: getPostSuccess, post } } = await axios.get(
       `http://localhost:5000/api/post/getPost?postUuid=${postContent}`
     );
-    if (res.data.success && res.data.posts.length) {
-      getPosts = true; //글 목록 불러오기
-    } else {
-      getPosts = false;
-    }
-    if (getPostRes.data.success) {
-      getPost = true; //글 불러오기
-    } else {
-      getPost = false;
-    }
-    if (getPosts && getPost) {
-      const posts = res.data.posts;
-      const post = getPostRes.data.post;
+    if ((getPostsSuccess || posts.length == 0) && getPostSuccess) {
       return {
         props: {
           posts,
           post,
         },
       };
-    } else {
-      console.log("res.data.success False");
+    }
+    else {
       return {
         redirect: {
           permanent: false,
           destination: "/",
-        },
-        props: {
-          posts: [],
-          post: [],
         },
       };
     }
@@ -101,9 +83,6 @@ export const getServerSideProps = async (context) => {
       redirect: {
         permanent: false,
         destination: "/",
-      },
-      props: {
-        posts: [],
       },
     };
   }

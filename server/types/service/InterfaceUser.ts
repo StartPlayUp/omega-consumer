@@ -1,16 +1,25 @@
+import { User } from 'server/typeorm/entity/User';
 import { role } from "../enum";
+import { returnApi } from "./Model/InterfaceReturnApiModel"
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-
-interface ICreateUser {
+interface IUser {
     id: string,
     nickname: string,
     email: string,
     password: string,
     emailToken: string,
     isVerified: boolean,
-    role?: role
 }
 
+// interface ICreateUser extends IUser {
+//     id: string,
+//     nickname: string,
+//     email: string,
+//     password: string,
+//     emailToken?: string,
+//     isVerified?: boolean,
+// }
 
 interface IReadUser {
     id: string
@@ -20,5 +29,9 @@ interface ILoginUser {
     id: string,
     password: string
 }
+interface returnUser extends returnApi {
+    user?: any,
+}
 
-export type { ICreateUser, IReadUser, ILoginUser }
+
+export type { IReadUser, ILoginUser, returnUser, IUser }

@@ -61,7 +61,7 @@ const isNotEmailVerified = async (req: Request, res: any, next: NextFunction) =>
     if (result.success) {
         result.error = "이미 이메일 인증을 받았습니다."
         console.log(result.error)
-        return res.status(500).json(result)
+        return res.status(500).json(result).redirect('/emailVerify')
     }
     else {
         next()
