@@ -2,8 +2,8 @@ import { getRepository, getConnection } from 'typeorm';
 import { Thumb } from '../typeorm/entity/Thumb';
 import { User } from '../typeorm/entity/User';
 import { validate } from 'class-validator';
-import { returnGetPostLikeIt, returnPost, returnPostLikeIt, returnPosts } from '../types/InterfaceReturn';
-import { IPost, ILikeIt } from '../types/service/InterfacePost';
+
+import { IPost, ILikeIt, returnPostLikeIt, returnGetPostLikeIt, returnPost, returnPosts } from '../types/service/InterfacePost';
 import { Post } from '../typeorm/entity/Post';
 
 

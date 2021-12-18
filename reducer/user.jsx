@@ -1,5 +1,5 @@
 import cookieParser from "cookie-parser";
-
+import produce from '../util/produce'
 export const initialState = {
   isLoggedIn: false,
   me: null,
@@ -20,24 +20,22 @@ export const logoutAction = () => {
   };
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "LOG_IN":
-      return {
-        ...state,
-        isLoggedIn: true,
-        me: action.data,
-      };
-    case "LOG_OUT":
-      return {
-        ...state,
-        ...state.user,
-        isLoggedIn: false,
-        me: null,
-      };
-    default:
-      return state;
-  }
-};
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    console.log(draft)
+    switch (action.type) {
+      case "LOG_IN":
+        draft.isLoggedIn = true;
+        draft.me = action.data;
+        break;
+      case "LOG_OUT":
+        // draft.user = user
+        draft.isLoggedIn = false;
+        draft.me = null;
+        break
+      default:
+        break;
+    }
+  });
 
 export default reducer;

@@ -1,10 +1,12 @@
+import { User } from './../../typeorm/entity/User';
 import { Request, Response } from 'express';
-import { createUser, readUser, loginCheckUser, verifyEmailUser } from '../../service/User.service';
+import { createUser, getUserFromId, loginCheckUser, updateUser, verifyEmailUser } from '../../service/User.service';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import config from '../../config'
+import { sendMail } from '../../utilities/apiUtilities';
 
 
 const transporter = nodemailer.createTransport(config.mailConfig);
@@ -52,7 +54,7 @@ const register = async (req: Request, res: Response) => {
 
 const createToken = (id: string) => {
     const secret: any = process.env.JWT_SECRET
-    return jwt.sign({ id }, secret);
+    return jwt.sign({ id }, secret, { expiresIn: '1h' });
 }
 
 
@@ -65,7 +67,7 @@ const login = async (req: Request, res: Response) => {
         res.cookie('access-token', token, {
             secure: true,
             httpOnly: true,
-            maxAge: 900000
+            maxAge: 3600000
         })
         // res.redirect('/dashboard')
         return res.status(201).json(result);
@@ -82,12 +84,60 @@ const verifyEmail = async (req: Request, res: Response) => {
     console.log(emailToken)
     const result = await verifyEmailUser({ emailToken })
     if (result.success) {
-        return res.status(201).json(result);
+        return res.status(201).json(result).redirect("/");
     }
     else {
-        return res.status(500).json(result)
+        return res.status(500).json(result).redirect("/");
     }
 }
+
+
+
+const sendVerifyEmail = async (req: Request, res: Response) => {
+    const id = req.user.id as string
+
+    const { success, user } = await getUserFromId({ id });
+    if (success) {
+        const host = req.headers.host;
+        const { email, nickname } = user;
+        const result = await updateUser({ user })
+        const { success: sendMailSuccess, message } = sendMail({ host, email, nickname });
+        return res.status(201).json({
+            success: true,
+            message: "인증메일을 보냈습니다."
+        })
+    }
+    else {
+        return res.status(500).json({
+            success: false,
+            message: "인증 메일 보내기에 실패하였습니다."
+        });
+    }
+}
+
+// const updateUser = async (req: Request, res: Response) => {
+//     // const id = req.user.id as string
+//     // const { email } = req.body;
+//     // const { success, user: { nickname, email } } = await getUserFromId({ id })
+//     // const res = await User.update({ id }, { email }).then(response => response.raw[0]);
+//     // return post; // returns post of type Post
+
+//     // if (success) {
+//     //     const { success: sendMailSuccess, message } = sendMail({ host: req.headers.host, email, nickname });
+//     //     return res.status(201).json({
+//     //         success: true,
+//     //         message: "인증메일을 보냈습니다."
+//     //     })
+//     // }
+//     // else {
+//     //     return res.status(500).json({
+//     //         success: false,
+//     //         message: "인증 메일 보내기에 실패하였습니다."
+//     //     });
+//     // }
+// }
+
+
 
 const logout = async (req: Request, res: Response) => {
     res.cookie('access-token', "", { maxAge: 1 })
@@ -96,8 +146,8 @@ const logout = async (req: Request, res: Response) => {
 
 
 const deleteUser = async (req: Request, res: Response) => {
-    const nickname = req.query.nickname as string;
-    const result = await readUser({ nickname });
+    const { id } = req.user as { id: string }
+    const result = await getUserFromId({ id });
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -108,8 +158,8 @@ const deleteUser = async (req: Request, res: Response) => {
 
 
 const getUser = async (req: Request, res: Response) => {
-    const nickname = req.query.nickname as string;
-    const result = await readUser({ nickname });
+    const { id } = req.user as { id: string }
+    const result = await getUserFromId({ id });
     if (result.success) {
         return res.status(201).json(result);
     }
@@ -121,4 +171,4 @@ const getUser = async (req: Request, res: Response) => {
 
 
 
-export { register, getUser, deleteUser, login, logout, verifyEmail }
+export { register, getUser, deleteUser, login, logout, verifyEmail, sendVerifyEmail }

@@ -23,12 +23,16 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
   },
+  "typeRoots": [
+    "./server/types",
+    "./node_modules/@types"
+  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "./constants/constant/category.ts",
-    "./components/hooks/*.ts"
+    "./components/hooks/*.ts",
    ],
   "exclude": [
     "node_modules"

@@ -1,15 +1,11 @@
 import { validate } from 'class-validator';
-import { returnUser, returnApi } from '../types/InterfaceReturn';
-import { ICreateUser, ILoginUser, IReadUser } from '../types/service/InterfaceUser';
+import { ILoginUser, IReadUser, IUser, returnUser } from '../types/service/InterfaceUser';
 import { User } from '../typeorm/entity/User';
 import bcrypt from 'bcrypt';
+import { getConnection } from "typeorm";
+import { sanitizeUser } from '../utilities/apiUtilities';
 
-
-
-
-
-
-const createUser = async (userData: ICreateUser): Promise<returnUser> => {
+const createUser = async (userData: IUser): Promise<returnUser> => {
     const { id, nickname, email, password, emailToken, isVerified } = userData;
     try {
         const user = User.create({
@@ -17,9 +13,9 @@ const createUser = async (userData: ICreateUser): Promise<returnUser> => {
             nickname,
             email,
             password,
-            role: 'user',
             emailToken,
-            isVerified
+            isVerified,
+            role: 'user',
         });
 
         const errors = await validate(user)
@@ -38,7 +34,7 @@ const createUser = async (userData: ICreateUser): Promise<returnUser> => {
     }
 }
 
-const deleteUser = async (userData: ICreateUser): Promise<returnUser> => {
+const deleteUser = async (userData: IUser | any): Promise<returnUser> => {
     const { id, nickname, email, password } = userData;
     try {
         const user = User.create({ id, nickname, email, password, role: 'user' });
@@ -58,15 +54,19 @@ const deleteUser = async (userData: ICreateUser): Promise<returnUser> => {
     }
 }
 
-const updateUser = async (userData: ICreateUser): Promise<returnUser> => {
-    const { id, nickname, email, password } = userData;
+const updateUser = async (user: IUser | any): Promise<returnUser> => {
+    const { id, nickname, email, emailToken } = user;
     try {
-        const user = User.create({ id, nickname, email, password, role: 'user' });
-
-        // 추가해야 검사해줌
         const errors = await validate(user)
         if (errors.length > 0) throw errors
-        await user.save()
+        const result = await getConnection()
+            .createQueryBuilder()
+            .update(User)
+            .set({
+                emailToken,
+            })
+            .where("id = :id", { id })
+            .execute();
         return {
             success: true,
         }
@@ -78,20 +78,14 @@ const updateUser = async (userData: ICreateUser): Promise<returnUser> => {
     }
 }
 
-const readUser = async (userData: IReadUser): Promise<returnUser> => {
-    const { nickname } = userData;
+const getUserFromId = async (userData: IReadUser): Promise<returnUser> => {
+    const { id } = userData;
     try {
-        const user = await User.findOneOrFail({ nickname });
-        const userWithoutPassword = {
-            ...user,
-            password: undefined,
-            emailToken: undefined,
-            isVerified: undefined
-        }
-
+        const user = await User.findOneOrFail({ id });
+        const sanitizeUserData = await sanitizeUser(user);
         return {
             success: true,
-            user: userWithoutPassword
+            user: sanitizeUserData
         }
     } catch (err) {
         return {
@@ -109,7 +103,9 @@ const loginCheckUser = async (userData: ILoginUser): Promise<returnUser> => {
         if (!match) throw "비밀번호가 일치하지 않습니다."
         return {
             success: true,
-            nickname: user.nickname
+            user: {
+                nickname: user.nickname
+            }
         }
     } catch (error: any) {
         return {
@@ -159,4 +155,11 @@ const checkEmailVerifyFromId = async ({ id }: { id: string }): Promise<returnUse
     }
 }
 
-export { createUser, readUser, loginCheckUser, verifyEmailUser, checkEmailVerifyFromId }
+export {
+    createUser,
+    getUserFromId,
+    loginCheckUser,
+    verifyEmailUser,
+    checkEmailVerifyFromId,
+    updateUser
+}

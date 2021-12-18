@@ -12,24 +12,31 @@ declare namespace Express {
 
 
 const loginRequired = async (req: any, res: any, next: NextFunction) => {
-    const token = req.cookies['access-token']
-    const secret: any = process.env.JWT_SECRET
-    if (token) {
-        const validateToken: any = jwt.verify(token, secret);
-        if (validateToken) {
-            req.user = {
-                id: validateToken.id
+    try {
+        const token = req.cookies['access-token']
+        const secret: any = process.env.JWT_SECRET
+        if (token) {
+            const validateToken: any = jwt.verify(token, secret);
+            if (validateToken) {
+                req.user = {
+                    id: validateToken.id
+                }
+                next()
             }
-            next()
+            else {
+                console.log("token expires");
+                res.redirect('/')
+            }
+
         }
         else {
-            console.log("token expires");
+            console.log('token not found')
             res.redirect('/')
         }
-
     }
-    else {
-        console.log('token not found')
+    catch (err) {
+        console.log(err)
+        res.cookie('access-token', "", { maxAge: 1 })
         res.redirect('/')
     }
 }
@@ -47,6 +54,20 @@ const emailVerified = async (req: Request, res: any, next: NextFunction) => {
     }
 }
 
+const isNotEmailVerified = async (req: Request, res: any, next: NextFunction) => {
+    const id = req.body.id as string;
+    console.log(id)
+    const result = await checkEmailVerifyFromId({ id });
+    if (result.success) {
+        result.error = "이미 이메일 인증을 받았습니다."
+        console.log(result.error)
+        return res.status(500).json(result).redirect('/emailVerify')
+    }
+    else {
+        next()
+    }
+}
+
 const ipMiddleware = (req: any, res: any, next: NextFunction) => {
     const clientIp = requestIp.getClientIp(req);
     console.log("test ip : ", clientIp);
@@ -54,4 +75,4 @@ const ipMiddleware = (req: any, res: any, next: NextFunction) => {
     next();
 };
 
-export { loginRequired, emailVerified, ipMiddleware }
+export { loginRequired, emailVerified, isNotEmailVerified, ipMiddleware }
