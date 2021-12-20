@@ -1,7 +1,7 @@
 import LoginModal from "./LoginContainer/index";
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { logoutAction } from "../../reducer/user";
+import { logoutRequestAction } from "../../reducer/user";
 import { useDispatch } from "react-redux";
 import { Button } from "antd";
 import Link from "next/link";
@@ -9,11 +9,14 @@ import NOTICE_BOARD from "../../constants/constant/category";
 import axios from 'axios';
 const Header = () => {
   const dispatch = useDispatch();
-  const { me, isLoggedIn } = useSelector((state) => state.user);
-  const logoutFunction = async () => {
-    await axios.post("/api/user/logout");
-    dispatch(logoutAction());
-  }
+  const { me } = useSelector((state) => state.user);
+  // const logoutFunction = async () => {
+  //   await axios.post("/api/user/logout");
+  //   dispatch(logoutAction());
+  // }
+  const onLogoutHandler = useCallback(() => {
+    dispatch(logoutRequestAction());
+  }, [dispatch]);
   return (
     <header>
       <nav className="w-full h-16 border-b-2">
@@ -33,13 +36,13 @@ const Header = () => {
           </ul>
           <ul>
             <li className="absolute lg:right-5">
-              {isLoggedIn ? (
+              {me ? (
                 <div className="">
                   <div>{me}님</div>
                   <Button
                     type="primary"
                     htmlType="submit"
-                    onClick={logoutFunction}
+                    onClick={onLogoutHandler}
                   >
                     로그아웃
                   </Button>

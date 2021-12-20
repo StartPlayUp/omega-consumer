@@ -15,6 +15,11 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     </>
   )
 }
+
+export function reportWebVitals(metric: any) {
+  console.log(metric);
+}
+
 export default wrapper.withRedux(MyApp);
 
 

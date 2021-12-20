@@ -55,10 +55,10 @@ export const getServerSideProps = async (context) => {
     const { category, postContent } = context.query;
     console.log(postContent);
     const { data: { success: getPostsSuccess, posts } } = await axios.get(
-      `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
+      `/api/post/getCategoryPosts?category=${category}`
     );
     const { data: { success: getPostSuccess, post } } = await axios.get(
-      `http://localhost:5000/api/post/getPost?postUuid=${postContent}`
+      `/api/post/getPost?postUuid=${postContent}`
     );
     if ((getPostsSuccess || posts.length == 0) && getPostSuccess) {
       return {

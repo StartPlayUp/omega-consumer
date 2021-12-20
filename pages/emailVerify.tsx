@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import axios from 'axios'
+import axios from 'axios';
+import wrapper from '../store/configureStore';
+
 const Home: NextPage = (): any => {
     const onClickHandler = async () => {
-        const { data: { success } } = await axios.get("http://localhost:5000/api/user/sendVerifyEmail")
-        const test = await axios.get("http://localhost:5000/api/user/sendVerifyEmail")
+        const { data: { success } } = await axios.get("/api/user/sendVerifyEmail")
+        const test = await axios.get("/api/user/sendVerifyEmail")
         console.log("request", test.request)
         alert(`${success}  `)
     }
@@ -28,7 +30,7 @@ const Home: NextPage = (): any => {
 
 export const getServerSideProps = async () => {
     try {
-        const { data: { success, user } } = await axios.get("http://localhost:5000/api/user/getUser");
+        const { data: { success, user } } = await axios.get("/api/user/getUser");
         if (success) {
             return {
                 props: {
@@ -57,6 +59,21 @@ export const getServerSideProps = async () => {
         };
     }
 };
+// export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+//     const cookie = context.req ? context.req.headers.cookie : '';
+//     axios.defaults.headers.Cookie = '';
+//     if (context.req && cookie) {
+//         axios.defaults.headers.Cookie = cookie;
+//     }
+//     context.store.dispatch({
+//         type: LOAD_MY_INFO_REQUEST,
+//     });
+//     context.store.dispatch({
+//         type: LOAD_POSTS_REQUEST,
+//     });
+//     context.store.dispatch(END);
+//     await context.store.sagaTask.toPromise();
+// });
 
 
 export default Home
