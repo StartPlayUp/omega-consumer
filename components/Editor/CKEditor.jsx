@@ -16,7 +16,7 @@ function Editor({ onChange, editorLoaded }) {
       {editorLoaded ? (
         <CKEditor
           editor={ClassicEditor}
-          data="<div>글을 적어주세요…..</div>"
+          data=""
           onChange={(event, editor) => {
             const data = editor.getData();
             onChange(data);

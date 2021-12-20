@@ -6,6 +6,8 @@ import Link from "next/link";
 import PostList from "../../../components/Board/PageContainer/index";
 import { Pagination } from "antd";
 import { NOTICE_BOARD } from "../../../constants/constant/category";
+import CommentContainer from "../../../components/Board/Comment/Comment";
+
 const UserLink = ({ id }) => (
   <Link href={`/${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
@@ -29,13 +31,14 @@ const PostContentContainer = ({ posts, post }) => {
     }
   }, [category]);
   return (
-    <div className="w-full h-full bg-slate-500">
+    <div className="w-full h-full bg-gray-500">
       <div className="flex place-items-center flex-col">
         <div className="w-3/4 h-9 flex m-5">
           <div className="flex-none ml-16 text-4xl">{boardName}</div>
           <UserLink id={category} comment="글쓰기"></UserLink>
         </div>
         <ContentContainer post={post} />
+        
         <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
         <div className="mb-3">
           <Pagination
@@ -54,10 +57,14 @@ export const getServerSideProps = async (context) => {
   try {
     const { category, postContent } = context.query;
     console.log(postContent);
-    const { data: { success: getPostsSuccess, posts } } = await axios.get(
+    const {
+      data: { success: getPostsSuccess, posts },
+    } = await axios.get(
       `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
     );
-    const { data: { success: getPostSuccess, post } } = await axios.get(
+    const {
+      data: { success: getPostSuccess, post },
+    } = await axios.get(
       `http://localhost:5000/api/post/getPost?postUuid=${postContent}`
     );
     if ((getPostsSuccess || posts.length == 0) && getPostSuccess) {
@@ -67,8 +74,7 @@ export const getServerSideProps = async (context) => {
           post,
         },
       };
-    }
-    else {
+    } else {
       return {
         redirect: {
           permanent: false,
