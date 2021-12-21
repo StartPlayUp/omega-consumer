@@ -6,18 +6,23 @@ import Link from "next/link";
 import PostList from "../../../components/Board/PageContainer/index";
 import { Pagination } from "antd";
 import { NOTICE_BOARD } from "../../../constants/constant/category";
-const UserLink = ({ id }) => (
+import { GetServerSideProps } from "next";
+import wrapper, { SagaStore } from "store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "reducer/user";
+import { END } from "redux-saga";
+
+const UserLink = ({ id, comment }: { id: string, comment: string }) => (
   <Link href={`/${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
       <div className="font-extrabold text-white">글쓰기</div>
     </a>
   </Link>
 );
-const PostContentContainer = ({ posts, post }) => {
+const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }) => {
   console.log(post);
   const router = useRouter();
-  const { category } = router.query;
-  const [boardName, setBoardName] = useState("");
+  const category = router.query.category as string;
+  const [boardName, setBoardName]: [boardName: string, setBoardName: Function] = useState("");
 
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -50,15 +55,29 @@ const PostContentContainer = ({ posts, post }) => {
     </div>
   );
 };
-export const getServerSideProps = async (context) => {
+
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req, res, query }) => {
+  const cookie = req ? req.headers.cookie : '';
+  console.log("cookie", cookie)
+  console.log("test", axios.defaults.headers.common)
+  axios.defaults.headers.common['Cookie'] = '';
+  if (req && cookie) {
+    axios.defaults.headers.common['Cookie'] = cookie;
+  }
+  store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+  store.dispatch(END);
+  await (store as SagaStore).sagaTask.toPromise();
   try {
-    const { category, postContent } = context.query;
+    const { category, postContent } = query;
     console.log(postContent);
     const { data: { success: getPostsSuccess, posts } } = await axios.get(
-      `http://localhost:5000/api/post/getCategoryPosts?category=${category}`
+      `/api/post/getCategoryPosts?category=${category}`
     );
     const { data: { success: getPostSuccess, post } } = await axios.get(
-      `http://localhost:5000/api/post/getPost?postUuid=${postContent}`
+      `/api/post/getPost?postUuid=${postContent}`
     );
     if ((getPostsSuccess || posts.length == 0) && getPostSuccess) {
       return {
@@ -86,5 +105,5 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-};
+});
 export default PostContentContainer;

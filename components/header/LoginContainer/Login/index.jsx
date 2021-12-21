@@ -1,28 +1,24 @@
-import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { loginAction } from "../../../../reducer/user";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequestAction } from "../../../../reducer/user";
 import axios from "axios";
 import { Form, Input, Button, Checkbox } from "antd";
 const Login = () => {
   const dispatch = useDispatch();
-  const onFinish = async (values) => {
-    try {
-      const loginResult = await axios.post("/api/user/login", {
-        id: values.id,
-        password: values.password,
-      });
-      console.log(loginResult);
-      if (loginResult.data.success) {
-        dispatch(loginAction(loginResult.data.user.nickname));
-      } else {
-        alert(loginResult.data.success);
-        alert("아이디 혹은 비밀번호를 다시 확인해주세요.");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("아이디 혹은 비밀번호를 다시 확인해주세요.");
+  const { logInLoading, logInError } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
     }
-  };
+  }, [logInError]);
+
+  const onSubmitForm = useCallback((values) => {
+    const { id, password } = values;
+    console.log(id, password);
+    dispatch(loginRequestAction({ id, password }));
+  }, [dispatch]);
+  // 시도해보기
   return (
     <>
       <div>로그인 입니다</div>
@@ -34,7 +30,7 @@ const Login = () => {
         wrapperCol={{
           span: 16,
         }}
-        onFinish={onFinish}
+        onFinish={onSubmitForm}
       >
         <Form.Item
           label="ID"
@@ -66,24 +62,11 @@ const Login = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
-            {/* <Button type="primary" htmlType="submit" onClick={onSubmit}> */}
+          <Button type="primary" htmlType="submit" loading={logInLoading}>
             로그인
           </Button>
         </Form.Item>
       </Form>
-      {/* 
-
-      <div>아이디 확인용 {inputs.id}</div>
-      <div>비번</div>
-      <input
-        type="password"
-        onChange={onChange}
-        name="password"
-        value={password}
-        className="border-2"
-      ></input>
-      <div>비밀번호 확인용 {inputs.password}</div> */}
     </>
   );
 };

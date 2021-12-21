@@ -17,6 +17,7 @@ const LoginModal = () => {
       <button onClick={changeModalState}>로그인</button>
       <Modal
         isOpen={modalState}
+        ariaHideApp={false}
         style={{
           overlay: {
             position: "fixed",

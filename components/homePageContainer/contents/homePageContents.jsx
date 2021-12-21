@@ -27,12 +27,12 @@ const HomePageContent = () => {
           console.log("서버가 이상이 생겨 포스트를 못가져옴");
         }
       } catch (err) {
-        console.log("post get error : ", err);
+        // console.log("post get error : ", err);
         alert("서버가 이상이 생겨 포스트를 못가져옴");
       }
     })();
   }, []);
-  console.log("noticeBoard",noticeBoard)
+  console.log("noticeBoard", noticeBoard)
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col lg:flex-row justify-center ">
@@ -45,7 +45,7 @@ const HomePageContent = () => {
 };
 // export const getServerSideProps = async () => {
 //   try {
-//     const res = await fetch("http://localhost:5000/api/post/getPosts");
+//     const res = await fetch("/api/post/getPosts");
 //     const data = await res.json();
 //     console.log("test");
 //       return { props: { data } };

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -32,8 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     "./constants/constant/category.ts",
-    "./components/hooks/*.ts",
-   ],
+    "./components/hooks/*.ts", "pages/index.tsx",
+    "./store/redux.d.ts"
+, "pages/[category]/writeBoard.jsx"   ],
   "exclude": [
     "node_modules"
   ]
