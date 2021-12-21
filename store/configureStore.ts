@@ -12,9 +12,6 @@ export interface SagaStore extends Store {
   sagaTask: Task;
 }
 
-
-
-
 const loggerMiddleware = ({ }) => (next: (arg0: any) => any) => (action: any) => {
   return next(action);
 };

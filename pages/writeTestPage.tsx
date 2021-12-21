@@ -13,8 +13,7 @@ const Write = () => {
       <h3> 테스트입니다. </h3>
       <div>
         <Editor
-          name="description"
-          onChange={(data) => {
+          onChange={(data: string) => {
             setData(data);
           }}
           editorLoaded={editorLoaded}

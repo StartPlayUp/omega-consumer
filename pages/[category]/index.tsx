@@ -9,7 +9,7 @@ import { post } from "superagent";
 import { NOTICE_BOARD } from "../../constants/constant/category";
 import { LOAD_MY_INFO_REQUEST } from '../../reducer/user.js';
 import { END, Task } from "redux-saga";
-import wrapper, { SagaStore } from '../../store/configureStore'
+import wrapper, { SagaStore } from './../../store/configureStore'
 import { Store } from 'redux'
 
 
@@ -57,9 +57,11 @@ const BoardWrapper = ({ posts, category }: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ req, res, query }) => {
   const cookie = req ? req.headers.cookie : '';
-  axios.defaults.headers.common['access-token'] = '';
+  console.log("cookie", cookie)
+  console.log("test", axios.defaults.headers.common)
+  axios.defaults.headers.common['Cookie'] = '';
   if (req && cookie) {
-    axios.defaults.headers.common['access-token'] = cookie;
+    axios.defaults.headers.common['Cookie'] = cookie;
   }
   store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
@@ -84,7 +86,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ r
       return {
         redirect: {
           permanent: false,
-          destination: "/404",
+          destination: "/",
         },
       };
     }
@@ -94,7 +96,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ r
     return {
       redirect: {
         permanent: false,
-        destination: "/404",
+        destination: "/",
       },
     };
   }

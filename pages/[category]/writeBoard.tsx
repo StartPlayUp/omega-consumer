@@ -3,16 +3,20 @@ import Editor from "../../components/Editor/CKEditor";
 import { useRouter } from "next/router";
 import axios from 'axios';
 import UseInput from "../../components/hooks/useInput";
+import { LOAD_MY_INFO_REQUEST } from '../../reducer/user.js';
+import { END, Task } from "redux-saga";
+import wrapper, { SagaStore } from '../../store/configureStore'
+import { GetServerSideProps } from "next";
 
 const WriteBoard = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("<p>글을 적어주세요…..</p>");
-  const onChangeData = (data) => {
+  const onChangeData = (data: string) => {
     setData(data);
   }
 
   const [boardName, setBoardName] = useState("");
-  const [postTitle, postTitleHandler, setPostTitle] = UseInput("");
+  const [postTitle, postTitleHandler] = UseInput("");
   const router = useRouter();
   const { category } = router.query;
   console.log(router.query);
@@ -58,7 +62,7 @@ const WriteBoard = () => {
       </div>
       <div></div>
       <div className="lg:w-1/2 w-full">
-        <input placeholder="제목을 입력하세요" onChange={postTitleHandler}></input>
+        <input placeholder="제목을 입력하세요" onChange={(e) => postTitleHandler(e)}></input>
         <Editor
           onChange={onChangeData}
           editorLoaded={editorLoaded}
@@ -81,5 +85,21 @@ const WriteBoard = () => {
     </div>
   );
 };
+
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
+  const cookie = req ? req.headers.cookie : '';
+  console.log("cookie", cookie)
+  console.log("test", axios.defaults.headers.common)
+  axios.defaults.headers.common['Cookie'] = '';
+  if (req && cookie) {
+    axios.defaults.headers.common['Cookie'] = cookie;
+  }
+  store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+  store.dispatch(END);
+  await (store as SagaStore).sagaTask.toPromise();
+});
 
 export default WriteBoard;
