@@ -27,12 +27,15 @@ const loginRequired = async (req: any, res: any, next: NextFunction) => {
             else {
                 console.log("token expires");
                 // res.redirect('/')
+                res.status(500).json({ success: false, message: "token expires" })
             }
 
         }
         else {
             console.log('token not found')
             // res.redirect('/')
+            res.status(500).json({ success: false, message: "token not found" })
+
         }
     }
     catch (err) {

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios'
 import { applyMiddleware, compose, createStore, Store } from "redux";
 import { MetadataAlreadyExistsError } from 'typeorm';
+import { GetServerSideProps } from 'next';
 
 
 
@@ -34,18 +35,11 @@ const Home = () => {
 }
 
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
-  interface SagaStore extends Store {
-    sagaTask: Task;
-  }
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
   const cookie = req ? req.headers.cookie : '';
-  console.log("cookie: ", cookie)
-  let { Cookie: axiosCookie }: any = axios.defaults.headers;
+  axios.defaults.headers.Cookie = '';
   if (req && cookie) {
-    axiosCookie = cookie;
-  }
-  else {
-    axiosCookie = '';
+    axios.defaults.headers.Cookie = cookie;
   }
   store.dispatch({
     type: LOAD_MY_INFO_REQUEST,

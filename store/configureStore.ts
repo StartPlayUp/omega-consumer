@@ -9,7 +9,7 @@ import rootSaga from '../sagas';
 
 
 export interface SagaStore extends Store {
-  sagaTask?: Task;
+  sagaTask: Task;
 }
 
 

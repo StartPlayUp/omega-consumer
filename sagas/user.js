@@ -35,7 +35,7 @@ function* loadMyInfo() {
         });
 
     } catch (err) {
-        // console.error(err);
+        console.error(err.response.data);
         yield put({
             type: LOAD_MY_INFO_FAILURE,
             error: err.response.data,
