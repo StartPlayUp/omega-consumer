@@ -52,9 +52,9 @@ const register = async (req: Request, res: Response) => {
     }
 }
 
-const createToken = (id: string) => {
+const createToken = ({ id, nickname }: { id: string, nickname: string }) => {
     const secret: any = process.env.JWT_SECRET
-    return jwt.sign({ id }, secret, { expiresIn: '1h' });
+    return jwt.sign({ id, nickname }, secret, { expiresIn: '1h' });
 }
 
 
@@ -63,7 +63,7 @@ const login = async (req: Request, res: Response) => {
     console.log(id, password)
     const result = await loginCheckUser({ id, password });
     if (result.success) {
-        const token = createToken(id)
+        const token = createToken({ id, nickname: result.user.nickname })
         res.cookie('access-token', token, {
             secure: true,
             httpOnly: true,
@@ -76,6 +76,19 @@ const login = async (req: Request, res: Response) => {
         return res.status(500).json(result)
     }
 }
+
+const getLoadMyInfo = async (req: Request, res: Response) => {
+    const { id, nickname } = req.user as { id: string, nickname: string }
+    console.log("getLoadMyInfo", id, nickname);
+    // const token = createToken(id)
+    // res.cookie('access-token', token, {
+    //     secure: true,
+    //     httpOnly: true,
+    //     maxAge: 3600000
+    // })
+    return res.status(201).json({ success: true, id, nickname });
+}
+
 
 
 
@@ -171,4 +184,4 @@ const getUser = async (req: Request, res: Response) => {
 
 
 
-export { register, getUser, deleteUser, login, logout, verifyEmail, sendVerifyEmail }
+export { register, getUser, deleteUser, login, logout, verifyEmail, sendVerifyEmail, getLoadMyInfo }

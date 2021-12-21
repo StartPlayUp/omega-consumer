@@ -23,18 +23,19 @@ import {
 } from '../reducer/user';
 
 function loadMyInfoAPI() {
-    return axios.get('/api/user/getUser');
+    return axios.get('/api/user/loadMyInfo');
 }
 
 function* loadMyInfo() {
     try {
-        const result = yield call(loadMyInfoAPI);
+        const { data: { nickname } } = yield call(loadMyInfoAPI);
         yield put({
             type: LOAD_MY_INFO_SUCCESS,
-            data: result.data,
+            data: nickname,
         });
+
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         yield put({
             type: LOAD_MY_INFO_FAILURE,
             error: err.response.data,
@@ -64,7 +65,7 @@ function* logIn(action) {
             });
         }
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         yield put({
             type: LOG_IN_FAILURE,
             error: err.response.data,
@@ -91,7 +92,7 @@ function* logOut() {
             });
         }
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         yield put({
             type: LOG_OUT_FAILURE,
             error: err.response.data,
@@ -111,7 +112,7 @@ function* signUp(action) {
             type: SIGN_UP_SUCCESS,
         });
     } catch (err) {
-        console.error(err);
+        // console.error(err);
         yield put({
             type: SIGN_UP_FAILURE,
             error: err.response.data,
@@ -135,6 +136,7 @@ function* watchLogOut() {
 function* watchSignUp() {
     yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
+
 
 export default function* userSaga() {
     yield all([

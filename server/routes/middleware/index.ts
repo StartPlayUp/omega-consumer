@@ -19,25 +19,26 @@ const loginRequired = async (req: any, res: any, next: NextFunction) => {
             const validateToken: any = jwt.verify(token, secret);
             if (validateToken) {
                 req.user = {
-                    id: validateToken.id
+                    id: validateToken.id,
+                    nickname: validateToken.nickname
                 }
                 next()
             }
             else {
                 console.log("token expires");
-                res.redirect('/')
+                // res.redirect('/')
             }
 
         }
         else {
             console.log('token not found')
-            res.redirect('/')
+            // res.redirect('/')
         }
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         res.cookie('access-token', "", { maxAge: 1 })
-        res.redirect('/')
+        // res.redirect('/')
     }
 }
 

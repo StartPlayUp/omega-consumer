@@ -1,5 +1,5 @@
 
-export const NOTICE_BOARD = "noticeBoard";
+export const NOTICE_BOARD: string = "noticeBoard";
 
 export const CATEGORY_LIST = {
     "noticeBoard": "공지사항",
