@@ -57,9 +57,9 @@ const BoardWrapper = ({ posts, category }: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ req, res, query }) => {
   const cookie = req ? req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
+  axios.defaults.headers.common['access-token'] = '';
   if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
+    axios.defaults.headers.common['access-token'] = cookie;
   }
   store.dispatch({
     type: LOAD_MY_INFO_REQUEST,

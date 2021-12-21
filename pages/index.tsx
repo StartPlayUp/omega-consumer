@@ -34,12 +34,13 @@ const Home = () => {
   )
 }
 
-
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
   const cookie = req ? req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
+  console.log("cookie", cookie)
+  console.log("test", axios.defaults.headers.common)
+  axios.defaults.headers.common['Cookie'] = '';
   if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
+    axios.defaults.headers.common['Cookie'] = cookie;
   }
   store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
