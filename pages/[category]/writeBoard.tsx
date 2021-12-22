@@ -3,7 +3,7 @@ import Editor from "../../components/Editor/CKEditor";
 import { useRouter } from "next/router";
 import axios from 'axios';
 import UseInput from "../../components/hooks/useInput";
-import { LOAD_MY_INFO_REQUEST } from '../../reducer/user.js';
+import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from '../../store/configureStore'
 import { GetServerSideProps } from "next";
@@ -89,8 +89,6 @@ const WriteBoard = () => {
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
   const cookie = req ? req.headers.cookie : '';
-  console.log("cookie", cookie)
-  console.log("test", axios.defaults.headers.common)
   axios.defaults.headers.common['Cookie'] = '';
   if (req && cookie) {
     axios.defaults.headers.common['Cookie'] = cookie;
