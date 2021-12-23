@@ -60,8 +60,6 @@ const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req, res, query }) => {
   const cookie = req ? req.headers.cookie : '';
-  console.log("cookie", cookie)
-  console.log("test", axios.defaults.headers.common)
   axios.defaults.headers.common['Cookie'] = '';
   if (req && cookie) {
     axios.defaults.headers.common['Cookie'] = cookie;

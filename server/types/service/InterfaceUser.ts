@@ -8,7 +8,7 @@ interface IUser {
     nickname: string,
     email: string,
     password: string,
-    emailToken: string,
+    emailToken?: string | null,
     isVerified: boolean,
 }
 

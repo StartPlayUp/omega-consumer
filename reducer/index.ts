@@ -3,7 +3,7 @@ import user from "./user";
 import { combineReducers } from "redux";
 
 // (이전상태, 액션) => 다음상태
-const rootReducer = (state, action) => {
+const rootReducer = (state: any, action: any) => {
   // console.log("reducer : action : ", state, action)
   switch (action.type) {
     case HYDRATE:
