@@ -148,6 +148,7 @@ const getPostsSortByTime = async (): Promise<returnPosts> => {
             .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
             .leftJoin('post.user', 'user')
             .addSelect('user.nickname' as "nickname")
+            .orderBy("post.createdAt", "DESC")
             .getRawMany();
         console.log(posts)
         return {

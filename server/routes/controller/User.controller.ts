@@ -129,30 +129,6 @@ const sendVerifyEmail = async (req: Request, res: Response) => {
     }
 }
 
-// const updateUser = async (req: Request, res: Response) => {
-//     // const id = req.user.id as string
-//     // const { email } = req.body;
-//     // const { success, user: { nickname, email } } = await getUserFromId({ id })
-//     // const res = await User.update({ id }, { email }).then(response => response.raw[0]);
-//     // return post; // returns post of type Post
-
-//     // if (success) {
-//     //     const { success: sendMailSuccess, message } = sendMail({ host: req.headers.host, email, nickname });
-//     //     return res.status(201).json({
-//     //         success: true,
-//     //         message: "인증메일을 보냈습니다."
-//     //     })
-//     // }
-//     // else {
-//     //     return res.status(500).json({
-//     //         success: false,
-//     //         message: "인증 메일 보내기에 실패하였습니다."
-//     //     });
-//     // }
-// }
-
-
-
 const logout = async (req: Request, res: Response) => {
     res.cookie('access-token', "", { maxAge: 1 })
     res.status(201).json({ success: true })
