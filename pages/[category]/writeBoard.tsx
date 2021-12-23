@@ -7,7 +7,7 @@ import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from '../../store/configureStore'
 import { GetServerSideProps } from "next";
-
+import Link from "next/link";
 
 const WriteBoard = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -19,7 +19,7 @@ const WriteBoard = () => {
   const [boardName, setBoardName] = useState("");
   const [postTitle, postTitleHandler] = UseInput("");
   const router = useRouter();
-  const { category } = router.query;
+  const category = router.query.category as string;
   console.log(router.query);
   useEffect(() => {
     setEditorLoaded(true);
@@ -27,20 +27,21 @@ const WriteBoard = () => {
       setBoardName("공지사항");
     }
   }, [category]);
-  // const ReturnToPostList = ({ category }) => {
-  //   return (
-  //     <Link href={`/${category}`}>
-  //       <a>
-  //         <button
-  //           className=" font-extrabold text-white"
-  //           onClick={onChangeSendPost}
-  //         >
-  //           글 올리기
-  //         </button>
-  //       </a>
-  //     </Link>
-  //   );
-  // };
+
+  const ReturnToPostList = ({ category }: { category: string }) => {
+    return (
+      <Link href={`/${category}`}>
+        <a>
+          <button
+            className=" font-extrabold text-white"
+            onClick={onChangeSendPost}
+          >
+            글 올리기
+          </button>
+        </a>
+      </Link>
+    );
+  };
   const onChangeSendPost = async () => {
     try {
       const sendPoseResult = await axios.post("/api/post/sendPost", {
@@ -67,8 +68,8 @@ const WriteBoard = () => {
         >
           <div className="flex-shrink-0">
             <div className="flex-shrink-0">
-              {/* <ReturnToPostList category={category} /> */}
-              <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
+              <ReturnToPostList category={category} />
+              {/* <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button> */}
             </div>
           </div>
         </div>
@@ -90,8 +91,8 @@ const WriteBoard = () => {
                     "
         >
           <div className="flex-shrink-0">
-            {/* <ReturnToPostList category={category} /> */}
-             <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
+            <ReturnToPostList category={category} />
+             {/* <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button> */}
           </div>
         </div>
       </div>
