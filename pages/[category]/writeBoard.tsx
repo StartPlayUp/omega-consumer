@@ -8,6 +8,7 @@ import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from '../../store/configureStore'
 import { GetServerSideProps } from "next";
 
+
 const WriteBoard = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("<p>글을 적어주세요…..</p>");
@@ -26,20 +27,20 @@ const WriteBoard = () => {
       setBoardName("공지사항");
     }
   }, [category]);
-  const ReturnToPostList = ({ category }) => {
-    return (
-      <Link href={`/${category}`}>
-        <a>
-          <button
-            className=" font-extrabold text-white"
-            onClick={onChangeSendPost}
-          >
-            글 올리기
-          </button>
-        </a>
-      </Link>
-    );
-  };
+  // const ReturnToPostList = ({ category }) => {
+  //   return (
+  //     <Link href={`/${category}`}>
+  //       <a>
+  //         <button
+  //           className=" font-extrabold text-white"
+  //           onClick={onChangeSendPost}
+  //         >
+  //           글 올리기
+  //         </button>
+  //       </a>
+  //     </Link>
+  //   );
+  // };
   const onChangeSendPost = async () => {
     try {
       const sendPoseResult = await axios.post("/api/post/sendPost", {
@@ -66,7 +67,8 @@ const WriteBoard = () => {
         >
           <div className="flex-shrink-0">
             <div className="flex-shrink-0">
-              <ReturnToPostList category={category} />
+              {/* <ReturnToPostList category={category} /> */}
+              <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
             </div>
           </div>
         </div>
@@ -88,7 +90,8 @@ const WriteBoard = () => {
                     "
         >
           <div className="flex-shrink-0">
-            <ReturnToPostList category={category} />
+            {/* <ReturnToPostList category={category} /> */}
+             <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
           </div>
         </div>
       </div>
