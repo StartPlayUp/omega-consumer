@@ -1,13 +1,14 @@
 import React from "react";
 import Content from "./Content";
+import CommentContainer from "../Comment/Comment";
+import WriteComment from "../Comment/WriteComment";
 const ContentContainer = ({ post }) => {
-  console.log(post);
+
   const timeArray = post.createdAt
     .slice(0, post.createdAt.length - 5)
     .split("T");
-  console.log(timeArray);
   return (
-    <div className="md:w-2/3 w-full bg-gray-200">
+    <div className="md:w-2/3 w-full bg-white">
       <div className="ml-3 mr-3 ">
         <div className="mt-3 border-b-2 border-blue-400">
           <div className="w-full flex ">
@@ -25,7 +26,7 @@ const ContentContainer = ({ post }) => {
         </div>
         <div className="w-full flex flex-col h-full">
           <div className="mt-3 h-full">
-            <Content content={ post.content}/>
+            <Content content={post.content} />
           </div>
           <div className="w-full mt-72 flex justify-center">
             <div className="mr-3 w-28 h-28 border-2 flex justify-center bg-white shadow-2xl">
@@ -70,7 +71,8 @@ const ContentContainer = ({ post }) => {
             </button>
           </div>
           <div className="w-full border-4 border-blue-300 mt-3" />
-          {/* <Comment /> */}
+          <CommentContainer />
+          <WriteComment />
         </div>
       </div>
     </div>

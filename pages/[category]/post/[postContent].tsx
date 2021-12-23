@@ -34,13 +34,14 @@ const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }
     }
   }, [category]);
   return (
-    <div className="w-full h-full bg-slate-500">
+    <div className="w-full h-full bg-gray-500">
       <div className="flex place-items-center flex-col">
         <div className="w-3/4 h-9 flex m-5">
           <div className="flex-none ml-16 text-4xl">{boardName}</div>
           <UserLink id={category} comment="글쓰기"></UserLink>
         </div>
         <ContentContainer post={post} />
+        
         <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
         <div className="mb-3">
           <Pagination
@@ -84,8 +85,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
           post,
         },
       };
-    }
-    else {
+    } else {
       return {
         redirect: {
           permanent: false,
