@@ -28,20 +28,6 @@ const WriteBoard = () => {
     }
   }, [category]);
 
-  const ReturnToPostList = ({ category }: { category: string }) => {
-    return (
-      <Link href={`/${category}`}>
-        <a>
-          <button
-            className=" font-extrabold text-white"
-            onClick={onChangeSendPost}
-          >
-            글 올리기
-          </button>
-        </a>
-      </Link>
-    );
-  };
   const onChangeSendPost = async () => {
     try {
       const sendPoseResult = await axios.post("/api/post/sendPost", {
@@ -49,6 +35,10 @@ const WriteBoard = () => {
         content: data,
         category,
       });
+      router.push({
+        pathname: '/[category]',
+        query:{category:category}
+      })
       console.log(sendPoseResult);
     } catch (error) {
       alert(error);
@@ -68,8 +58,7 @@ const WriteBoard = () => {
         >
           <div className="flex-shrink-0">
             <div className="flex-shrink-0">
-              <ReturnToPostList category={category} />
-              {/* <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button> */}
+              <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
             </div>
           </div>
         </div>
@@ -91,8 +80,7 @@ const WriteBoard = () => {
                     "
         >
           <div className="flex-shrink-0">
-            <ReturnToPostList category={category} />
-             {/* <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button> */}
+             <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
           </div>
         </div>
       </div>
