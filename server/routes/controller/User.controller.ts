@@ -97,31 +97,32 @@ const verifyEmail = async (req: Request, res: Response) => {
     console.log(emailToken)
     const result = await verifyEmailUser({ emailToken })
     if (result.success) {
-        return res.status(201).json(result).redirect("/");
+        return res.status(201).redirect("/");
     }
     else {
-        return res.status(500).json(result).redirect("/");
+        return res.status(500).redirect("/");
     }
 }
 
 
 
 const sendVerifyEmail = async (req: Request, res: Response) => {
-    const id = req.user.id as string
-
-    const { success, user } = await getUserFromId({ id });
-    if (success) {
-        const host = req.headers.host;
-        const { email, nickname } = user;
-        const result = await updateUser({ user })
-        const { success: sendMailSuccess, message } = sendMail({ host, email, nickname });
+    const id = req.user.id as string;
+    const nickname = req.user.nickname as string;
+    const email = req.body.email as string;
+    const host = req.headers.host;
+    const emailToken = crypto.randomBytes(64).toString('hex');
+    const result = await updateUser({ id, email, emailToken })
+    console.log("update User", result)
+    if (result.success) {
+        await sendMail({ host, email, emailToken, nickname });
         return res.status(201).json({
             success: true,
             message: "인증메일을 보냈습니다."
         })
     }
     else {
-        return res.status(500).json({
+        return res.status(201).json({
             success: false,
             message: "인증 메일 보내기에 실패하였습니다."
         });

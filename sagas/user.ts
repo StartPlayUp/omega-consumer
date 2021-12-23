@@ -1,5 +1,5 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
     LOG_IN_REQUEST,
     LOG_IN_SUCCESS,
@@ -34,7 +34,7 @@ function* loadMyInfo() {
             data: nickname,
         });
 
-    } catch (err) {
+    } catch (err: any) {
         console.error(err.response.data);
         yield put({
             type: LOAD_MY_INFO_FAILURE,
@@ -43,12 +43,11 @@ function* loadMyInfo() {
     }
 }
 
-function logInAPI(data) {
-    console.log(data, "insaga")
+function logInAPI(data: any) {
     return axios.post('/api/user/login', data);
 }
 
-function* logIn(action) {
+function* logIn(action: any) {
     try {
         const { data: { success, message, user, error } } = yield call(logInAPI, action.data);
         if (success) {
@@ -64,8 +63,7 @@ function* logIn(action) {
                 error: message,
             });
         }
-    } catch (err) {
-        // console.error(err);
+    } catch (err: any) {
         yield put({
             type: LOG_IN_FAILURE,
             error: err.response.data,
@@ -91,7 +89,7 @@ function* logOut() {
                 error: message
             });
         }
-    } catch (err) {
+    } catch (err: any) {
         // console.error(err);
         yield put({
             type: LOG_OUT_FAILURE,
@@ -100,19 +98,22 @@ function* logOut() {
     }
 }
 
-function signUpAPI(data) {
+interface returnApi {
+    data?: { success: Boolean, message: string }
+}
+function signUpAPI(data: any): Promise<returnApi> {
     return axios.post('/api/user/register', data);
 }
 
-function* signUp(action) {
+function* signUp(action: any) {
+
+
     try {
-        const result = yield call(signUpAPI, action.data);
-        console.log(result);
+        const result = <returnApi>call(signUpAPI, action.data);
         yield put({
             type: SIGN_UP_SUCCESS,
         });
-    } catch (err) {
-        // console.error(err);
+    } catch (err: any) {
         yield put({
             type: SIGN_UP_FAILURE,
             error: err.response.data,

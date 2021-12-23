@@ -1,46 +1,60 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import axios from 'axios';
-import wrapper from '../store/configureStore';
+import wrapper, { SagaStore } from '../store/configureStore';
+import { LOAD_MY_INFO_REQUEST } from 'reducer/user';
+import { END } from 'redux-saga';
+import { useSelector } from 'react-redux';
+import { userType } from 'reducer/reducerUser';
 
-const Home: NextPage = (): any => {
-    const onClickHandler = async () => {
-        const { data: { success } } = await axios.get("/api/user/sendVerifyEmail")
-        const test = await axios.get("/api/user/sendVerifyEmail")
-        console.log("request", test.request)
-        alert(`${success}  `)
+import { useState } from 'react';
+
+const EmailVerify = ({ user }: { user: { email: string } }): any => {
+    const [email, setEmail] = useState(user.email)
+    const onClickHandler = async (email: string) => {
+        const { data: { success, message } } = await axios.post("/api/user/sendVerifyEmail", {
+            email
+        })
+        console.log(message)
+        alert(message);
     }
-
-
+    // const me = useSelector((state: { user: userType }): string => state.user.me);
     return (
         <div className="flex flex-col">
-            <div className="self-center mx-5">
-                <div className="self-center">현재 인증 메일은 { }로 발송되었습니다.</div>
+            <div className="self-center mx-50">
+                <div className="self-center">현재 인증 메일은 {user.email}로 발송되었습니다.</div>
                 <div className="flex flex-col">
                     <div className="self-center">인증메일을 받지 못하셨나요?</div>
-                    <Button type="primary" block onClick={onClickHandler}>인증메일 재전송</Button>
-                    <Button type="dashed" block>메일 주소 변경</Button>
+                    <Input className="h-10 text-center" onChange={(e) => setEmail(e.target.value)} placeholder={email}></Input>
+                    <div >메일 주소 변경 하려면 위 이메일 주소를 바꿔주세요.</div>
+                    <Button type="primary" block onClick={() => onClickHandler(email)}>{email} 로 인증메일 재전송</Button>
                 </div>
             </div>
         </div>
     )
 }
 
-
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async ({ req }): Promise<any> => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.common['Cookie'] = '';
+    if (req && cookie) {
+        axios.defaults.headers.common['Cookie'] = cookie;
+    }
+    store.dispatch({
+        type: LOAD_MY_INFO_REQUEST,
+    });
+    store.dispatch(END);
+    await (store as SagaStore).sagaTask.toPromise();
     try {
         const { data: { success, user } } = await axios.get("/api/user/getUser");
-        if (success) {
+        if (success && !user.isVerified) {
             return {
                 props: {
                     user,
                 },
             };
         } else {
-            console.log("로그인 하세요");
-            console.log(success)
-            console.log(user)
             return {
                 redirect: {
                     permanent: false,
@@ -58,22 +72,6 @@ export const getServerSideProps = async () => {
             },
         };
     }
-};
-// export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-//     const cookie = context.req ? context.req.headers.cookie : '';
-//     axios.defaults.headers.Cookie = '';
-//     if (context.req && cookie) {
-//         axios.defaults.headers.Cookie = cookie;
-//     }
-//     context.store.dispatch({
-//         type: LOAD_MY_INFO_REQUEST,
-//     });
-//     context.store.dispatch({
-//         type: LOAD_POSTS_REQUEST,
-//     });
-//     context.store.dispatch(END);
-//     await context.store.sagaTask.toPromise();
-// });
+});
 
-
-export default Home
+export default EmailVerify

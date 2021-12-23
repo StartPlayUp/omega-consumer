@@ -4,13 +4,12 @@ import config from '../config'
 import crypto from 'crypto';
 
 const sanitizeUser = (user: User): any => {
-    const { password, emailToken, isVerified, ...userWithOutPassword } = user;
+    const { password, emailToken, ...userWithOutPassword } = user;
     return userWithOutPassword;
 };
 
 
-const sendMail = ({ email, nickname, host }: any) => {
-    const emailToken = crypto.randomBytes(64).toString('hex');
+const sendMail = async ({ email, emailToken, nickname, host }: any) => {
     const transporter = nodemailer.createTransport(config.mailConfig);
     const mailOptions = {
         from: '"Verify your email <startPlayUp@gmail.com>',
@@ -22,7 +21,7 @@ const sendMail = ({ email, nickname, host }: any) => {
             <a href="http://${host}/api/user/verify-email?token=${emailToken}">인증하기</a>
         `
     }
-    transporter.sendMail(mailOptions, (error, info) => {
+    await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return {
                 success: false,

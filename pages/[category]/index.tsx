@@ -7,7 +7,7 @@ import { Pagination } from "antd";
 import { useEffect } from "react";
 import { post } from "superagent";
 import { NOTICE_BOARD } from "../../constants/constant/category";
-import { LOAD_MY_INFO_REQUEST } from '../../reducer/user.js';
+import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from './../../store/configureStore'
 import { Store } from 'redux'
@@ -32,7 +32,7 @@ const BoardWrapper = ({ posts, category }: any) => {
     }
   }, [category]);
   return (
-    <div className="bg-pink-200">
+    <div className="bg-gray-300">
       <div className="w-full h-full">
         <div className="flex place-items-center flex-col">
           <div className="w-3/4 h-9 flex m-5">
@@ -57,8 +57,6 @@ const BoardWrapper = ({ posts, category }: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ req, res, query }) => {
   const cookie = req ? req.headers.cookie : '';
-  console.log("cookie", cookie)
-  console.log("test", axios.defaults.headers.common)
   axios.defaults.headers.common['Cookie'] = '';
   if (req && cookie) {
     axios.defaults.headers.common['Cookie'] = cookie;

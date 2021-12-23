@@ -7,7 +7,7 @@ router.post('/register', register);
 router.get('/getUser', loginRequired, getUser)
 router.post('/login', login)
 router.post('/logout', loginRequired, logout)
-router.get('/sendVerifyEmail', loginRequired, isNotEmailVerified, sendVerifyEmail)
+router.post('/sendVerifyEmail', loginRequired, isNotEmailVerified, sendVerifyEmail)
 router.get('/verify-email', verifyEmail)
 router.get('/loadMyInfo', loginRequired, getLoadMyInfo)
 

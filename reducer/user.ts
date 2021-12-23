@@ -1,6 +1,4 @@
-import cookieParser from "cookie-parser";
 import produce from '../util/produce';
-
 
 export const LOAD_MY_INFO_REQUEST = "LOAD_MY_INFO_REQUEST";
 export const LOAD_MY_INFO_SUCCESS = "LOAD_MY_INFO_SUCCESS";
@@ -55,13 +53,13 @@ export const initialState = {
   signOutDone: false,
   signOutError: null,
 
-  // 
+  // 회원 기본 정보
 
   me: null,
   userInfo: null,
 };
 
-export const loginRequestAction = (data) => {
+export const loginRequestAction = (data: any) => {
   console.log("loginRequestAction: ", data)
   return {
     type: LOG_IN_REQUEST,
@@ -75,8 +73,8 @@ export const logoutRequestAction = () => {
   };
 };
 
-const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+const reducer = (state = initialState, action: any) =>
+  produce(state, (draft: any) => {
     console.log(draft, action.type)
     switch (action.type) {
       case LOG_IN_REQUEST:

@@ -1,9 +1,12 @@
+import { IsEmail } from 'class-validator';
 import { validate } from 'class-validator';
 import { ILoginUser, IReadUser, IUser, returnUser } from '../types/service/InterfaceUser';
 import { User } from '../typeorm/entity/User';
 import bcrypt from 'bcrypt';
 import { getConnection } from "typeorm";
 import { sanitizeUser } from '../utilities/apiUtilities';
+import { SrvRecord } from 'dns';
+import { stringify } from 'querystring';
 
 const createUser = async (userData: IUser): Promise<returnUser> => {
     const { id, nickname, email, password, emailToken, isVerified } = userData;
@@ -54,29 +57,53 @@ const deleteUser = async (userData: IUser | any): Promise<returnUser> => {
     }
 }
 
+// const updateUser = async (user: IUser | any): Promise<returnUser> => {
+//     const { id, emailToken } = await user;
+//     console.log("update User : ", user);
+//     try {
+//         const errors = await validate(user)
+//         if (errors.length > 0) throw errors
+//         const result = await getConnection()
+//             .createQueryBuilder()
+//             .update(User)
+//             .set({
+//                 emailToken: "asdf",
+//                 isVerified: false
+//             })
+//             .where("id = :id", { id: id })
+//             .execute();
+//         console.log(result)
+//         return {
+//             success: true,
+//         }
+//     } catch (err) {
+//         return {
+//             success: false,
+//             error: "Something went wrong"
+//         }
+//     }
+// }
+
 const updateUser = async (user: IUser | any): Promise<returnUser> => {
-    const { id, nickname, email, emailToken } = user;
+    const { id, email, emailToken }: { id: string, email: string, emailToken: string } = user;
     try {
-        const errors = await validate(user)
-        if (errors.length > 0) throw errors
-        const result = await getConnection()
-            .createQueryBuilder()
-            .update(User)
-            .set({
-                emailToken,
-            })
-            .where("id = :id", { id })
-            .execute();
+        const validateUser = new User({ id, email, emailToken });
+        const errors = await validate(validateUser, { skipMissingProperties: true })
+        if (errors.length > 0) {
+            console.log(errors)
+            throw errors
+        }
+        await User.update({ id }, { emailToken, email, isVerified: false })
         return {
             success: true,
         }
     } catch (err) {
         return {
             success: false,
-            error: "Something went wrong"
         }
     }
 }
+
 
 const getUserFromId = async (userData: IReadUser): Promise<returnUser> => {
     const { id } = userData;
