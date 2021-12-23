@@ -1,4 +1,5 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
+import { loginRequired } from '../../middleware';
 import {
     sendMemberComment,
     sendNonMemberComment,
@@ -6,7 +7,7 @@ import {
 } from '../../controller/Comment.controller';
 const router = Router()
 
-router.post('/sendMemberComment', sendMemberComment);
+router.post('/sendMemberComment', loginRequired, sendMemberComment);
 router.post('/sendNonMemberComment', sendNonMemberComment);
 router.get('/getComments', getComments);
 

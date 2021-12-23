@@ -61,7 +61,7 @@ const getComments = async (req: Request, res: Response) => {
         return res.status(201).json(result);
     }
     else {
-        return res.status(500).json(result)
+        return res.status(400).json(result)
     }
 }
 
