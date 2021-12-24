@@ -1,6 +1,6 @@
 interface interfaceCommentModel {
     content: string,
-    ipAddress: string
+    ipAddress?: string
     postUuid: string,
     delete?: boolean,
     parentUuid?: string,

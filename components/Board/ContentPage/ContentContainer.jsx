@@ -4,6 +4,7 @@ import CommentContainer from "../Comment/Comment";
 import WriteComment from "../Comment/WriteComment";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import axios from 'axios';
+import { useRouter } from "next/router";
 
 const queryClient = new QueryClient()
 
@@ -16,8 +17,10 @@ const Comments = () => {
 }
 
 const CommentList = () => {
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    axios.get(`http://localhost:5000/api/comment/getComments?postUuid=${"14e543f7-0504-46f9-9a73-77d00a876988"}`)
+  const router = useRouter();
+  const { postContent } = router.query;
+  const { isLoading, error, data } = useQuery('getComments', () =>
+    axios.get(`http://localhost:5000/api/comment/getComments?postUuid=${postContent}`)
       .then(res => {
         return res.data
       })

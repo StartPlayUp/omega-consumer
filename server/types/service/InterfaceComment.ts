@@ -2,7 +2,7 @@ import { interfaceCommentModel } from "./Model/interfaceCommentModel";
 import { returnApi } from "./Model/InterfaceReturnApiModel";
 
 interface IMemberComment extends interfaceCommentModel {
-    userUuid: string
+    id?: string
 }
 
 interface INonMemberComment extends interfaceCommentModel {
