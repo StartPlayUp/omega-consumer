@@ -72,10 +72,13 @@ const isNotEmailVerified = async (req: Request, res: any, next: NextFunction) =>
     }
 }
 
-const ipMiddleware = (req: any, res: any, next: NextFunction) => {
+const ipMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const clientIp = requestIp.getClientIp(req);
-    console.log("test ip : ", clientIp);
-    req.user.ipAddress = clientIp
+
+    if (req.user === undefined) {
+        req.user = {}
+    }
+    req.user.ipAddress = clientIp as string;
     next();
 };
 

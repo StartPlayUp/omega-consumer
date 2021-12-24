@@ -1,5 +1,5 @@
+import { Comment } from './../typeorm/entity/Comment';
 import { User } from '../typeorm/entity/User';
-import { Comment } from '../typeorm/entity/Comment';
 import { Post } from '../typeorm/entity/Post';
 import { validate } from 'class-validator';
 import { IMemberComment, INonMemberComment, returnComment } from '../types/service/InterfaceComment';
@@ -11,16 +11,15 @@ const createMemberComment = async (commentData: IMemberComment): Promise<returnC
         content,
         ipAddress,
         postUuid,
-        userUuid,
+        id,
         parentUuid,
     } = commentData;
     try {
         const postFromUuid = await Post.findOneOrFail({ uuid: postUuid })
-        const userFromUuid = await User.findOneOrFail({ uuid: userUuid })
+        const userFromUuid = await User.findOneOrFail({ id })
         let comment;
         if (parentUuid !== undefined) {
             const commentFromUuid = await Comment.findOneOrFail({ uuid: parentUuid })
-            console.log(commentFromUuid)
             comment = Comment.create({
                 content,
                 ipAddress,
@@ -52,7 +51,7 @@ const createMemberComment = async (commentData: IMemberComment): Promise<returnC
     } catch (err) {
         return {
             success: false,
-            error: "Something went wrong"
+            error: "send comment error"
         }
     }
 }
@@ -66,13 +65,11 @@ const createNonMemberComment = async (commentData: INonMemberComment): Promise<r
         password,
         parentUuid,
     } = commentData;
-    console.log(commentData)
     try {
         const postFromUuid = await Post.findOneOrFail({ uuid: postUuid })
         let comment;
         if (parentUuid !== undefined) {
             const commentFromUuid = await Comment.findOneOrFail({ uuid: parentUuid })
-            console.log(commentFromUuid)
             comment = Comment.create({
                 content,
                 ipAddress,
@@ -86,9 +83,9 @@ const createNonMemberComment = async (commentData: INonMemberComment): Promise<r
             comment = Comment.create({
                 content,
                 ipAddress,
+                post: postFromUuid,
                 anonymouseId,
                 password,
-                post: postFromUuid,
             });
         }
         // 추가해야 검사해줌
@@ -101,15 +98,46 @@ const createNonMemberComment = async (commentData: INonMemberComment): Promise<r
     } catch (err) {
         return {
             success: false,
-            error: "Something went wrong"
+            error: "createNonMemberComment error"
         }
     }
 }
 
-
-const deleteComment = async () => {
+const deleteMemberCommentFromUuid = async () => {
 
 }
+
+const deleteNonMemberCommentFromUuid = async (data: any) => {
+    const {
+        id,
+        commentUuid,
+    } = data;
+    try {
+        const commentFromUuid = await Comment.findOneOrFail({ uuid: commentUuid })
+        const userFromUuid = await User.findOneOrFail({ id })
+        if (commentFromUuid.user === userFromUuid) {
+            console.log("check console : ", commentFromUuid.user, userFromUuid)
+        }
+        // comment = Comment.update({
+        //     ...commentFromUuid,
+        //     deleted: true
+        // })
+        // 추가해야 검사해줌
+        // const errors = await validate(comment)
+        // if (errors.length > 0) throw errors
+        // await comment.save()
+        return {
+            success: true,
+        }
+    } catch (err) {
+        return {
+            success: false,
+            error: "createNonMemberComment error"
+        }
+    }
+
+}
+
 
 const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment> => {
     try {
@@ -194,4 +222,4 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
     }
 }
 
-export { createMemberComment, createNonMemberComment, deleteComment, getCommentsFromPostUuid }
+export { createMemberComment, createNonMemberComment, deleteMemberCommentFromUuid, deleteNonMemberCommentFromUuid, getCommentsFromPostUuid }

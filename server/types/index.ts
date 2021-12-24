@@ -6,8 +6,9 @@ declare global {
     namespace Express {
         interface Request {
             user: {
-                id: string;
-                nickname: string;
+                id?: string;
+                nickname?: string;
+                ipAddress?: string;
             };
         }
     }

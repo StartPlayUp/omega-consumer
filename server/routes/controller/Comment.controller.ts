@@ -2,22 +2,23 @@ import { Request, Response } from 'express';
 import {
     createMemberComment,
     createNonMemberComment,
-    getCommentsFromPostUuid
+    getCommentsFromPostUuid,
+    deleteMemberCommentFromUuid,
+    deleteNonMemberCommentFromUuid
 } from '../../service/comment.service';
 
 const sendMemberComment = async (req: Request, res: Response) => {
     const {
         content,
-        ipAddress,
         postUuid,
-        userUuid,
         parentUuid,
     } = req.body;
+    const { id, ipAddress } = req.user;
     const result = await createMemberComment({
         content,
         ipAddress,
         postUuid,
-        userUuid,
+        id,
         parentUuid,
     });
     if (result.success) {
@@ -31,12 +32,13 @@ const sendMemberComment = async (req: Request, res: Response) => {
 const sendNonMemberComment = async (req: Request, res: Response) => {
     const {
         content,
-        ipAddress,
         postUuid,
         parentUuid,
         anonymouseId,
         password,
     } = req.body;
+    const ipAddress = req.user.ipAddress as string;
+    console.log("testtestsetstttest : ", ipAddress)
     const result = await createNonMemberComment({
         content,
         ipAddress,
@@ -53,10 +55,13 @@ const sendNonMemberComment = async (req: Request, res: Response) => {
     }
 }
 
-const deleteMemberComment = (req: Request, res: Response) => {
+const deleteMemberComment = async (req: Request, res: Response) => {
     const id = req.user.id;
     const { commentUuid } = req.body;
-    const result = { success: true }
+    const result = await deleteNonMemberCommentFromUuid({
+        id,
+        commentUuid,
+    })
     if (result.success) {
         return res.status(200).json(result);
     }
@@ -64,8 +69,13 @@ const deleteMemberComment = (req: Request, res: Response) => {
         return res.status(400).json(result);
     }
 }
-const deleteNonmemberComment = (req: Request, res: Response) => {
-    const result = { success: true }
+const deleteNonMemberComment = async (req: Request, res: Response) => {
+    const id = req.user.id;
+    const { commentUuid } = req.body;
+    const result = await deleteNonMemberCommentFromUuid({
+        id,
+        commentUuid,
+    })
     if (result.success) {
         return res.status(200).json(result);
     }
@@ -73,6 +83,8 @@ const deleteNonmemberComment = (req: Request, res: Response) => {
         return res.status(400).json(result);
     }
 }
+
+
 const updateMemberComment = (req: Request, res: Response) => {
     const result = { success: true }
     if (result.success) {
@@ -110,7 +122,7 @@ export {
     sendNonMemberComment,
     getComments,
     deleteMemberComment,
-    deleteNonmemberComment,
+    deleteNonMemberComment,
     updateMemberComment,
     updateNonMemberComment,
 }

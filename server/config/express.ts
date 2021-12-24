@@ -23,8 +23,8 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.json())
 server.use(morgan('combined'));
-server.use(hpp());
-server.use(helmet({ contentSecurityPolicy: false }));
+// server.use(hpp());
+// server.use(helmet({ contentSecurityPolicy: false }));
 // server.use(express.static(path.join(__dirname, '../public')))
 server.use('/api', routes)
 
