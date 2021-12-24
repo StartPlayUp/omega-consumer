@@ -19,7 +19,6 @@ const Example = () => {
   const { isLoading, error, data } = useQuery('repoData', () =>
     axios.get(`http://localhost:5000/api/comment/getComments?postUuid=${"14e543f7-0504-46f9-9a73-77d00a876988"}`)
       .then(res => {
-        console.log("res란 무엇인가? ", res)
         return res.data
       })
   )
@@ -31,11 +30,13 @@ const Example = () => {
       {
         data && Object.values(data.comment).map((value, index) =>
           <div key={index}>
-            <CommentContainer key={index} nickname={value.nickname} comment={value.content} />
+            <CommentContainer key={index} nickname={value.isMember ? value.nickname : "익명 ㅇㅇ"} comment={value.content} />
+            {/* <CommentContainer key={index} nickname={value.isMember ? value.nickname : value.annonymouseId} comment={value.content} /> */}
+
             {
               value.childComments.map((chileValue, chileIndex) =>
                 <div key={chileIndex} className="ml-10">
-                  <CommentContainer key={chileIndex} nickname={chileValue.nickname} comment={chileValue.content} />
+                  <CommentContainer key={chileIndex} nickname={chileValue.isMember ? chileValue.nickname : "익명 ㅇㅇ"} comment={chileValue.content} />
                 </div>
               )
             }
