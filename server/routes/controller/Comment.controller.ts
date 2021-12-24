@@ -53,6 +53,45 @@ const sendNonMemberComment = async (req: Request, res: Response) => {
     }
 }
 
+const deleteMemberComment = (req: Request, res: Response) => {
+    const id = req.user.id;
+    const { commentUuid } = req.body;
+    const result = { success: true }
+    if (result.success) {
+        return res.status(200).json(result);
+    }
+    else {
+        return res.status(400).json(result);
+    }
+}
+const deleteNonmemberComment = (req: Request, res: Response) => {
+    const result = { success: true }
+    if (result.success) {
+        return res.status(200).json(result);
+    }
+    else {
+        return res.status(400).json(result);
+    }
+}
+const updateMemberComment = (req: Request, res: Response) => {
+    const result = { success: true }
+    if (result.success) {
+        return res.status(200).json(result);
+    }
+    else {
+        return res.status(400).json(result);
+    }
+}
+const updateNonMemberComment = (req: Request, res: Response) => {
+    const result = { success: true }
+    if (result.success) {
+        return res.status(200).json(result);
+    }
+    else {
+        return res.status(400).json(result);
+    }
+}
+
 
 const getComments = async (req: Request, res: Response) => {
     const postUuid = req.query.postUuid as string;
@@ -61,9 +100,17 @@ const getComments = async (req: Request, res: Response) => {
         return res.status(201).json(result);
     }
     else {
-        return res.status(500).json(result)
+        return res.status(400).json(result)
     }
 }
 
 
-export { sendMemberComment, sendNonMemberComment, getComments }
+export {
+    sendMemberComment,
+    sendNonMemberComment,
+    getComments,
+    deleteMemberComment,
+    deleteNonmemberComment,
+    updateMemberComment,
+    updateNonMemberComment,
+}

@@ -119,7 +119,7 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
             .andWhere("post.uuid = :uuid", { uuid: postUuid })
             .leftJoin('comment.post', 'post')
             .leftJoinAndSelect('comment.childComments', ' parentComment')
-            .printSql()
+            .orderBy("comment.createdAt", "ASC")
             .getRawMany();
 
         const temp: any = {}
@@ -143,14 +143,13 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
             if (temp.hasOwnProperty(o.comment_index)) {
                 if (o.parentComment_index) {
                     temp[o.comment_index]["childComments"].push({
-                        index: o.parentComment_index,
                         uuid: o.parentComment_uuid,
                         updatedAt: o.parentComment_updatedAt,
                         content: o.parentComment_content,
                         ipAddress: o.parentComment_ipAddress,
                         annonymouseId: o.parentComment_anonymouseId,
                         isMember: o.parentComment_isMember,
-                        user_id: o.parentComment_user_nickname,
+                        nickname: o.parentComment_user_nickname,
 
                     })
                 }
@@ -160,14 +159,13 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
                 const childComments = []
                 if (o.parentComment_index) {
                     childComments.push({
-                        index: o.parentComment_index,
                         uuid: o.parentComment_uuid,
                         updatedAt: o.parentComment_updatedAt,
                         content: o.parentComment_content,
                         ipAddress: o.parentComment_ipAddress,
                         annonymouseId: o.parentComment_anonymouseId,
                         isMember: o.parentComment_isMember,
-                        user_id: o.parentComment_user_nickname,
+                        nickname: o.parentComment_user_nickname,
                     })
                 }
                 temp[o.comment_index] = {
@@ -175,7 +173,9 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
                     updatedAt: o.comment_updatedAt,
                     content: o.comment_content,
                     ipAddress: o.comment_ipAddress,
-                    user_id: o.comment_user_nickname,
+                    annonymouseId: o.comment_anonymouseId,
+                    isMember: o.comment_isMember,
+                    nickname: o.comment_user_nickname,
                     childComments
                 }
 

@@ -12,8 +12,7 @@ export class Post extends Model {
     @Length(1, 255)
     title!: string;
 
-    @Column()
-    @Length(1, 255)
+    @Column({ type: "text" })
     content!: string;
 
     @Column({

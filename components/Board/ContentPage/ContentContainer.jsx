@@ -2,8 +2,53 @@ import React from "react";
 import Content from "./Content";
 import CommentContainer from "../Comment/Comment";
 import WriteComment from "../Comment/WriteComment";
-const ContentContainer = ({ post }) => {
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import axios from 'axios';
 
+const queryClient = new QueryClient()
+
+const Test = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Example />
+    </QueryClientProvider>
+  )
+}
+
+const Example = () => {
+  const { isLoading, error, data } = useQuery('repoData', () =>
+    axios.get(`http://localhost:5000/api/comment/getComments?postUuid=${"14e543f7-0504-46f9-9a73-77d00a876988"}`)
+      .then(res => {
+        return res.data
+      })
+  )
+
+  if (isLoading) return 'Loading...'
+  if (error) return 'An error has occurred: ' + error.message
+  return (
+    <>
+      {
+        data && Object.values(data.comment).map((value, index) =>
+          <div key={index}>
+            <CommentContainer key={index} nickname={value.isMember ? value.nickname : "익명 ㅇㅇ"} comment={value.content} />
+            {/* <CommentContainer key={index} nickname={value.isMember ? value.nickname : value.annonymouseId} comment={value.content} /> */}
+
+            {
+              value.childComments.map((chileValue, chileIndex) =>
+                <div key={chileIndex} className="ml-10">
+                  <CommentContainer key={chileIndex} nickname={chileValue.isMember ? chileValue.nickname : "익명 ㅇㅇ"} comment={chileValue.content} />
+                </div>
+              )
+            }
+          </div>
+        )
+      }
+    </ >
+  )
+}
+
+
+const ContentContainer = ({ post }) => {
   const timeArray = post.createdAt
     .slice(0, post.createdAt.length - 5)
     .split("T");
@@ -71,7 +116,7 @@ const ContentContainer = ({ post }) => {
             </button>
           </div>
           <div className="w-full border-4 border-blue-300 mt-3" />
-          <CommentContainer />
+          <Test />
           <WriteComment />
         </div>
       </div>

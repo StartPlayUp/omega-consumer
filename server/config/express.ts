@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
+import hpp from 'hpp';
+import helmet from 'helmet';
 const server = express()
 
 if (process.env.NODE_ENV !== 'production') {
@@ -21,6 +23,8 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.json())
 server.use(morgan('combined'));
+server.use(hpp());
+server.use(helmet({ contentSecurityPolicy: false }));
 // server.use(express.static(path.join(__dirname, '../public')))
 server.use('/api', routes)
 
