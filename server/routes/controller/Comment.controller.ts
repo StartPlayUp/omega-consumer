@@ -58,7 +58,7 @@ const sendNonMemberComment = async (req: Request, res: Response) => {
 const deleteMemberComment = async (req: Request, res: Response) => {
     const id = req.user.id;
     const { commentUuid } = req.body;
-    const result = await deleteNonMemberCommentFromUuid({
+    const result = await deleteMemberCommentFromUuid({
         id,
         commentUuid,
     })
@@ -70,10 +70,9 @@ const deleteMemberComment = async (req: Request, res: Response) => {
     }
 }
 const deleteNonMemberComment = async (req: Request, res: Response) => {
-    const id = req.user.id;
-    const { commentUuid } = req.body;
+    const { commentUuid, commentPassword } = req.body;
     const result = await deleteNonMemberCommentFromUuid({
-        id,
+        commentPassword,
         commentUuid,
     })
     if (result.success) {
