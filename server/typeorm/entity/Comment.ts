@@ -59,6 +59,13 @@ export class Comment extends Model {
     @JoinColumn({ name: 'user_nickname', referencedColumnName: 'nickname' })
     user_nickname!: User;
 
+    @ManyToOne(() => User, user => user.commentsForId, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+    })
+    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    user_id!: User;
+
 
     @ManyToOne(() => Post, post => post.comments, {
         onDelete: "CASCADE",
