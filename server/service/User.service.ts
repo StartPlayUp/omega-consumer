@@ -161,6 +161,7 @@ const verifyEmailUser = async ({ emailToken }: { emailToken: string }): Promise<
 
 const checkEmailVerifyFromId = async ({ id }: { id: string }): Promise<returnUser> => {
     try {
+        console.log(id)
         const user = await User.findOneOrFail({ id })
         console.log("user : ", user)
         if (user.isVerified) {
