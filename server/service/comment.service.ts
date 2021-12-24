@@ -26,6 +26,7 @@ const createMemberComment = async (commentData: IMemberComment): Promise<returnC
                 post: postFromUuid,
                 user: userFromUuid,
                 user_nickname: userFromUuid,
+                user_id: userFromUuid,
                 isMember: true,
                 parentComment: commentFromUuid
             });
@@ -38,6 +39,7 @@ const createMemberComment = async (commentData: IMemberComment): Promise<returnC
                 post: postFromUuid,
                 user: userFromUuid,
                 user_nickname: userFromUuid,
+                user_id: userFromUuid,
             });
         }
 
@@ -103,29 +105,54 @@ const createNonMemberComment = async (commentData: INonMemberComment): Promise<r
     }
 }
 
-const deleteMemberCommentFromUuid = async () => {
-
-}
-
-const deleteNonMemberCommentFromUuid = async (data: any) => {
+const deleteMemberCommentFromUuid = async (data: any) => {
     const {
         id,
         commentUuid,
     } = data;
     try {
-        const commentFromUuid = await Comment.findOneOrFail({ uuid: commentUuid })
-        const userFromUuid = await User.findOneOrFail({ id })
-        if (commentFromUuid.user === userFromUuid) {
-            console.log("check console : ", commentFromUuid.user, userFromUuid)
+        const UpdateResult = await getRepository(Comment)
+            .createQueryBuilder("comment")
+            .update(Comment)
+            .set({
+                deleted: true,
+            })
+            .where("user_id = :id AND uuid = :commentUuid", { id, commentUuid })
+            .execute();
+
+        // UpdateResult ex)
+        // UpdateResult { generatedMaps: [], raw: [], affected: 1 }
+        if (UpdateResult.affected) {
+            return {
+                success: true,
+            }
         }
-        // comment = Comment.update({
-        //     ...commentFromUuid,
-        //     deleted: true
-        // })
-        // 추가해야 검사해줌
-        // const errors = await validate(comment)
-        // if (errors.length > 0) throw errors
-        // await comment.save()
+        else {
+            return {
+                success: false,
+                error: "업데이트 실패"
+            }
+        }
+    } catch (err) {
+        return {
+            success: false,
+            error: "createNonMemberComment server error"
+        }
+    }
+}
+
+const deleteNonMemberCommentFromUuid = async (data: any) => {
+    const {
+        commentPassword,
+        commentUuid,
+    } = data;
+    try {
+        const commentFromUuid = await Comment.findOneOrFail({
+            uuid: commentUuid,
+            password: commentPassword
+        })
+        commentFromUuid.deleted = true
+        Comment.save(commentFromUuid);
         return {
             success: true,
         }
