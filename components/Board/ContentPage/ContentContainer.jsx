@@ -7,15 +7,15 @@ import axios from 'axios';
 
 const queryClient = new QueryClient()
 
-const Test = () => {
+const Comments = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Example />
+      <CommentList />
     </QueryClientProvider>
   )
 }
 
-const Example = () => {
+const CommentList = () => {
   const { isLoading, error, data } = useQuery('repoData', () =>
     axios.get(`http://localhost:5000/api/comment/getComments?postUuid=${"14e543f7-0504-46f9-9a73-77d00a876988"}`)
       .then(res => {
@@ -116,7 +116,7 @@ const ContentContainer = ({ post }) => {
             </button>
           </div>
           <div className="w-full border-4 border-blue-300 mt-3" />
-          <Test />
+          <Comments />
           <WriteComment />
         </div>
       </div>
