@@ -8,7 +8,7 @@ const Editor = ({ onChange, editorLoaded }) => {
   useEffect(() => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
-      ClassicEditor: require("ckeditor5-custom-build/build/ckeditor"),
+      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
   }, []);
 

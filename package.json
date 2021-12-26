@@ -62,6 +62,7 @@
     "react-js-pagination": "^3.0.3",
     "react-modal": "^3.14.3",
     "react-query": "^3.34.6",
+    "react-query-devtools": "^2.6.3",
     "react-redux": "^7.2.6",
     "react-slick": "^0.28.1",
     "redux-devtools-extension": "^2.13.9",
