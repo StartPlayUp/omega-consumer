@@ -5,12 +5,10 @@ import Link from "next/link";
 import axios from "axios";
 import { Pagination } from "antd";
 import { useEffect } from "react";
-import { post } from "superagent";
 import { NOTICE_BOARD } from "../../constants/constant/category";
 import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from './../../store/configureStore'
-import { Store } from 'redux'
 
 
 const UserLink = ({ id }: any) => (
