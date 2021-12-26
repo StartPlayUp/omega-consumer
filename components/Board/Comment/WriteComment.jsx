@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Editor from "../../Editor/CKEditor";
 import { Button, Input } from "antd";
 import { useSelector } from "react-redux";
+import immer from "immer";
 import {
   QueryClient,
   QueryClientProvider,
@@ -45,9 +46,12 @@ const CommentRequestButton = ({
     {
       onMutate: async ({ postUuid, content }) => {
         setComment("");
-        await queryClient.cancelQueries(["getComments",postUuid]);
-        const previousValue = queryClient.getQueryData(["getComments",postUuid]);
-        queryClient.setQueryData(["getComments",postUuid], (old) => {
+        await queryClient.cancelQueries(["getComments", postUuid]);
+        const previousValue = queryClient.getQueryData([
+          "getComments",
+          postUuid,
+        ]);
+        queryClient.setQueryData(["getComments", postUuid], (old) => {
           const len = Object.keys(old.comment).length + 1;
           return {
             comment: {
@@ -70,10 +74,10 @@ const CommentRequestButton = ({
       },
       // On failure, roll back to the previous value
       onError: (err, variables, previousValue) =>
-        queryClient.setQueryData(["getComments",postUuid], previousValue),
+        queryClient.setQueryData(["getComments", postUuid], previousValue),
       // After success or failure, refetch the todos query
       onSettled: () => {
-        queryClient.invalidateQueries(["getComments",postUuid]);
+        queryClient.invalidateQueries(["getComments", postUuid]);
       },
     }
   );
