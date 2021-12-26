@@ -10,6 +10,8 @@ import { GetServerSideProps } from "next";
 import wrapper, { SagaStore } from "store/configureStore";
 import { LOAD_MY_INFO_REQUEST } from "reducer/user";
 import { END } from "redux-saga";
+import { useSelector } from "react-redux";
+import { userType } from "reducer/reducerUser";
 
 const UserLink = ({ id, comment }: { id: string, comment: string }) => (
   <Link href={`/${id}/writeBoard`}>
@@ -23,7 +25,7 @@ const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }
   const router = useRouter();
   const category = router.query.category as string;
   const [boardName, setBoardName]: [boardName: string, setBoardName: Function] = useState("");
-
+  const { me } = useSelector((state:{user:userType}) => state.user)
   const [page, setPage] = useState(1);
   useEffect(() => {
     console.log("NOTICE_BOARD : ", NOTICE_BOARD);
@@ -38,7 +40,7 @@ const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }
       <div className="flex place-items-center flex-col">
         <div className="w-3/4 h-9 flex m-5">
           <div className="flex-none ml-16 text-4xl">{boardName}</div>
-          <UserLink id={category} comment="글쓰기"></UserLink>
+          {me? <UserLink id={category} comment="글쓰기"></UserLink>:<></> }
         </div>
         <ContentContainer post={post} />
         

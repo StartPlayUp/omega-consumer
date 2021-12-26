@@ -5,6 +5,7 @@ import React, { FC } from 'react';
 import 'antd/dist/antd.variable.min.css';
 import Layout from '../components/layout'
 import wrapper from "../store/configureStore"
+
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
