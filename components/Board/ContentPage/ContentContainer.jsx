@@ -32,9 +32,8 @@ const Comments = () => {
               key={index}
               nickname={value.isMember ? value.nickname : "익명 ㅇㅇ"}
               comment={value.content}
+              commentUuid={value.uuid}
             />
-            {/* <CommentContainer key={index} nickname={value.isMember ? value.nickname : value.annonymouseId} comment={value.content} /> */}
-
             {value.childComments.map((chileValue, chileIndex) => (
               <div key={chileIndex} className="ml-10">
                 <CommentContainer
@@ -43,6 +42,7 @@ const Comments = () => {
                     chileValue.isMember ? chileValue.nickname : "익명 ㅇㅇ"
                   }
                   comment={chileValue.content}
+                  commentUuid={chileValue.uuid}
                 />
               </div>
             ))}

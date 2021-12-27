@@ -11,20 +11,11 @@ import {
 
 import axios from "axios";
 
-const CommentsRequest = ({ comment, postUuid, setComment }) => {
-  return (
-    <CommentRequestButton
-      comment={comment}
-      postUuid={postUuid}
-      setComment={setComment}
-    />
-  );
-};
-
-const CommentRequestButton = ({
+const CommentsRequest = ({
   comment,
   postUuid,
   setComment,
+  commentUuid,
 }) => {
   const { me } = useSelector((state) => state.user);
   const queryClient = useQueryClient();
@@ -34,6 +25,7 @@ const CommentRequestButton = ({
         .post("http://localhost:5000/api/comment/sendMemberComment", {
           postUuid,
           content,
+          parentUuid: commentUuid,
         })
         .then((res) => {
           return res.data;
@@ -105,8 +97,7 @@ const CommentRequestButton = ({
   );
 };
 
-const WriteComment = () => {
-
+const WriteComment = ({ commentUuid }) => {
   const { me } = useSelector((state) => state.user);
   const router = useRouter();
   const { postContent: postUuid } = router.query;
@@ -131,6 +122,7 @@ const WriteComment = () => {
             comment={comment}
             postUuid={postUuid}
             setComment={setComment}
+            commentUuid={commentUuid}
           />
         </div>
       </div>
