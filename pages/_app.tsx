@@ -5,12 +5,16 @@ import React, { FC } from 'react';
 import 'antd/dist/antd.variable.min.css';
 import Layout from '../components/layout'
 import wrapper from "../store/configureStore"
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+const queryClient = new QueryClient();
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Layout >
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </Layout>
 
     </>
