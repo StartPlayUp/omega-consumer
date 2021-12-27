@@ -4,7 +4,6 @@ import "reflect-metadata";
 import routes from "../routes";
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import hpp from 'hpp';
@@ -19,8 +18,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 require('dotenv').config();
 server.use(cookieParser())
-server.use(bodyParser.json())
-server.use(bodyParser.urlencoded({ extended: false }));
+server.use(express.json())
+server.use(express.urlencoded({ extended: false }));
 server.use(express.json())
 server.use(morgan('combined'));
 server.use(hpp());

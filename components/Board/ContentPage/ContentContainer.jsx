@@ -2,25 +2,15 @@ import React from "react";
 import Content from "./Content";
 import CommentContainer from "../Comment/Comment";
 import WriteComment from "../Comment/WriteComment";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { ReactQueryDevtools } from "react-query/devtools";
 
-const queryClient = new QueryClient();
-
-// const Comments = () => {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <CommentList />
-//     </QueryClientProvider>
-//   );
-// };
-
 const Comments = () => {
   const router = useRouter();
   const { postContent } = router.query;
-  const { isLoading, error, data, isFetching } = useQuery(["getComments",postContent], () =>
+  const { isLoading, error, data, isFetching } = useQuery(["getComments", postContent], () =>
     axios
       .get(
         `http://localhost:5000/api/comment/getComments?postUuid=${postContent}`
@@ -67,7 +57,7 @@ const ContentContainer = ({ post }) => {
     .slice(0, post.createdAt.length - 5)
     .split("T");
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <div className="md:w-2/3 w-full bg-white">
         <div className="ml-3 mr-3 ">
           <div className="mt-3 border-b-2 border-blue-400">
@@ -132,12 +122,12 @@ const ContentContainer = ({ post }) => {
             </div>
             <div className="w-full border-4 border-blue-300 mt-3" />
             <Comments />
-            <WriteComment queryClient={queryClient} />
+            <WriteComment />
           </div>
         </div>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </>
   );
 };
 

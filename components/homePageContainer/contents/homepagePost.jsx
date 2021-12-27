@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
-const queryClient = new QueryClient();
 
 const HomePagePostProvider = ({ mainPageContentTitle }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <PostList mainPageContentTitle={mainPageContentTitle} />
-    </QueryClientProvider>
+    <PostList mainPageContentTitle={mainPageContentTitle} />
   );
 };
 const PostList = ({ mainPageContentTitle }) => {

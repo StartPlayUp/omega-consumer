@@ -5,24 +5,19 @@ import { Button, Input } from "antd";
 import { useSelector } from "react-redux";
 import immer from "immer";
 import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
   useMutation,
+  useQueryClient,
 } from "react-query";
 
 import axios from "axios";
 
-const CommentsRequest = ({ comment, postUuid, setComment, queryClient }) => {
+const CommentsRequest = ({ comment, postUuid, setComment }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <CommentRequestButton
-        comment={comment}
-        postUuid={postUuid}
-        setComment={setComment}
-        queryClient={queryClient}
-      />
-    </QueryClientProvider>
+    <CommentRequestButton
+      comment={comment}
+      postUuid={postUuid}
+      setComment={setComment}
+    />
   );
 };
 
@@ -30,9 +25,9 @@ const CommentRequestButton = ({
   comment,
   postUuid,
   setComment,
-  queryClient,
 }) => {
   const { me } = useSelector((state) => state.user);
+  const queryClient = useQueryClient();
   const mutation = useMutation(
     ({ postUuid, content }) =>
       axios
@@ -110,7 +105,8 @@ const CommentRequestButton = ({
   );
 };
 
-const WriteComment = ({ queryClient }) => {
+const WriteComment = () => {
+
   const { me } = useSelector((state) => state.user);
   const router = useRouter();
   const { postContent: postUuid } = router.query;
@@ -135,7 +131,6 @@ const WriteComment = ({ queryClient }) => {
             comment={comment}
             postUuid={postUuid}
             setComment={setComment}
-            queryClient={queryClient}
           />
         </div>
       </div>
