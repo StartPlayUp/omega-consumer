@@ -12,7 +12,7 @@ module.exports = {
     includePaths: [path.join("./jss")],
   },
   images: {
-    domains: ["cdn.discordapp.com"],
+    domains: ["images.unsplash.com", "cdn.discordapp.com"],
   },
   reactStrictMode: true,
 };

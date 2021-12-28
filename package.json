@@ -37,7 +37,6 @@
     "babel-preset-env": "^1.7.0",
     "bcrypt": "^5.0.1",
     "celebrate": "^15.0.0",
-    "ckeditor5-custom-build": "file:./ckeditor5",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

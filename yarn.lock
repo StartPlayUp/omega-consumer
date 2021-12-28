@@ -3944,12 +3944,6 @@ cjs-module-lexer@^1.0.0:
   resolved "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz"
   integrity sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==
 
-<<<<<<< HEAD
-=======
-"ckeditor5-custom-build@file:./ckeditor5":
-  version "0.0.1"
-
->>>>>>> 1e5d19701338ebf7145fa89b713e8f3988429aad
 ckeditor5@^31.0.0:
   version "31.0.0"
   resolved "https://registry.npmjs.org/ckeditor5/-/ckeditor5-31.0.0.tgz"
@@ -5370,14 +5364,11 @@ file-stream-rotator@^0.5.7:
   dependencies:
     moment "^2.11.2"
 
-<<<<<<< HEAD
-=======
 file@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/file/-/file-0.2.2.tgz#c3dfd8f8cf3535ae455c2b423c2e52635d76b4d3"
   integrity sha1-w9/Y+M81Na5FXCtCPC5SY112tNM=
 
->>>>>>> 1e5d19701338ebf7145fa89b713e8f3988429aad
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.npmjs.org/fill-range/-/fill-range-7.0.1.tgz"

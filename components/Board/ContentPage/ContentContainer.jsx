@@ -1,56 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Content from "./Content";
-import CommentContainer from "../Comment/Comment";
+import CommentContainer from "../Comment/CommentContainer";
 import WriteComment from "../Comment/WriteComment";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { ReactQueryDevtools } from "react-query/devtools";
-
-const Comments = () => {
-  const router = useRouter();
-  const { postContent } = router.query;
-  const { isLoading, error, data, isFetching } = useQuery(["getComments", postContent], () =>
-    axios
-      .get(
-        `http://localhost:5000/api/comment/getComments?postUuid=${postContent}`
-      )
-      .then((res) => {
-        console.log(res.data);
-        return res.data;
-      })
-  );
-  console.log("isFetching", isFetching);
-  if (isLoading) return "Loading...";
-  if (error) return "An error has occurred: " + error.message;
-  return (
-    <>
-      {data &&
-        Object.values(data.comment).map((value, index) => (
-          <div key={index}>
-            <CommentContainer
-              key={index}
-              nickname={value.isMember ? value.nickname : "익명 ㅇㅇ"}
-              comment={value.content}
-              commentUuid={value.uuid}
-            />
-            {value.childComments.map((chileValue, chileIndex) => (
-              <div key={chileIndex} className="ml-10">
-                <CommentContainer
-                  key={chileIndex}
-                  nickname={
-                    chileValue.isMember ? chileValue.nickname : "익명 ㅇㅇ"
-                  }
-                  comment={chileValue.content}
-                  commentUuid={chileValue.uuid}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-    </>
-  );
-};
+import Thumb from "../Thumb";
 
 const ContentContainer = ({ post }) => {
   const timeArray = post.createdAt
@@ -79,7 +31,7 @@ const ContentContainer = ({ post }) => {
               <Content content={post.content} />
             </div>
             <div className="w-full mt-72 flex justify-center">
-              <div className="mr-3 w-28 h-28 border-2 flex justify-center bg-white shadow-2xl">
+              <div className="mr-3 w-28 h-28 border-2 flex flex-col items-center bg-white shadow-2xl">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-16 w-16 mt-2"
@@ -94,7 +46,8 @@ const ContentContainer = ({ post }) => {
                     d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
                   />
                 </svg>
-              </div>
+                <Thumb className=" font-bold" />
+                {/* </div>
               <div className="ml-3 w-28 h-28 border-2 flex justify-center bg-white shadow-2xl">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,6 +63,7 @@ const ContentContainer = ({ post }) => {
                     d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
                   />
                 </svg>
+                <div>1</div> */}
               </div>
             </div>
             <div className="ml-auto mt-5">
@@ -121,12 +75,11 @@ const ContentContainer = ({ post }) => {
               </button>
             </div>
             <div className="w-full border-4 border-blue-300 mt-3" />
-            <Comments />
+            <CommentContainer />
             <WriteComment />
           </div>
         </div>
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 };

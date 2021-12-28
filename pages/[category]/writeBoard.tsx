@@ -37,7 +37,7 @@ const WriteBoard = () => {
       });
       router.push({
         pathname: '/[category]',
-        query:{category:category}
+        query: { category: category }
       })
       console.log(sendPoseResult);
     } catch (error) {
@@ -67,6 +67,7 @@ const WriteBoard = () => {
       <div className="lg:w-1/2 w-full">
         <input placeholder="제목을 입력하세요" onChange={(e) => postTitleHandler(e)}></input>
         <Editor
+          content={data}
           onChange={onChangeData}
           editorLoaded={editorLoaded}
         />
@@ -80,7 +81,7 @@ const WriteBoard = () => {
                     "
         >
           <div className="flex-shrink-0">
-             <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
+            <button className=" font-extrabold text-white" onClick={onChangeSendPost}>글 올리기</button>
           </div>
         </div>
       </div>

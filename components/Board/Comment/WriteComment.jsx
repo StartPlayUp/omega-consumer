@@ -15,7 +15,7 @@ const CommentsRequest = ({
   comment,
   postUuid,
   setComment,
-  commentUuid,
+  parentUuid,
 }) => {
   const { me } = useSelector((state) => state.user);
   const queryClient = useQueryClient();
@@ -25,7 +25,7 @@ const CommentsRequest = ({
         .post("http://localhost:5000/api/comment/sendMemberComment", {
           postUuid,
           content,
-          parentUuid: commentUuid,
+          parentUuid,
         })
         .then((res) => {
           return res.data;
@@ -39,21 +39,20 @@ const CommentsRequest = ({
           postUuid,
         ]);
         queryClient.setQueryData(["getComments", postUuid], (old) => {
-          const len = Object.keys(old.comment).length + 1;
           return {
-            comment: {
+            comment: [
               ...old.comment,
-              len: {
+              {
                 annonymouseId: "익명 OO",
                 childComments: [],
                 content,
-                ipAddress: "X.X.",
+                ipAddress: "X.X.X.X",
                 isMember: me ? 1 : 0,
                 nickname: me && me,
                 updatedAt: "2021-12-26T03:17:01.870Z",
                 uuid: "test",
               },
-            },
+            ],
           };
         });
 
@@ -97,7 +96,7 @@ const CommentsRequest = ({
   );
 };
 
-const WriteComment = ({ commentUuid }) => {
+const WriteComment = ({ parentUuid }) => {
   const { me } = useSelector((state) => state.user);
   const router = useRouter();
   const { postContent: postUuid } = router.query;
@@ -112,7 +111,7 @@ const WriteComment = ({ commentUuid }) => {
     <div className="w-full bg-gray-300">
       {me ? <div>{me}</div> : <Input placeholder="닉네임을 입력하세요"></Input>}
       <Editor
-        comment={comment}
+        content={comment}
         onChange={setComment}
         editorLoaded={editorLoaded}
       />
@@ -122,7 +121,7 @@ const WriteComment = ({ commentUuid }) => {
             comment={comment}
             postUuid={postUuid}
             setComment={setComment}
-            commentUuid={commentUuid}
+            parentUuid={parentUuid}
           />
         </div>
       </div>

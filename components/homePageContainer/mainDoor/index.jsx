@@ -1,4 +1,5 @@
 import { Carousel } from "antd";
+import Image from 'next/image';
 const HomePageMainDoorContainer = () => {
   const linkArray = [
     "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
@@ -26,7 +27,8 @@ const HomePageMainDoorContainer = () => {
           <div key={idx} className="w-screen h-full flex justify-center">
             <div style={contentStyle}>
               {console.log("test : ", idx, i)}
-              <img style={imageStyle} src={i} />
+              <Image src={i} width="100%" height="100%" layout="responsive"
+                alt="그림" />
             </div>
           </div>
         ))}

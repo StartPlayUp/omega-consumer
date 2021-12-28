@@ -239,7 +239,7 @@ const getCommentsFromPostUuid = async ({ postUuid }: any): Promise<returnComment
 
         return {
             success: true,
-            comment: temp
+            comment: Object.values(temp)
         }
     } catch (err) {
         return {
