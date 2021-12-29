@@ -12,7 +12,7 @@ const CommentContainer = () => {
     const { isLoading, error, data, isFetching } = useQuery(["getComments", postContent], () =>
         axios
             .get(
-                `http://localhost:5000/api/comment/getComments?postUuid=${postContent}`
+                `/api/comment/getComments?postUuid=${postContent}`
             )
             .then((res) => {
                 console.log(res.data);

@@ -6,14 +6,14 @@ const Thumb = () => {
     const router = useRouter();
     const { postContent: postUuid } = router.query;
     const { isLoading, error, data, isFetching } = useQuery(["getLikeIt", postUuid],
-        () => axios.get(`http://localhost:5000/api/post/getLikeIt?postUuid=${postUuid}`).then((res) => {
+        () => axios.get(`/api/post/getLikeIt?postUuid=${postUuid}`).then((res) => {
             return res.data;
         })
     );
     const mutation = useMutation(
         ({ postUuid }: any) =>
             axios
-                .put("http://localhost:5000/api/comment/likeIt", {
+                .put("/api/comment/likeIt", {
                     postUuid
                 })
                 .then((res) => {

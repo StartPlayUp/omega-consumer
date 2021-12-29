@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Content from "./Content";
 import CommentContainer from "../Comment/CommentContainer";
 import WriteComment from "../Comment/WriteComment";

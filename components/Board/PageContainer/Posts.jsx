@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
 import { CATEGORY_LIST } from "../../../constants/constant/category";
 import Link from "next/link";
 const GetPostUuid = ({ category, uuid, posts, timeArray }) => (

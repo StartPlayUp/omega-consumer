@@ -17,7 +17,7 @@ const CommentContainer = ({ commentValue, isOpen, setIsOpen }) => {
   const mutation = useMutation(
     ({ commentUuid }) =>
       axios
-        .post("http://localhost:5000/api/comment/deleteMemberComment", {
+        .post("/api/comment/deleteMemberComment", {
           commentUuid
         })
         .then((res) => {

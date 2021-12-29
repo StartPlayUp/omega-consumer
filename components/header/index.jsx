@@ -1,12 +1,10 @@
 import LoginModal from "./LoginContainer/index";
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { logoutRequestAction } from "../../reducer/user";
 import { useDispatch } from "react-redux";
 import { Button } from "antd";
 import Link from "next/link";
-import NOTICE_BOARD from "../../constants/constant/category";
-import axios from 'axios';
 const Header = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);

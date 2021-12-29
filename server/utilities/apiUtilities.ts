@@ -1,7 +1,6 @@
 import { User } from '../typeorm/entity/User';
 import nodemailer from 'nodemailer';
 import config from '../config'
-import crypto from 'crypto';
 
 const sanitizeUser = (user: User): any => {
     const { password, emailToken, ...userWithOutPassword } = user;

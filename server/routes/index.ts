@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 const router = require('express').Router()
 import user from './api/user';
 import post from './api/post';

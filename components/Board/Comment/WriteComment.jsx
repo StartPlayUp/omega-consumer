@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Editor from "../../Editor/CKEditor";
 import { Button, Input } from "antd";
 import { useSelector } from "react-redux";
-import immer from "immer";
 import {
   useMutation,
   useQueryClient,
@@ -22,7 +21,7 @@ const CommentsRequest = ({
   const mutation = useMutation(
     ({ postUuid, content }) =>
       axios
-        .post("http://localhost:5000/api/comment/sendMemberComment", {
+        .post("/api/comment/sendMemberComment", {
           postUuid,
           content,
           parentUuid,
