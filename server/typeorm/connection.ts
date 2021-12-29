@@ -1,4 +1,4 @@
-import { Connection as IConnection, createConnection, createConnections, getConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import { createDatabase } from "typeorm-extension";
 
 const connection = {
