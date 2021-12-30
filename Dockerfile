@@ -17,7 +17,6 @@ RUN yarn nextBuild
 RUN yarn expressBuild
 
 
-
 # ###############################################################
 # FROM node:16-alpine AS builder
 # # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -45,7 +44,10 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
-EXPOSE 5000
 
-CMD ["node_modules/.bin/next", "start", "-p", "5000"]
+# ENV PORT=7777
+
+EXPOSE 7777
+
+CMD ["node_modules/.bin/next", "start", "-p", "7777"]
 
