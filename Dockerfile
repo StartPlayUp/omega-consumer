@@ -45,7 +45,10 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
-EXPOSE 5000
 
-CMD ["node_modules/.bin/next", "start", "-p", "5000"]
+# ENV PORT=7777
+
+EXPOSE 7777
+
+CMD ["node_modules/.bin/next", "start", "-p", "7777"]
 

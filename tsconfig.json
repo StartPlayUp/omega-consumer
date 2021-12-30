@@ -34,7 +34,7 @@
     "./constants/constant/category.ts",
     "./components/hooks/*.ts", "pages/index.tsx",
     "./store/redux.d.ts"
-, "pages/[category]/writeBoard.jsx", "components/AdminPage/Test.hsx"   ],
+, "pages/[category]/writeBoard.jsx",  ],
   "exclude": [
     "node_modules"
   ]
