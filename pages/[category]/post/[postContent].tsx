@@ -12,7 +12,7 @@ import { LOAD_MY_INFO_REQUEST } from "reducer/user";
 import { END } from "redux-saga";
 import { useSelector } from "react-redux";
 import { userType } from "reducer/reducerUser";
-
+import { CATEGORY_LIST } from "../../../constants/constant/category";
 const UserLink = ({ id, comment }: { id: string, comment: string }) => (
   <Link href={`/${id}/writeBoard`}>
     <a className="ml-auto w-32 align-middle border-2 rounded-xl flex items-center space-x-4 justify-center bg-blue-400">
@@ -28,12 +28,11 @@ const PostContentContainer = ({ posts, post }: { posts: Object[], post: Object }
   const { me } = useSelector((state:{user:userType}) => state.user)
   const [page, setPage] = useState(1);
   useEffect(() => {
-    console.log("NOTICE_BOARD : ", NOTICE_BOARD);
-    if (category === NOTICE_BOARD) {
-      setBoardName("공지사항");
-    } else {
-      setBoardName(category);
-    }
+    Object.entries(CATEGORY_LIST).map(([key,value]) => {
+      if (category === key) {
+        setBoardName(value)
+      }
+    })
   }, [category]);
   return (
     <div className="w-full h-full bg-gray-500">
