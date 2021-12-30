@@ -9,7 +9,7 @@ import { NOTICE_BOARD } from "../../constants/constant/category";
 import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from './../../store/configureStore'
-
+import { CATEGORY_LIST } from "../../constants/constant/category";
 
 const UserLink = ({ id }: any) => (
   <Link href={`/${id}/writeBoard`}>
@@ -21,13 +21,13 @@ const UserLink = ({ id }: any) => (
 const BoardWrapper = ({ posts, category }: any) => {
   const [boardName, setBoardName] = useState("");
   const [page, setPage] = useState(1);
+  
   useEffect(() => {
-    console.log("NOTICE_BOARD : ", NOTICE_BOARD);
-    if (category === NOTICE_BOARD) {
-      setBoardName("공지사항");
-    } else {
-      setBoardName(category);
-    }
+    Object.keys(CATEGORY_LIST).map((i) => {
+      if (category === i) {
+        setBoardName(CATEGORY_LIST[i])
+      }
+    })
   }, [category]);
   return (
     <div className="bg-gray-300">

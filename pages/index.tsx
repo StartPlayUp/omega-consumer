@@ -16,7 +16,7 @@ import { GetServerSideProps } from 'next';
 // import styles from '../styles/Home.module.css';
 
 const Home = () => {
-  // const me = useSelector((state: any): any => state.user.me);
+  const me = useSelector((state: any): any => state.user.me);
 
   return (
     <div className="min-h-screen p-0 flex flex-col justify-center h-screen items-center">
@@ -26,7 +26,6 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="w-full h-full">
-        {/* <div>me : {me}</div> */}
         <HomePageMainDoorContainer />
         <HomePageContent />
       </section>

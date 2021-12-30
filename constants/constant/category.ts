@@ -6,6 +6,6 @@ export const CATEGORY_LIST = {
     "review": "리뷰",
     "game": "게임",
     "programming": "프로그래밍",
-    "freeBoard": "자유"
+    "freeBoard": "자유",
 };
 

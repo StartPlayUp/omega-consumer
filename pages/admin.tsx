@@ -6,7 +6,7 @@ import { END } from 'redux-saga';
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import React from 'react';
-import AdminPage from '../components/AdminPage'
+import AdminPage from '../components/adminPage/index';
 
 const Admin = () => {
     const { SubMenu } = Menu;
