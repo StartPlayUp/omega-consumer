@@ -18,14 +18,14 @@ const UserLink = ({ id }: any) => (
     </a>
   </Link>
 );
-const BoardWrapper = ({ posts, category }: any) => {
+const BoardWrapper = ({ posts, category }: {posts:any,category:string}) => {
   const [boardName, setBoardName] = useState("");
   const [page, setPage] = useState(1);
   
   useEffect(() => {
-    Object.keys(CATEGORY_LIST).map((i) => {
-      if (category === i) {
-        setBoardName(CATEGORY_LIST[i])
+    Object.entries(CATEGORY_LIST).map(([key,value]) => {
+      if (category === key) {
+        setBoardName(value)
       }
     })
   }, [category]);
