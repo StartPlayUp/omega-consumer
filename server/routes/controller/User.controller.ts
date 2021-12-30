@@ -1,4 +1,3 @@
-import { User } from './../../typeorm/entity/User';
 import { Request, Response } from 'express';
 import { createUser, getUserFromId, loginCheckUser, updateUser, verifyEmailUser } from '../../service/User.service';
 import bcrypt from 'bcrypt';

@@ -2,14 +2,13 @@ import SearchComponent from './SearchComponent';
 import UserComponent from './UserComponent';
 import { useQuery } from 'react-query'
 import axios from 'axios';
-import { Key } from 'react';
 import { useRouter } from "next/router";
 
 const AdminPage = () => {
     const router = useRouter();
     const { postContent } = router.query;
     const { isLoading, refetch, error, data } = useQuery(['getPosts', ""], () =>
-        axios.get(`http://localhost:5000/api/post/getPosts`)
+        axios.get(`/api/post/getPosts`)
             .then(res => {
                 console.log(res.data)
                 return res.data

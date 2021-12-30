@@ -1,11 +1,10 @@
-import next from "next";
-import express, { Request, Response } from "express";
+import express from "express";
 import "reflect-metadata";
 import routes from "../routes";
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import cors from 'cors';
-import path from 'path';
+// import path from 'path';
 import hpp from 'hpp';
 import helmet from 'helmet';
 const server = express()

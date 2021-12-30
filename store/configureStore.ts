@@ -1,4 +1,3 @@
-import { AnyAction } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { applyMiddleware, compose, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";

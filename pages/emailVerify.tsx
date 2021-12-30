@@ -1,13 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import styled from 'styled-components';
 import { Button, Input } from 'antd';
 import axios from 'axios';
 import wrapper, { SagaStore } from '../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from 'reducer/user';
 import { END } from 'redux-saga';
-import { useSelector } from 'react-redux';
-import { userType } from 'reducer/reducerUser';
-
 import { useState } from 'react';
 
 const EmailVerify = ({ user }: { user: { email: string } }): any => {

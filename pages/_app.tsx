@@ -6,6 +6,7 @@ import 'antd/dist/antd.variable.min.css';
 import Layout from '../components/layout'
 import wrapper from "../store/configureStore"
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
@@ -14,6 +15,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       <Layout >
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Layout>
 

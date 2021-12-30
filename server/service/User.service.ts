@@ -1,12 +1,8 @@
-import { IsEmail } from 'class-validator';
 import { validate } from 'class-validator';
 import { ILoginUser, IReadUser, IUser, returnUser } from '../types/service/InterfaceUser';
 import { User } from '../typeorm/entity/User';
 import bcrypt from 'bcrypt';
-import { getConnection } from "typeorm";
 import { sanitizeUser } from '../utilities/apiUtilities';
-import { SrvRecord } from 'dns';
-import { stringify } from 'querystring';
 
 const createUser = async (userData: IUser): Promise<returnUser> => {
     const { id, nickname, email, password, emailToken, isVerified } = userData;

@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 const NoticePosts = ({ posts }) => {
   return (
     <div className="bg-gray-100 w-full h-full">

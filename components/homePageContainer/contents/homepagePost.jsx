@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ const PostList = ({ mainPageContentTitle }) => {
   const { isLoading, error, data } = useQuery("repoData", () =>
     axios
       .get(
-        `http://localhost:5000/api/post/getCategoryPosts?category=${mainPageContentTitle}&limit=10`
+        `/api/post/getCategoryPosts?category=${mainPageContentTitle}&limit=10`
       )
       .then((res) => {
         return res.data;
