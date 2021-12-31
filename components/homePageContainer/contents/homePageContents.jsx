@@ -7,7 +7,7 @@ import {
 } from "constants/constant/category";
 import React, { useState } from "react";
 const HomePageContent = () => {
-  const [categoryExceptNoticeBoard, setCategoryExceptNoticeBoard] = [
+  const categoryExceptNoticeBoard= [
     REVIEW,
     GAME,
     FREE_BOARD,

@@ -1,8 +1,9 @@
+import { Button } from "antd";
 import React, { useState } from "react";
 import Modal from "react-modal";
 import Login from "./Login/index";
 import SignUp from "./SignUp/index";
-const LoginModal = () => {
+const LoginModal = ({ mobileView }) => {
   const [modalState, setModalState] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const changeSignUpLogin = () => {
@@ -11,10 +12,32 @@ const LoginModal = () => {
   const changeModalState = () => {
     setModalState(!modalState);
   };
-
+  console.log(mobileView);
   return (
     <>
-      <button onClick={changeModalState}>로그인</button>
+      {mobileView.mobile ? (
+        <button onClick={changeModalState}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+            />
+          </svg>
+        </button>
+      ) : (
+        <div className="w-full ml-auto">
+          <Button onClick={changeModalState}>로그인</Button>
+        </div>
+      )}
+
       <Modal
         isOpen={modalState}
         ariaHideApp={false}

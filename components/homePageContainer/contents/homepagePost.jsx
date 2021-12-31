@@ -25,7 +25,9 @@ const PostList = ({ mainPageContentTitle }) => {
     <>
       {data.posts.map((post) => (
         <div key={post.post_uuid}>
-          <Link href={`/${post.post_category}/post/${post.post_uuid}`}>{post.post_title}</Link>
+          <Link href={`/${post.post_category}/post/${post.post_uuid}`}>
+            <a className="text-black ml-2">{post.post_title}</a>
+          </Link>
         </div>
       ))}
     </>
@@ -33,7 +35,7 @@ const PostList = ({ mainPageContentTitle }) => {
 };
 const HomepagePost = ({ mainPageContentTitle }) => {
   return (
-    <div className="lg:w-1/4 md:w-1/2 pl-4 pr-4">
+    <div className="lg:w-1/4 md:w-1/2 pl-4 mt-3 pr-4">
       <div className="flex flex-col border-4">
         <HomePagePostProvider mainPageContentTitle={mainPageContentTitle} />
       </div>

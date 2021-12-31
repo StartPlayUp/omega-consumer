@@ -10,6 +10,8 @@ import { LOAD_MY_INFO_REQUEST } from '../../reducer/user';
 import { END, Task } from "redux-saga";
 import wrapper, { SagaStore } from './../../store/configureStore'
 import { CATEGORY_LIST } from "../../constants/constant/category";
+import { useSelector } from "react-redux";
+import { userType } from "reducer/reducerUser";
 
 const UserLink = ({ id }: any) => (
   <Link href={`/${id}/writeBoard`}>
@@ -21,7 +23,7 @@ const UserLink = ({ id }: any) => (
 const BoardWrapper = ({ posts, category }: {posts:any,category:string}) => {
   const [boardName, setBoardName] = useState("");
   const [page, setPage] = useState(1);
-  
+    const { me } = useSelector((state:{user:userType}) => state.user)
   useEffect(() => {
     Object.entries(CATEGORY_LIST).map(([key,value]) => {
       if (category === key) {
@@ -35,7 +37,7 @@ const BoardWrapper = ({ posts, category }: {posts:any,category:string}) => {
         <div className="flex place-items-center flex-col">
           <div className="w-3/4 h-9 flex m-5">
             <div className="flex-none ml-16 text-4xl">{boardName}</div>
-            <UserLink id={category} comment="글쓰기"></UserLink>
+            {me? <UserLink id={category} comment="글쓰기"></UserLink>:<></> }
           </div>
           <PostList posts={posts.slice(15 * (page - 1), 15 * page)} />
           <div className="mb-3">
