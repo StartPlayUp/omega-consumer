@@ -1,6 +1,6 @@
 interface returnApi {
     success: boolean,
-    error?: string,
+    error?: string | null,
     message?: string,
 }
 export type { returnApi }
