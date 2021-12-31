@@ -232,6 +232,7 @@ const getPostsPagenationSortByTime = async ({ category, page = 0, pageSize = 15 
     }
 }
 
+
 const getCategoryPostsSortByTime = async ({ category, limit }: { category: string, limit: string }): Promise<returnPosts> => {
     try {
         limit = limit || "1500"
