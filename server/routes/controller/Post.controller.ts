@@ -63,7 +63,7 @@ const getCategoryPosts = async (req: Request, res: Response) => {
 }
 
 const getPostsWithoutNoticeBoard = async (req: Request, res: Response) => {
-    const limit = req.query.category as string;
+    const limit = req.query.limit as string;
     const result = await getPostsWithoutNoticeBoardByTime({ limit });
     if (result.success) {
         return res.status(201).json(result);
