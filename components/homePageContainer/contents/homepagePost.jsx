@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
-
+import Link from "next/link";
 const HomePagePostProvider = ({ mainPageContentTitle }) => {
   return (
     <PostList mainPageContentTitle={mainPageContentTitle} />
@@ -24,7 +24,9 @@ const PostList = ({ mainPageContentTitle }) => {
   return (
     <>
       {data.posts.map((post) => (
-        <div key={post.post_uuid}>{post.post_title}</div>
+        <div key={post.post_uuid}>
+          <Link href={`/${post.post_category}/post/${post.post_uuid}`}>{post.post_title}</Link>
+        </div>
       ))}
     </>
   );
