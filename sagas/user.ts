@@ -23,6 +23,7 @@ import {
 } from '../reducer/user';
 
 function loadMyInfoAPI() {
+    console.log("baseURL : ",axios.defaults.baseURL)
     return axios.get('/api/user/loadMyInfo');
 }
 
@@ -44,6 +45,7 @@ function* loadMyInfo() {
 }
 
 function logInAPI(data: any) {
+    console.log("baseURL : ",axios.defaults.baseURL)
     return axios.post('/api/user/login', data);
 }
 
