@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { sendPost, getCategoryPosts, getPost, getPosts, likeIt, getLikeIt } from '../../controller/Post.controller';
+import { sendPost, getCategoryPosts, getPost, getPosts, likeIt, getLikeIt, getPostsWithoutNoticeBoard } from '../../controller/Post.controller';
 import { loginRequired, ipMiddleware } from '../../middleware';
 const router = Router()
 
@@ -10,6 +10,8 @@ router.post('/sendPost', loginRequired, ipMiddleware, sendPost);
 router.get('/getPost', getPost);
 router.get('/getPosts', getPosts);
 router.get('/getCategoryPosts', getCategoryPosts);
+router.get('/getPostsWithoutNoticeBoard', getPostsWithoutNoticeBoard);
+
 router.put('/likeIt', likeIt);
 router.get('/getLikeIt', getLikeIt);
 
