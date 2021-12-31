@@ -141,14 +141,43 @@ const getPostFromUuid = async ({ postUuid }: { postUuid: string }): Promise<retu
 }
 
 
-const getPostsSortByTime = async (): Promise<returnPosts> => {
+const getPostsWithoutNoticeBoardByTime = async ({ limit = "150" }: { limit: string }): Promise<returnPosts> => {
     try {
+        const intLimit = parseInt(limit);
+        const category = "noticeBoard";
+        const posts = await getRepository(Post)
+            .createQueryBuilder("post")
+            .where("post.category != :category", { category })
+            .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
+            .leftJoin('post.user', 'user')
+            .addSelect('user.nickname' as "nickname")
+            .orderBy("post.createdAt", "DESC")
+            .limit(intLimit)
+            .getRawMany();
+        console.log(posts)
+        return {
+            success: true,
+            posts
+        }
+    } catch (err) {
+        console.error(err)
+        return {
+            success: false,
+            error: "getPostsWithoutNoticeBoardByTime db error"
+        }
+    }
+}
+
+const getPostsSortByTime = async ({ limit = "150" }: { limit: string }): Promise<returnPosts> => {
+    try {
+        const intLimit = parseInt(limit);
         const posts = await getRepository(Post)
             .createQueryBuilder("post")
             .select(["post.uuid", "post.title", "post.updatedAt", "post.category"])
             .leftJoin('post.user', 'user')
             .addSelect('user.nickname' as "nickname")
             .orderBy("post.createdAt", "DESC")
+            .limit(intLimit)
             .getRawMany();
         console.log(posts)
         return {
@@ -203,6 +232,7 @@ const getPostsPagenationSortByTime = async ({ category, page = 0, pageSize = 15 
     }
 }
 
+
 const getCategoryPostsSortByTime = async ({ category, limit }: { category: string, limit: string }): Promise<returnPosts> => {
     try {
         limit = limit || "1500"
@@ -237,6 +267,7 @@ export {
     getPostsSortByTime,
     getCategoryPostsSortByTime,
     getPostsPagenationSortByTime,
+    getPostsWithoutNoticeBoardByTime,
     likeItPost,
     getLikeItPost,
 }
